@@ -11,7 +11,7 @@ import './ServiceCard.css';
  * links to the contact form through the price row (see PriceCta); the client
  * pills stay independently clickable.
  */
-export default function ServiceCard({ title, price, lede, items = [], media, clients = [], href = '#/contact' }) {
+export default function ServiceCard({ title, price, lede, items = [], media, clients = [], href = '/contact' }) {
   return (
     <article className="service-card">
       <div className="service-card__body">

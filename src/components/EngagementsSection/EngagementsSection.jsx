@@ -19,7 +19,7 @@ export default function EngagementsSection() {
           </div>
           <p className="engagements-body">{BODY}</p>
         </div>
-        <a href="#/engagements" className="btn-primary btn-primary--deep">
+        <a href="/engagements" className="btn-primary btn-primary--deep">
           Engagements
         </a>
       </Reveal>
@@ -27,7 +27,7 @@ export default function EngagementsSection() {
       <RevealGroup as="ul" className="engagements-list" pace="quick">
         {engagements.map((item) => (
           <RevealItem as="li" className="engagements-item" key={item.slug}>
-            <a href="#/engagements" className="engagements-row">
+            <a href="/engagements" className="engagements-row">
               <h3 className="engagements-label">{item.label}</h3>
               <span className="engagements-description">{item.description}</span>
             </a>

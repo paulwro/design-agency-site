@@ -26,11 +26,11 @@
 ## Pages
 
 - Home: https://paulwro.com/
-- Work: https://paulwro.com/#/work
-- Studio: https://paulwro.com/#/studio
-- Engagements: https://paulwro.com/#/engagements
-- Contact: https://paulwro.com/#/contact
+- Work: https://paulwro.com/work
+- Studio: https://paulwro.com/studio
+- Engagements: https://paulwro.com/engagements
+- Contact: https://paulwro.com/contact
 
 ## Contact
 
-Start a conversation at https://paulwro.com/#/contact. LinkedIn: https://www.linkedin.com/in/pwronski/
+Start a conversation at https://paulwro.com/contact. LinkedIn: https://www.linkedin.com/in/pwronski/

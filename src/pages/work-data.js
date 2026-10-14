@@ -19,7 +19,7 @@ import everWonderLogo from '../assets/testimonials/ever-wonder-logo.svg';
  *
  * EVERYTHING BELOW IS PLACEHOLDER copy lifted from the Figma frame, to be
  * replaced with real projects. The same module can appear any number of times.
- * A story's `outcome.href` is where its "Read more" goes: #/work/<slug>.
+ * A story's `outcome.href` is where its "Read more" goes: /work/<slug>.
  */
 const DESC = 'Description of the work we did or what is shown above.';
 const CHAPTER =
@@ -93,7 +93,7 @@ export const workEntries = [
     outcome: {
       title: 'Outcome',
       bullets: ['Bulleted item 1', 'Bulleted item 2', 'Bulleted item 3', 'Bulleted item 4'],
-      href: '#/work/swept',
+      href: '/work/swept',
     },
     media: [
       { ...piece(), span: 3 },
@@ -128,7 +128,7 @@ export const workEntries = [
       {
         title: 'Clarify what matters',
         paragraphs: [CHAPTER, CHAPTER.split('. ').slice(0, 2).join('. ') + '.'],
-        href: '#/work/swept',
+        href: '/work/swept',
       },
     ],
     testimonial: everWonder,

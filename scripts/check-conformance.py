@@ -78,7 +78,7 @@ check('Engagements: the 96 and 24 gap modifiers exist and are used',
       and eng_jsx.count('engagements-page__section--96') == 2)
 
 check('Engagements: price row is a stretched contact link with the slot-machine roll',
-      "href = '#/contact'" in read('components/ServiceCard/PriceCta.jsx')
+      "href = '/contact'" in read('components/ServiceCard/PriceCta.jsx')
       and 'price-cta__line--in' in read('components/ServiceCard/PriceCta.css')
       and '--ease-overshoot' in read('components/ServiceCard/PriceCta.css'))
 check('Engagements: collage has scroll parallax and honours reduced motion',
@@ -235,7 +235,7 @@ check('Studio bio uses the exported LinkedIn glyph',
       'studio-bio__social-mark' in read('pages/Studio.jsx')
       and '--linkedin-src' in studio_css)
 check('Work has a real route instead of falling through to Home',
-      "'#/work':" in read('App.jsx') and 'replaceState' in read('App.jsx'))
+      "'/work':" in read('App.jsx') and 'replaceState' in read('App.jsx'))
 check('News is gone: no route, no nav link, no menu promo',
       "news" not in re.sub(r'//.*', '', read('App.jsx') + read('components/Footer/Footer.jsx')
                            + read('components/MenuOverlay/MenuOverlay.jsx')).lower(),
@@ -277,9 +277,9 @@ check('the phone gutter is 24, matching the reference',
 
 # ---- routing ----------------------------------------------------------------
 all_src = '\n'.join(read(str(f.relative_to(SRC))) for f in SRC.rglob('*.js*'))
-check('every internal href is a hash route',
-      not re.search(r'href=[{"]`?/(?!/)', all_src) and "href: '/" not in all_src)
-check('the PW mark points at the home route', 'href="#/"' in read('components/Navbar/Navbar.jsx'))
+check('every internal href is a real path, not a hash route',
+      not re.search(r'''href[=:]\s*[{"'`]+#/''', all_src))
+check('the PW mark points at the home route', 'href="/"' in read('components/Navbar/Navbar.jsx'))
 
 # ---- every var() resolves ---------------------------------------------------
 defined = set()

@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { currentPath } from '../router';
 import { PATH_ROUTING, ROUTE_SEO, SITE, seoKeyFor } from './seo-data';
 
 /**
@@ -78,7 +79,7 @@ export function applySeo(key) {
 
 export default function Seo({ lightbox, route }) {
   useEffect(() => {
-    applySeo(seoKeyFor(window.location.hash, lightbox));
+    applySeo(seoKeyFor(currentPath(), lightbox));
   }, [lightbox, route]);
   return null;
 }

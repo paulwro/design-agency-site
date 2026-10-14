@@ -15,7 +15,7 @@ import './PriceCta.css';
  * Both strings sit in one grid cell, so the row is as wide as the longer of the
  * two and nothing reflows when the label changes.
  */
-export default function PriceCta({ label, hoverLabel = 'Contact us', href = '#/contact' }) {
+export default function PriceCta({ label, hoverLabel = 'Contact us', href = '/contact' }) {
   const roll = (text, className) => (
     <span className={`price-cta__line ${className}`} aria-hidden="true">
       {Array.from(text).map((ch, i) => (

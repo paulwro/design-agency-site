@@ -7,7 +7,7 @@
  *   { type: 'text',  headline, paragraphs[] }      a 760px-max reading column
  *
  * Add a case study by adding a slug here; its "Read more" link is
- * `#/work/<slug>`. Insights open from `#/insight/<slug>`. Unknown slugs fall
+ * `/work/<slug>`. Insights open from `/insight/<slug>`. Unknown slugs fall
  * back to the placeholder so a link never lands on nothing.
  */
 const LOREM =

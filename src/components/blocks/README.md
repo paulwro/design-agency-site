@@ -22,7 +22,7 @@ Repeatable pieces the pages assemble from. Import from
 
 ```jsx
 <SectionHeader eyebrow="Working together" headline="…" lede="…"
-               cta={{ label: 'Engagements', href: '#/engagements' }}
+               cta={{ label: 'Engagements', href: '/engagements' }}
                as="h2" width="two-thirds|half|full" />
 
 <TitleBody title="…" body="…" emphasis="default|strong" />

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import ThemeToggle from '../ThemeToggle/ThemeToggle';
+import { navigate } from '../../router';
 import './Navbar.css';
 
 /**
@@ -59,7 +60,7 @@ export default function Navbar({
     if (wiping) return;
     const arrive = () => {
       if (menuOpen) onMenuClick?.();
-      if (window.location.hash !== '#/' && window.location.hash !== '') window.location.hash = '#/';
+      navigate('/');
       window.scrollTo(0, 0);
     };
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -108,7 +109,7 @@ export default function Navbar({
             right. The key restarts the animation on each click. */}
         <a
           className="navbar__mark"
-          href="#/"
+          href="/"
           aria-label="Paul Wronski — home"
           onClick={goHome}
         >

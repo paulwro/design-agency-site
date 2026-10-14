@@ -44,8 +44,8 @@ export const testimonials = [
     role: 'Creative Director, Sema4',
     logo: sema4Logo,
     logoAlt: 'Sema4',
-    logoWidth: 150,
-    logoHeight: 32,
+    logoWidth: 122,
+    logoHeight: 26,
   },
   {
     id: 'solargator-beck',
@@ -55,8 +55,8 @@ export const testimonials = [
     role: 'Partner, SolarGator',
     logo: solarGatorLogo,
     logoAlt: 'SolarGator',
-    logoWidth: 84,
-    logoHeight: 56,
+    logoWidth: 71.7,
+    logoHeight: 48,
   },
   {
     id: 'noteworthy-berntsen',

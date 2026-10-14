@@ -3,7 +3,7 @@ import Reveal from '../components/blocks/Reveal';
 import FaqSection from '../components/FaqSection/FaqSection';
 
 /**
- * Upcoming — holding page for #/work/<slug>, the per-story pages that are not
+ * Upcoming — holding page for /work/<slug>, the per-story pages that are not
  * designed yet. The Work page itself is pages/Work.jsx.
  *
  * Deliberately built only from PageHero and the FAQs — no invented layout.
@@ -25,7 +25,7 @@ export default function Upcoming({ kind }) {
       <PageHero
         headline={copy.headline}
         lede={copy.lede}
-        cta={{ label: 'Get in touch', href: '#/contact' }}
+        cta={{ label: 'Get in touch', href: '/contact' }}
       />
       <Reveal>
         <FaqSection />

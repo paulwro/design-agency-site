@@ -14,10 +14,10 @@ import './MenuOverlay.css';
  * toggle stays clickable while the menu is open.
  */
 const LINKS = [
-  { label: 'Contact', href: '#/contact' },
-  { label: 'Work', href: '#/work' },
-  { label: 'Studio', href: '#/studio' },
-  { label: 'Engagements', href: '#/engagements' },
+  { label: 'Contact', href: '/contact' },
+  { label: 'Work', href: '/work' },
+  { label: 'Studio', href: '/studio' },
+  { label: 'Engagements', href: '/engagements' },
 ];
 
 const SOCIALS = [
@@ -74,7 +74,7 @@ export default function MenuOverlay({ open, onClose }) {
             ))}
           </nav>
 
-          <FeaturedArticle href="#/insight/featured" />
+          <FeaturedArticle href="/insight/featured" />
         </div>
 
         <div className="menu-overlay__footer">

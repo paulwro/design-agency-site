@@ -4,9 +4,9 @@ import Reveal from '../blocks/Reveal';
 import './Footer.css';
 
 const NAV_LINKS = [
-  { label: 'Work', href: '#/work' },
-  { label: 'Studio', href: '#/studio' },
-  { label: 'Engagements', href: '#/engagements' },
+  { label: 'Work', href: '/work' },
+  { label: 'Studio', href: '/studio' },
+  { label: 'Engagements', href: '/engagements' },
 ];
 
 const SOCIAL_LINKS = [
@@ -63,7 +63,7 @@ export default function Footer({ headline = HEADLINE }) {
           >
             <PillNavItem
               label="Contact"
-              href="#/contact"
+              href="/contact"
               isActive={activeItem === 'Contact'}
               isNavHovering={isNavHovering}
               onHover={setActiveItem}
@@ -96,7 +96,7 @@ export default function Footer({ headline = HEADLINE }) {
       <div className="footer-mobile">
         <div className="footer-cta">
           <h2 className="footer-headline">{headline}</h2>
-          <a href="#/contact" className="btn-primary">
+          <a href="/contact" className="btn-primary">
             Contact
           </a>
         </div>

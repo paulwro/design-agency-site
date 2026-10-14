@@ -21,12 +21,12 @@
  *   · Prices are stated plainly with "starts at"; they are the facts an answer
  *     engine is most likely to be asked for.
  *
- * ROUTING CAVEAT — read before launch
- *   The site uses hash URLs (#/studio). Search engines ignore everything after
- *   the #, so as built every page shares ONE crawlable URL. Set
- *   PATH_ROUTING = true once the router moves to real paths (/studio) and the
- *   host serves index.html for them (or pre-renders each page); canonical and
- *   og:url then switch on per page automatically.
+ * ROUTING
+ *   The site uses real paths (/studio). vercel.json serves index.html for them
+ *   and scripts/prerender-meta.mjs writes a per-route copy with this file's
+ *   title, description and canonical already in the HTML, so crawlers that do
+ *   not run JavaScript still see them. PATH_ROUTING turns canonical and og:url
+ *   on for every page.
  */
 import { contactFaqs } from '../components/FaqSection/contact-faq-data';
 import { homeFaqs } from '../components/FaqSection/home-faq-data';
@@ -35,7 +35,7 @@ import { workFaqs } from '../components/FaqSection/work-faq-data';
 import { howWeWork as studioCapabilities } from '../pages/studio-data';
 import { engagementFaqs, engagementTypes, services as engagementServiceList } from '../pages/engagements-data';
 
-export const PATH_ROUTING = false;
+export const PATH_ROUTING = true;
 
 export const SITE = {
   url: 'https://paulwro.com',
@@ -207,7 +207,7 @@ export const ROUTE_SEO = {
       faqPage(contactFaqs),
     ],
   },
-  // Lightbox routes: #/work/<slug> and #/insight/<slug>. Placeholder until each has real copy.
+  // Lightbox routes: /work/<slug> and /insight/<slug>. Placeholder until each has real copy.
   caseStudy: {
     path: '/work',
     title: 'Case study / Paul Wronski',
@@ -222,10 +222,10 @@ export const ROUTE_SEO = {
   },
 };
 
-/** Which entry applies to the current hash (or open lightbox). */
-export function seoKeyFor(hash, lightbox) {
+/** Which entry applies to the current path (or open lightbox). */
+export function seoKeyFor(path, lightbox) {
   if (lightbox) return lightbox.kind === 'work' ? 'caseStudy' : 'insight';
-  const h = hash.replace(/^#\/?/, '');
+  const h = path.replace(/^\//, '');
   return ROUTE_SEO[h] ? h : 'home';
 }
 

@@ -29,7 +29,7 @@ export default function Studio() {
       <PageHero
         headline="Become easier to trust, and harder to ignore"
         lede="We are an agency of one, building brand systems for B2B companies whose next stage requires more clarity, alignment and impact. From the brand and website to the marketing and AI-enabled creative, we strengthen the systems that shape how you are understood, trusted, and remembered."
-        cta={{ label: 'Engagements', href: '#/engagements' }}
+        cta={{ label: 'Engagements', href: '/engagements' }}
       />
 
       {/* Floating cluster · 1787:1464 — same gesture as Engagements, own artboard */}
