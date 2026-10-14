@@ -1,0 +1,57 @@
+/* InfoCard — Figma 1074:1211 */
+
+.info-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  width: 100%;
+  max-width: 384px;
+  padding: var(--space-6);
+  border-radius: var(--space-4);
+  background: var(--color-container);
+}
+
+.info-card__heading {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-1);
+  line-height: var(--leading-display);
+  color: var(--color-text);
+}
+
+.info-card__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.info-card__line {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+  color: var(--color-text);
+}
+
+/* Matches the LinkedIn / Instagram links in the menu overlay: the underline is
+   always present at half strength and comes to full on hover. The text itself
+   does not fade — it is the rule that answers, not the word. */
+.info-card__link {
+  text-decoration: underline;
+  text-underline-position: from-font;
+  text-decoration-thickness: 1.5px;
+  text-decoration-color: color-mix(in srgb, currentColor 50%, transparent);
+  transition: text-decoration-color var(--dur-color) var(--ease-out-cubic);
+}
+
+.info-card__link:hover,
+.info-card__link:focus-visible { text-decoration-color: currentColor; }
+
+/* Figma 1709:1392 — the location line sits 16 below the links (pt-16 on top of
+   the content's own gap of 4). */
+.info-card__location {
+  padding-top: var(--space-4);
+  font-size: var(--step--1);
+  line-height: 24px;
+  color: var(--color-text-muted);
+}

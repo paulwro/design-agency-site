@@ -1,0 +1,56 @@
+/* Engagements page — Figma 1161:1166 */
+
+.engagements-page__section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--section-gap);
+  padding-block: var(--section-inset);
+}
+
+/* Figma sets 96 between the header and its content on the engagement-types and
+   why-clients sections, and only 24 above the services rail. Named for the
+   measurement so the next person does not have to re-derive them. */
+.engagements-page__section--96 { gap: var(--rhythm-96); }
+.engagements-page__section--grid { gap: var(--space-6); }
+
+/* Figma 1195:1674 — "Services we offer" is a step-3 headline at px-24; the 24
+   inset lines it up with the first card's padding. */
+.engagements-page__heading {
+  margin: 0;
+  padding-inline: var(--space-6);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--step-3);
+  line-height: var(--leading-display);
+  color: var(--color-text);
+}
+
+/* Figma 1195:1641 — body copy here is step -1, not step 0. */
+.engagements-page__why .title-body__body {
+  font-size: var(--step--1);
+  line-height: var(--leading-reading);
+}
+
+.engagements-page__cards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rhythm-64);
+}
+
+/* Figma 1189:1560 — Services is a 3 x 2 grid now, 32 across and 96 down. The
+   cards stretch to the tallest in their row. */
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: var(--grid-gap);
+  row-gap: var(--rhythm-96);
+}
+
+.service-grid > * { display: block; min-width: 0; }
+.service-grid > * > * { height: 100%; }
+
+@media (max-width: 900px) {
+  .service-grid { grid-template-columns: 1fr; row-gap: var(--rhythm-64); }
+  .engagements-page__section,
+  .engagements-page__section--96 { gap: var(--space-12); }
+}

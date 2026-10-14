@@ -1,0 +1,39 @@
+/* ThemeToggle — Figma 876:956 / 876:958 */
+
+/* Sized from the circle itself: two dots overlapping by --toggle-overlap, so
+   the control is exactly as wide as the pair and never floats in a larger box. */
+.theme-toggle {
+  position: relative;
+  flex-shrink: 0;
+  width: calc(var(--toggle-dot) * 2 - var(--toggle-overlap));
+  height: var(--toggle-dot);
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  line-height: 0;
+}
+
+.theme-toggle__dot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: var(--toggle-dot);
+  height: var(--toggle-dot);
+  border-radius: 50%;
+  /* `left` carries the hover nudge; `transform` is Framer's. A 2.5px drift is
+     the shortest travel on the site, so it takes the quick tier — at 0.8s the
+     dots look like they are being dragged apart. */
+  transition: left var(--dur-quick) var(--ease-out-expo);
+}
+
+.theme-toggle__dot--primary { background: var(--color-text); }
+.theme-toggle__dot--muted { background: var(--color-muted-toggle); }
+
+.theme-toggle:hover .theme-toggle__dot[data-side='left'] { left: calc(var(--toggle-spread) * -1); }
+.theme-toggle:hover .theme-toggle__dot[data-side='right'] { left: var(--toggle-spread); }
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle__dot { transition: none; }
+}

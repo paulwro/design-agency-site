@@ -1,0 +1,36 @@
+:root {
+  --color-background: #F8F2F2;
+  --color-container: #FFF7F7;
+  --color-border: #0152F0;
+  --color-text: #0152F0;
+  --color-warning: #FFB700;
+  --color-error: #FF6E67;
+  --color-success: #81C941;
+
+  --font-display: 'neue-haas-grotesk-display', 'Inter Tight', Arial, sans-serif;
+  --font-body: 'helvetica-neue-lt-pro', 'Inter', Arial, sans-serif;
+
+  --step--2: clamp(0.5628rem, 0.8706rem + -0.3972vw, 0.7813rem);
+  --step--1: clamp(0.7502rem, 1.0141rem + -0.3406vw, 0.9375rem);
+  --step-0: clamp(1rem, 1.1761rem + -0.2273vw, 1.125rem);
+  --step-0-5: clamp(1.1546rem, 1.2642rem + -0.1415vw, 1.2324rem);
+  --step-1: clamp(1.333rem, 1.357rem + -0.0309vw, 1.35rem);
+  --step-1-5: clamp(1.4789rem, 1.4542rem + 0.1094vw, 1.5390rem);
+  --step-2: clamp(1.62rem, 1.5558rem + 0.2853vw, 1.7769rem);
+  --step-3: clamp(1.944rem, 1.7703rem + 0.772vw, 2.3686rem);
+  --step-4: clamp(2.3328rem, 1.9955rem + 1.4992vw, 3.1573rem);
+  --step-5: clamp(2.7994rem, 2.2228rem + 2.5625vw, 4.2087rem);
+
+  --shadow-lift: 0px 21px 13px rgba(0, 0, 0, 0.03), 0px 9px 9px rgba(0, 0, 0, 0.05),
+    0px 2px 5px rgba(0, 0, 0, 0.055);
+}
+
+.dark-mode {
+  --color-background: #081020;
+  --color-container: #0C162A;
+  --color-border: #132953;
+  --color-text: #F8F2F2;
+
+  --shadow-lift: 0px 21px 13px rgba(0, 0, 0, 0.18), 0px 9px 9px rgba(0, 0, 0, 0.25),
+    0px 2px 5px rgba(0, 0, 0, 0.3);
+}

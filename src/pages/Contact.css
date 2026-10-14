@@ -1,0 +1,36 @@
+/* Contact page — Figma 1074:849 */
+
+.contact { padding-block: var(--section-inset); }
+
+/* Figma 1074:854 — step 5 at tracking −0.5, and 96 to the form below, not the
+   128 the section-level gap would give. */
+.contact__headline {
+  margin: 0 0 var(--space-24);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--step-5);
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-display);
+  color: var(--color-text);
+  text-wrap: balance;
+}
+
+/* Figma: form 800, gap 32, info card 384. */
+.contact__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 25fr) minmax(0, 12fr);
+  gap: var(--space-8);
+  align-items: start;
+}
+
+/* Figma 1074:1075 — the form column keeps 96 clear on its right, so the fields
+   stop well short of the info card. */
+.contact__layout > :first-child { padding-right: var(--space-24); }
+
+@media (max-width: 900px) {
+  /* Single column: the 96 goes, or the fields would end in a dead strip. */
+  .contact__layout > :first-child { padding-right: 0; }
+  .contact__layout { grid-template-columns: 1fr; gap: var(--space-12); }
+  .contact__headline { margin-bottom: var(--space-12); }
+  .contact__inner { padding-inline: 0; }
+}

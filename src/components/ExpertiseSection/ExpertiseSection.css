@@ -1,0 +1,103 @@
+/* ExpertiseSection — Figma 1015:966 "section (how we work)".
+   3-col grid: the heading block spans two, column three stays empty, cards
+   fill row two. See 01_branding/figma-spec-home.md */
+
+.expertise {
+  padding-block: var(--section-inset);
+}
+
+.expertise-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--rhythm-64) var(--space-8);  /* Figma 64 row / 32 column */
+}
+
+/* Figma 1015:966 puts an Empty Spacer in column 3 of row 1. Rather than render
+   an empty div, the header claims the whole first row and the cards are pinned
+   to row 2 — same result, no filler markup. */
+.expertise-header {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  max-width: calc((100% - var(--space-8) * 2) / 3 * 2 + var(--space-8));
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-8);                   /* 32 */
+}
+
+.expertise-header__stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);                   /* 16 */
+  width: 100%;
+}
+
+.expertise-kicker {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+  color: var(--color-text);
+}
+
+.expertise-headline {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--step-4);
+  line-height: var(--leading-display);
+  color: var(--color-text);
+  text-wrap: balance;
+}
+
+/* Figma: opacity 50 */
+.expertise-body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+  color: var(--color-text-muted);
+}
+
+.expertise-card {
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);                   /* 16 */
+  padding: var(--space-5) var(--space-6);/* Figma: py-20 px-24 */
+  border-radius: 16px;
+  background: var(--color-container);
+}
+
+.expertise-card__title {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 400;                      /* Helvetica Neue Regular */
+  font-size: var(--step-1);              /* Figma: step 1 */
+  line-height: var(--leading-display);
+  letter-spacing: 0;
+  color: var(--color-text);
+}
+
+/* Figma: opacity 50 */
+.expertise-card__body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+  color: var(--color-text-muted);
+}
+
+/* THREE OR ONE, never two. A middle 2-up tier leaves the third card alone on
+   its own row, and that orphan reads as a mistake however comfortable the
+   measure is. The set holds three across until the stack point and then goes
+   to one, so the row is always complete. */
+@media (max-width: 1200px) {
+  .expertise-header { max-width: none; }
+}
+
+@media (max-width: 760px) {
+  .expertise-grid { grid-template-columns: 1fr; gap: var(--space-12); }
+  .expertise-header { grid-column: auto; grid-row: auto; }
+  .expertise-card { grid-row: auto; }
+}

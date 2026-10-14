@@ -1,0 +1,130 @@
+/* PriceCta — price row with circle→arrow and slot-machine letter roll. */
+
+.price-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;                                  /* Figma 1687:1646 */
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--step--1);
+  line-height: var(--leading-body);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Stretch the link over the whole card. Anything that must stay separately
+   clickable (the client pills) is lifted above this with position + z-index. */
+.price-cta::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.price-cta:focus-visible { outline: none; }
+.price-cta:focus-visible .price-cta__icon { box-shadow: 0 0 0 2px var(--color-text); }
+
+/* ---- Icon: 20px box, 10px dot that grows into a filled circle + arrow ----- */
+.price-cta__icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+.price-cta__dot {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-border);
+  transition: transform var(--dur-slow) var(--ease-out-expo),
+    background-color var(--dur-color) var(--ease-out-cubic);
+}
+
+.price-cta__dot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-background);
+  -webkit-mask: url('../../assets/arrow-right.svg') no-repeat center / 55% auto;
+  mask: url('../../assets/arrow-right.svg') no-repeat center / 55% auto;
+  opacity: 0;
+  transform: translateX(-30%);
+  transition: opacity var(--dur-quick) var(--ease-in-out-sine),
+    transform var(--dur-slow) var(--ease-out-expo);
+}
+
+.price-cta:hover .price-cta__dot,
+.price-cta:focus-visible .price-cta__dot {
+  transform: scale(2);                       /* 10px → 20px */
+  background: var(--color-text);
+}
+
+/* The arrow lives inside the scaled dot, so it is drawn at half size and
+   scales up with it. */
+.price-cta:hover .price-cta__dot::after,
+.price-cta:focus-visible .price-cta__dot::after {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.08s;
+}
+
+/* ---- Letters: every character is its own slot ---------------------------- */
+.price-cta__text {
+  display: inline-grid;                      /* both lines share one cell */
+  overflow: hidden;
+  /* Room for descenders and the overshoot inside the clip. */
+  padding-block: 2px;
+  margin-block: -2px;
+}
+
+.price-cta__line {
+  grid-area: 1 / 1;
+  display: inline-flex;
+  white-space: pre;
+}
+
+.price-cta__char {
+  display: inline-block;
+  transition-property: transform;
+  transition-delay: calc(var(--i) * 18ms);
+}
+
+/* Outgoing letters rise out of the frame. */
+.price-cta__line--out .price-cta__char {
+  transform: translateY(0);
+  transition-duration: var(--dur-quick);
+  transition-timing-function: var(--ease-out-expo);
+}
+
+/* Incoming letters wait below the frame, then arrive with a bounce. */
+.price-cta__line--in .price-cta__char {
+  transform: translateY(115%);
+  transition-duration: var(--dur-slow);
+  transition-timing-function: var(--ease-overshoot);
+}
+
+.price-cta:hover .price-cta__line--out .price-cta__char,
+.price-cta:focus-visible .price-cta__line--out .price-cta__char {
+  transform: translateY(-115%);
+}
+
+.price-cta:hover .price-cta__line--in .price-cta__char,
+.price-cta:focus-visible .price-cta__line--in .price-cta__char {
+  transform: translateY(0);
+  transition-delay: calc(var(--i) * 18ms + 40ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .price-cta__char,
+  .price-cta__dot,
+  .price-cta__dot::after { transition: none; }
+  .price-cta:hover .price-cta__dot,
+  .price-cta:focus-visible .price-cta__dot { transform: scale(2); }
+}

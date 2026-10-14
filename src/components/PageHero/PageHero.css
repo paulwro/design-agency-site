@@ -1,0 +1,56 @@
+/* PageHero — Figma 1378:1452 (Studio) / 1388:1468 (Engagements) */
+
+.page-hero {
+  padding-block: var(--section-inset);
+}
+
+/* Work page hero sits on the 32px page margin rather than the 80px one. */
+.page-hero.page-hero--wide { padding-inline: var(--page-gutter-wide); }
+
+.page-hero__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-8);
+}
+
+/* Content spans two of three columns; the third stays empty by design. */
+.page-hero__content {
+  grid-column: span 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-12);
+}
+
+.page-hero__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  width: 100%;
+}
+
+.page-hero__headline {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--step-5);
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-display);
+  color: var(--color-text);
+  text-wrap: balance;
+}
+
+/* Figma draws this at 50% opacity — that is the Muted Text token, so it is
+   expressed as a colour rather than an opacity on the whole block. */
+.page-hero__lede {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+  color: var(--color-text-soft);
+}
+
+@media (max-width: 900px) {
+  .page-hero__grid { grid-template-columns: 1fr; }
+  .page-hero__content { grid-column: auto; gap: var(--space-8); }
+}

@@ -1,0 +1,164 @@
+/* ==========================================================================
+   Shared controls — Figma section 1456:1369 "Components / Navigation & Controls"
+   Hover behaviour is taken from Paul's dev-mode annotations on each variant.
+   ========================================================================== */
+
+/* ---- Btn · 606:667 default / 689:752 hover -------------------------------
+   Annotation: "the button size grows 10% on hover (text size and placement
+   remain unchanged), and a light drop shadow is applied on hover."
+   scale() grows the rendered box without touching layout or text metrics. */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4) var(--space-8) 17px;
+  border: none;
+  border-radius: 100px;
+  background: var(--color-text);
+  color: var(--color-background);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transform-origin: center;
+  /* will-change keeps the pill on its own layer so the text does not
+     re-rasterise mid-scale, which is what made the growth look rough. */
+  will-change: transform;
+  /* Collins' own numbers: transform 0.8s on ease-out-expo. The shadow is given
+     the shorter fade duration so the lift reads as light catching up to the
+     movement rather than the two travelling locked together. */
+  transition: transform var(--dur-slow) var(--ease-out-expo),
+    filter var(--dur-base) var(--ease-in-out-sine);
+}
+
+.btn-primary:hover,
+.btn-primary:focus-visible {
+  transform: scale(1.04);
+  filter: drop-shadow(0 4px 6px rgba(8, 16, 32, 0.12));
+}
+
+/* --deep · a heavier cast for a button sitting alone against a lot of white,
+   where the default lift disappears. Two stacked shadows: a tight contact
+   shadow under the pill and a wide soft one carrying the actual weight. */
+.btn-primary--deep:hover,
+.btn-primary--deep:focus-visible {
+  filter: drop-shadow(0 2px 4px rgba(8, 16, 32, 0.16))
+    drop-shadow(0 12px 22px rgba(8, 16, 32, 0.22));
+}
+
+/* On black, a black shadow is invisible — the pill is white here, so the cast
+   has to come from the pill itself rather than from darkness beneath it. */
+.dark-mode .btn-primary--deep:hover,
+.dark-mode .btn-primary--deep:focus-visible {
+  filter: drop-shadow(0 2px 6px rgba(255, 255, 255, 0.10))
+    drop-shadow(0 14px 28px rgba(255, 255, 255, 0.07));
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+  transition-duration: var(--dur-fast);
+}
+
+/* ---- Text Link · 902:1402 default / 902:1404 hover ------------------------
+   Annotations: "Initial state has underline at .5 opacity" /
+   "Hover state brings underline to 100% opacity." */
+.text-link {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.text-link::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 1.5px;
+  background: currentColor;
+  opacity: 0.5;
+  transition: opacity var(--dur-base) var(--ease-in-out-sine);
+}
+
+.text-link:hover::after,
+.text-link:focus-visible::after { opacity: 1; }
+
+/* ---- Pill Container Link · 1189:1477 default / 1189:1479 hover ------------
+   Annotation: "the button shape getting 10% larger, with a subtle background
+   colour change. The text inside does not change or shift, and we should be
+   careful not to shift any other information that lives around this button." */
+.pill-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: var(--space-2) 14px 9px var(--space-4);
+  border-radius: 100px;
+  background: var(--color-pill);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--step--2);
+  line-height: var(--leading-reading);
+  text-decoration: none;
+  white-space: nowrap;
+  transform-origin: center;
+  will-change: transform;
+  transition: transform var(--dur-slow) var(--ease-out-expo),
+    background var(--dur-color) var(--ease-out-cubic);
+}
+
+.pill-link:hover,
+.pill-link:focus-visible {
+  transform: scale(1.04);
+  background: var(--color-pill-hover);
+}
+
+.pill-link__arrow {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  background-color: currentColor;
+  -webkit-mask: var(--arrow-src) no-repeat center / contain;
+  mask: var(--arrow-src) no-repeat center / contain;
+  /* The supplied asset is already drawn on the diagonal (viewBox 7.17 square),
+     so Figma's -45deg rotation on its own arrow does not carry over. */
+}
+
+/* ---- Arrow Btn · 818:1022 default / 818:1024 hover ------------------------ */
+.arrow-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  border: 1px solid var(--color-rule);
+  border-radius: 50%;
+  background: none;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: border-color var(--dur-color) var(--ease-out-cubic),
+    transform var(--dur-slow) var(--ease-out-expo);
+}
+
+.arrow-btn:hover,
+.arrow-btn:focus-visible {
+  border-color: var(--color-rule-strong);
+  transform: scale(1.06);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-primary,
+  .pill-link,
+  .arrow-btn { transition: none; }
+  .btn-primary:hover,
+  .pill-link:hover,
+  .arrow-btn:hover { transform: none; }
+}

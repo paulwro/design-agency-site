@@ -1,0 +1,119 @@
+/* FeaturedArticle — Figma 902:1371; hover from Dark Card 43:6828 → 43:6836 */
+
+.featured-article {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 456px;
+  max-width: 100%;
+  padding: var(--space-3);
+  border-radius: var(--space-5);
+  background: transparent;
+  text-decoration: none;
+  color: var(--color-text);
+  /* Background only — no stroke. The fill alone carries the state. A fill has
+     no distance to cover, so it takes the colour duration, not the movement one. */
+  transition: background var(--dur-color) var(--ease-out-cubic);
+}
+
+.featured-article:hover,
+.featured-article:focus-visible {
+  background: var(--color-container);
+}
+
+.featured-article__media {
+  margin: 0;
+  width: 100%;
+  aspect-ratio: 432 / 243;
+  overflow: hidden;
+  border-radius: var(--radius-media);
+  background: var(--color-container);
+}
+
+.featured-article__img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+.featured-article__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-1) var(--space-2);
+}
+
+.featured-article__meta {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+/* Fixed 20px slot so the row never reflows as the circle grows. */
+.featured-article__icon {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+}
+
+/* The bullet IS the mask. It reads as a dot at rest, grows on hover, and
+   clips the arrow travelling through it. Size animates rather than transform:
+   scale(), which would stretch the arrow inside along with it. */
+.featured-article__bullet {
+  display: grid;
+  place-items: center;
+  width: var(--bullet-rest);
+  height: var(--bullet-rest);
+  border-radius: 1000px;
+  background: var(--color-text);
+  overflow: hidden;
+  /* The circle opens with a whisper of overshoot and settles. Safe here because
+     the shape is symmetric — it reads as the dot inflating, not wobbling. */
+  transition: width var(--dur-quick) var(--ease-overshoot),
+    height var(--dur-quick) var(--ease-overshoot);
+}
+
+/* Knocked out of the circle, and parked off its left edge until called. */
+.featured-article__arrow {
+  width: var(--bullet-arrow);
+  height: var(--bullet-arrow);
+  background-color: var(--color-background);
+  -webkit-mask: var(--arrow-right-src) no-repeat center / contain;
+  mask: var(--arrow-right-src) no-repeat center / contain;
+  transform: translateX(calc(var(--bullet-hover) * -1));
+  /* Slower than the circle, so the arrow is still gliding in as the aperture
+     finishes opening. Reversing that order makes the arrow look like it is
+     waiting to be let out. */
+  transition: transform var(--dur-slow) var(--ease-out-expo);
+}
+
+.featured-article:hover .featured-article__bullet,
+.featured-article:focus-visible .featured-article__bullet {
+  width: var(--bullet-hover);
+  height: var(--bullet-hover);
+}
+
+.featured-article:hover .featured-article__arrow,
+.featured-article:focus-visible .featured-article__arrow {
+  transform: translateX(0);
+}
+
+.featured-article__kicker {
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+  color: var(--color-text-muted);
+}
+
+.featured-article__description {
+  margin: 0;
+  padding-left: 28px;
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+  color: var(--color-text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .featured-article,
+  .featured-article__bullet,
+  .featured-article__arrow { transition: none; }
+}

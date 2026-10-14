@@ -1,0 +1,72 @@
+.problem-definition {
+  padding-block: var(--section-inset);
+}
+
+.problem-definition__stage {
+  position: relative;
+  display: grid;
+}
+
+.problem-definition__media {
+  grid-column: 1;
+  grid-row: 1;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-media);
+  overflow: hidden;
+  background: var(--color-media-placeholder);
+}
+
+.problem-definition__text {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: end;
+  justify-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);                   /* Figma: gap-16 */
+  max-width: 808px;
+  padding: 0 var(--space-4) var(--space-8); /* Figma: px-16 py-32 */
+  text-align: center;
+}
+
+.problem-definition__heading {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--step-4);
+  line-height: var(--leading-display);
+  color: var(--color-on-media);
+}
+
+.problem-definition__body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+  color: var(--color-on-media);
+}
+
+@media (max-width: 760px) {
+  .problem-definition__stage {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .problem-definition__media {
+    border-radius: var(--radius-media);
+  }
+
+  .problem-definition__text {
+    align-items: flex-start;
+    max-width: none;
+    padding: 24px 0 0;
+    text-align: left;
+  }
+
+  .problem-definition__heading,
+  .problem-definition__body {
+    color: var(--color-on-media);
+  }
+}

@@ -1,0 +1,429 @@
+/* Work page modules — Figma 1725:1327 (1759:1655 artifact, 1759:2125 artifact duo,
+   1759:1675 feature, 1759:1743 gallery, 1727:1613 story, 1759:1744 outcome,
+   1759:1909 case study, 1759:1913 load more).
+
+   The Work frame sits on a 32px page margin (not the 80px one the other pages
+   use), 128 above and below every module, and 32 between grid columns. */
+
+.work-section {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding: var(--section-inset) var(--page-gutter-wide);
+}
+
+/* ---- Shared type --------------------------------------------------------- */
+.work-heading {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--step-3);
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-display);
+  color: var(--color-text);
+  text-wrap: balance;
+}
+.work-heading--lg { font-size: var(--step-4); }
+
+.work-lede {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+  color: var(--color-text-soft);
+}
+
+/* ---- Media + caption ------------------------------------------------------ */
+.work-figure {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+  margin: 0;
+}
+.work-figure--inset .work-figure__caption { padding-inline: var(--space-2); }
+
+.work-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: var(--ratio, 16 / 9);
+  border-radius: var(--radius-media);
+  background: #d9d9d9;                 /* Figma placeholder grey, both themes */
+  overflow: hidden;
+}
+.work-media[data-tone='orange'] { background: var(--color-orange); }
+.work-media[data-tone='error'] { background: var(--color-error); }
+.work-media img,
+.work-media video {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.work-figure__caption {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+}
+.work-figure__client { color: var(--color-text); }
+.work-figure__desc { color: var(--color-text-soft); }
+
+/* ---- Chapter: step-1 title over soft paragraphs, 16 apart, 24 between them -- */
+.work-chapter {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+  font-family: var(--font-body);
+}
+.work-chapter__title {
+  margin: 0;
+  font-size: var(--step-1);
+  line-height: var(--leading-display);
+  color: var(--color-text);
+}
+.work-chapter__body {
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+  color: var(--color-text-soft);
+}
+.work-chapter__body p { margin: 0; }
+.work-chapter__body p + p { margin-top: var(--space-6); }
+
+/* Gallery's heading column uses the bold step-0 title and a 4px gap. */
+.work-chapter--strong { gap: var(--space-1); }
+.work-chapter--strong .work-chapter__title {
+  font-size: var(--step-0-strong);
+  font-weight: 700;
+  line-height: var(--leading-body);
+  letter-spacing: var(--tracking-strong);
+}
+
+/* ---- Logo mask -------------------------------------------------------------- */
+.work-logo {
+  display: block;
+  flex-shrink: 0;
+  background-color: var(--color-text-soft);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+/* ---- Pull quote (Feature, Outcome): quote over cols 2–3, byline col 2, logo col 3 */
+.work-quote {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-8);
+  font-family: var(--font-body);
+}
+.work-quote__text {
+  grid-column: 2 / -1;
+  display: flex;
+  gap: 2px;
+  margin: 0;
+  font-size: var(--step-1);
+  line-height: var(--leading-display);
+  color: var(--color-text);
+}
+.work-quote__text > span:first-child { flex-shrink: 0; }
+.work-quote__by {
+  grid-column: 2;
+  margin: 0;
+  padding-inline: var(--space-2);
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+  color: var(--color-text-soft);
+}
+.work-quote__logo { grid-column: 3; justify-self: end; align-self: center; }
+
+/* ---- Artifact / duo ---------------------------------------------------------- */
+.work-duo {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-8);
+  align-items: start;
+}
+
+/* ---- Feature ----------------------------------------------------------------- */
+.work-feature {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: var(--grid-gap);
+  row-gap: var(--space-24);              /* 96 */
+  align-items: start;
+}
+.work-feature__intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  padding-right: var(--space-24);
+}
+.work-feature__lead { grid-column: span 2; }
+.work-feature__row {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-8);
+}
+.work-feature .work-quote { grid-column: 1 / -1; padding-block: var(--section-inset); }
+
+/* ---- Gallery ----------------------------------------------------------------- */
+.work-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: var(--grid-gap);
+  row-gap: var(--space-16);              /* 64 */
+  align-items: start;
+}
+.work-gallery__intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+}
+.work-gallery__wide { grid-column: span 2; }
+
+/* ---- Story ------------------------------------------------------------------- */
+.work-story {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-24);
+}
+.work-story__text {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-16);
+  align-items: start;
+}
+.work-story__heading { grid-column: 1 / -1; }
+.work-story__outcome {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  padding: var(--space-8);
+  border-radius: 24px;
+  background: var(--color-container);
+}
+.work-story__bullets {
+  margin: 0;
+  padding-left: 25.5px;
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+  color: var(--color-text-soft);
+}
+.work-story__bullets li + li { margin-top: var(--space-1); }
+
+.work-story__media {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  column-gap: var(--grid-gap);
+  row-gap: var(--space-16);
+  align-items: start;
+}
+.work-story__half { grid-column: span 3; }
+.work-story__third { grid-column: span 2; }
+
+/* ---- Outcome ----------------------------------------------------------------- */
+.work-outcome {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+}
+.work-outcome__intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  width: 100%;
+  max-width: 1280px;
+  padding-inline: var(--space-8);
+}
+.work-outcome__intro > * { max-width: calc(100% * 2 / 3); }
+.work-outcome__panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  padding: var(--space-4);
+  border-radius: 24px;
+  background: var(--color-container);
+}
+.work-outcome__row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+.work-outcome__rule {
+  width: 100%;
+  height: 0;
+  margin: 0;
+  border: 0;
+  border-top: 1px solid var(--color-rule);
+}
+.work-outcome .work-quote { padding-bottom: var(--space-8); }
+
+/* ---- Case study -------------------------------------------------------------- */
+.work-case {
+  display: flex;
+  flex-direction: column;
+  gap: var(--section-inset);
+}
+.work-case__text {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-8);
+}
+.work-case__statement {
+  grid-column: span 2;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  max-width: 960px;
+}
+.work-case__eyebrow {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+  color: var(--color-text);
+}
+.work-case__lede { grid-column: span 2; }
+
+/* The strip runs out past the section's side margin so it reads as cropped by
+   the page edge, then pads back in so the first slide lines up with the text. */
+.work-carousel {
+  --slide-h: clamp(300px, 34vw, 492px);
+  display: flex;
+  gap: var(--space-8);
+  margin-inline: calc(var(--page-gutter-wide) * -1);
+  padding-inline: var(--page-gutter-wide);
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scroll-padding-inline: var(--page-gutter-wide);
+  scrollbar-width: none;
+  cursor: grab;
+  overscroll-behavior-x: contain;
+}
+.work-carousel::-webkit-scrollbar { display: none; }
+.work-carousel.is-dragging { cursor: grabbing; scroll-snap-type: none; user-select: none; }
+.work-carousel:focus-visible { outline-offset: 4px; }
+
+.work-carousel__slide {
+  flex: 0 0 auto;
+  height: var(--slide-h);
+  scroll-snap-align: start;
+}
+.work-carousel__slide .work-media { height: 100%; width: auto; aspect-ratio: auto; }
+.work-carousel__slide--portrait { aspect-ratio: 350 / 492; }
+.work-carousel__slide--landscape { aspect-ratio: 730 / 492; }
+
+.work-case__cols {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: var(--space-16);
+  row-gap: var(--space-8);
+  align-items: start;
+}
+.work-case__col { display: flex; flex-direction: column; gap: var(--space-8); }
+
+/* The testimonial card carries its own surface, so its text is the card's
+   colour pair rather than the page's. */
+.work-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  margin: 0;
+  padding: var(--space-8);
+  border-radius: 24px;
+  background: var(--color-testimonial-card);
+  color: var(--color-testimonial-text);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+}
+.work-card__quote { display: flex; margin: 0; }
+.work-card__quote > span:first-child { flex-shrink: 0; }
+.work-card__by {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding-inline: var(--space-2);
+}
+.work-card__by > span:first-child { flex: 1; min-width: 0; opacity: 0.6; }
+.work-card__logo { background-color: var(--color-testimonial-text); }
+
+/* ---- Load more · 1759:1913 --------------------------------------------------- */
+.work-load-more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding: var(--space-24) var(--page-gutter-wide);
+}
+.work-load-more__rule { flex: 1; height: 0; border-top: 1px solid var(--color-rule); }
+.work-load-more__btn {
+  height: 58px;
+  padding: var(--space-4) var(--space-8);
+  border: 0;
+  border-radius: 12px;
+  background: var(--color-pill);
+  color: var(--color-text-soft);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+  cursor: pointer;
+  transition: background-color var(--dur-color) var(--ease-out-cubic), color var(--dur-color) var(--ease-out-cubic);
+}
+.work-load-more__btn:hover,
+.work-load-more__btn:focus-visible { background: var(--color-pill-hover); color: var(--color-text); }
+
+/* ---- Collapse -------------------------------------------------------------------
+   Three columns or one — a two-up tier would orphan the odd piece. The duo is
+   the exception: two pieces never orphan, so it holds until the phone. */
+@media (max-width: 900px) {
+  .work-feature,
+  .work-gallery,
+  .work-story__text,
+  .work-case__text,
+  .work-case__cols,
+  .work-outcome__row,
+  .work-feature__row { grid-template-columns: 1fr; }
+
+  .work-feature { row-gap: var(--space-12); }
+  .work-feature__intro { padding-right: 0; }
+  .work-feature__lead,
+  .work-gallery__wide,
+  .work-case__statement,
+  .work-case__lede { grid-column: auto; }
+  .work-feature__row,
+  .work-feature .work-quote { grid-column: auto; }
+  .work-feature .work-quote { padding-block: var(--space-12); }
+
+  .work-story { gap: var(--space-12); }
+  .work-story__text { gap: var(--space-12); }
+  .work-story__media { grid-template-columns: 1fr; row-gap: var(--space-8); }
+  .work-story__half,
+  .work-story__third { grid-column: auto; }
+
+  .work-outcome__intro { padding-inline: 0; }
+  .work-outcome__intro > * { max-width: none; }
+
+  .work-quote { grid-template-columns: 1fr; gap: var(--space-4); }
+  .work-quote__text,
+  .work-quote__by,
+  .work-quote__logo { grid-column: auto; }
+  .work-quote__logo { justify-self: start; }
+}
+
+@media (max-width: 760px) {
+  .work-duo { grid-template-columns: 1fr; }
+  .work-load-more { padding-block: var(--space-12); }
+}

@@ -1,0 +1,429 @@
+/* ==========================================================================
+   Shared section blocks — the repeatable pieces the interior pages assemble
+   from. Each maps to a named Figma group; see the component file for the node.
+   ========================================================================== */
+
+/* ---- SectionHeader · "Step 0_Step 4_Step 0" ------------------------------ */
+.section-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-8);
+}
+
+.section-header--two-thirds { max-width: 66%; }
+.section-header--full { max-width: none; }
+.section-header--half { max-width: 50%; }
+
+.section-header__eyebrow {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+  color: var(--color-text);
+}
+
+/* Figma binds the headline step per section: step 4 on Home and Engagements,
+   step 3 on every Studio section. --step-4 stays the default. */
+.section-header__headline {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--step-4);
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-display);
+  color: var(--color-text);
+  text-wrap: balance;
+}
+
+.section-header__lede {
+  margin: 0;
+  max-width: 62ch;
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+  color: var(--color-text-muted);
+}
+
+/* Figma nests these: the eyebrow/headline pair is its own 16px stack inside
+   the section header's 32px stack. Expressed directly rather than with a
+   negative margin, which breaks the moment the outer gap changes. */
+.section-header__eyebrow + .section-header__headline { margin-top: calc(var(--space-4) - var(--space-8)); }
+
+.section-header--step-3 .section-header__headline { font-size: var(--step-3); }
+
+.section-header__cta { margin-top: var(--space-4); }
+
+/* ---- TitleBody · "Step 1_Step 0" / "Step 0 (Strong)_Step 0" -------------- */
+/* Figma: 16 between a step-1 title and its body, 4 between a bold step-0 title
+   and its body. The tighter pair reads as one unit in a ruled list; the looser
+   one has to hold its own as a column. */
+.title-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.title-body--default { gap: var(--space-4); }
+.title-body--strong { gap: var(--space-1); }
+
+.title-body__title {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--color-text);
+}
+
+.title-body--default .title-body__title {
+  font-size: var(--step-1);
+  line-height: var(--leading-display);
+}
+
+.title-body--strong .title-body__title {
+  font-size: var(--step-0-strong);
+  font-weight: 700;
+  line-height: var(--leading-body);
+  letter-spacing: var(--tracking-strong);
+}
+
+.title-body__body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+  color: var(--color-text-muted);
+}
+
+/* ---- DividedRow ----------------------------------------------------------
+   1fr columns, so cells stay equal width however long the content runs. */
+.divided-row {
+  display: grid;
+  grid-template-columns: repeat(var(--divided-row-columns, 4), 1fr);
+  gap: var(--space-8);
+}
+
+.divided-row--vertical > * + * {
+  border-left: 1px solid var(--color-rule);
+  padding-left: var(--space-8);
+}
+
+.divided-row--none { gap: var(--rhythm-64); }
+
+.divided-row--horizontal {
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+
+.divided-row--horizontal > * + * {
+  border-top: 1px solid var(--color-rule);
+  padding-top: var(--space-8);
+  margin-top: var(--space-8);
+}
+
+/* ---- MediaPanel ---------------------------------------------------------- */
+.media-panel { padding-block: var(--section-inset); }
+
+/* Figma 1465:1258 — half the usual section inset. */
+.media-panel--tight { padding-block: calc(var(--section-inset) / 2); }
+
+.media-panel__grid {
+  display: grid;
+  grid-template-columns: repeat(var(--media-panel-columns, 1), 1fr);
+  gap: var(--space-4);
+}
+
+.media-panel__item {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  border-radius: var(--radius-media);
+  background: var(--color-container);
+}
+
+.media-panel__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---- Collapse tiers ------------------------------------------------------
+   See the breakpoint convention in tokens.css. Four across becomes two here,
+   not one — a 4→1 jump loses the comparison the row exists to make. */
+@media (max-width: 1200px) {
+  .divided-row {
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: var(--space-12);
+  }
+  /* In two columns only the right-hand cell of each row takes a rule. With
+     `* + *` the first cell of the second row inherits a stray left border
+     against nothing. */
+  .divided-row--vertical > * + * { border-left: 0; padding-left: 0; }
+  .divided-row--vertical > *:nth-child(2n) {
+    border-left: 1px solid var(--color-rule);
+    padding-left: var(--space-8);
+  }
+}
+
+@media (max-width: 900px) {
+  .section-header--two-thirds,
+  .section-header--half { max-width: none; }
+
+  .media-panel__grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 760px) {
+  .divided-row { grid-template-columns: 1fr; gap: 0; }
+  .divided-row--vertical > *,
+  .divided-row--vertical > *:nth-child(2n) {
+    border-left: 0;
+    padding-left: 0;
+  }
+  .divided-row--vertical > * + * {
+    border-top: 1px solid var(--color-rule);
+    padding-top: var(--space-8);
+    margin-top: var(--space-8);
+  }
+}
+
+/* ---- RuledList · "Unordered List wHorizontal Rules" ----------------------- */
+.ruled-list {
+  margin: 0;
+  padding: var(--space-2) 0 var(--space-6);
+  list-style: none;
+  width: 100%;
+}
+
+.ruled-list__item {
+  padding-block: var(--space-2);
+  font-family: var(--font-body);
+  font-size: var(--step--1);           /* Figma step -1: 16 / 25.6 */
+  line-height: var(--leading-reading);
+  color: var(--color-text);
+}
+
+/* Rules sit between items by default; --leading-rule adds one above the first. */
+.ruled-list__item + .ruled-list__item { border-top: 1px solid var(--color-rule); }
+.ruled-list--leading-rule .ruled-list__item:first-child { border-top: 1px solid var(--color-rule); }
+.ruled-list--trailing-rule .ruled-list__item:last-child { border-bottom: 1px solid var(--color-rule); }
+
+/* ---- FloatingCollage · "Floating Imgs" ------------------------------------ */
+.floating-collage {
+  padding-block: var(--section-inset);
+  /* The slots drift past the stage edge while they travel; clip them at the
+     section so they never ride over the hero or the section below. */
+  overflow: clip;
+}
+
+.floating-collage__stage {
+  position: relative;
+  width: 100%;
+}
+
+.floating-collage__slot {
+  position: absolute;
+  will-change: transform;
+}
+
+.floating-collage__enter { width: 100%; height: 100%; }
+
+.floating-collage__item {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  border-radius: var(--radius-media);
+  background: var(--color-container);
+}
+
+.floating-collage__item--round { border-radius: 50%; }
+
+.floating-collage__img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* Overlap stops reading at small widths — fall back to an even grid. */
+@media (max-width: 900px) {
+  .floating-collage__stage {
+    aspect-ratio: auto !important;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+  }
+  .floating-collage__slot {
+    position: static;
+    width: auto !important;
+    height: auto !important;
+    aspect-ratio: 1;
+  }
+  .floating-collage__slot:first-child { grid-column: span 2; aspect-ratio: 16 / 10; }
+}
+
+
+/* ---- CarouselCard · "Flickity Carousel Card" 1127:1010 -------------------- */
+.carousel-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: 0;
+  padding: var(--space-2);
+  border-radius: 12px;
+  background: var(--color-container);
+  align-self: start;
+}
+
+.carousel-card__media {
+  aspect-ratio: 322 / 220;
+  overflow: hidden;
+  border-radius: var(--radius-media);
+  background: var(--color-border);
+}
+
+.carousel-card__img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+.carousel-card__note {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-2);
+}
+
+/* Figma I1127:1010;604:865 is a 20px disc filled --background with an 8px
+   diagonal arrow drawn in --text on top of it. An earlier version knocked the
+   arrow out of a --text disc, which inverted the badge: subtracting the arrow
+   shows the CARD behind it, not the text colour. Two layers, not a mask. */
+.carousel-card__badge {
+  position: relative;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: var(--space-1);
+  border-radius: 50%;
+  background: var(--color-background);
+}
+
+.carousel-card__badge::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-text);
+  -webkit-mask: var(--arrow-src) no-repeat center / contain;
+  mask: var(--arrow-src) no-repeat center / contain;
+}
+
+.carousel-card__note-text {
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+  color: var(--color-text);
+}
+
+/* ---- ClientLineList · "Client Logos-Descript Container" 1371:1399 --------- */
+.client-line-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  margin: 0;
+  padding: var(--space-6);
+  border-radius: 20px;
+  background: var(--color-container);
+  list-style: none;
+}
+
+.client-line-list__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-8);
+}
+
+/* Rules sit between rows only — never above the first or below the last.
+   The 24px gap is split evenly on either side of the rule. */
+.client-line-list__row + .client-line-list__row {
+  border-top: 1px solid var(--color-rule);
+  padding-top: var(--space-6);
+}
+
+.client-line-list__symbol-name {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-shrink: 0;
+}
+
+/* Figma fills this tile #000000 in both themes, with the mark knocked out. */
+.client-line-list__tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  background: #000000;
+}
+
+/* A client's own coloured tile, exported whole from Figma. */
+.client-line-list__tile-img {
+  display: block;
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+}
+
+/* Figma's square mark, once one exists. 34px inside the 56px tile. */
+.client-line-list__mark {
+  display: block;
+  width: 34px;
+  height: 34px;
+  background-color: #FFFFFF;
+  /* mask-image comes from the inline style the component sets per entry. */
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+/* The stand-in until square marks land. A monogram fills the tile the way a
+   mark would, instead of a wordmark squeezed to a third of its natural width. */
+.client-line-list__monogram {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--step--1);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: #FFFFFF;
+}
+
+.client-line-list__name {
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+  color: var(--color-text);
+  white-space: nowrap;
+}
+
+/* 80%, not --color-text-muted. Figma uses both values and means different
+   things by them. */
+.client-line-list__description {
+  flex: 1 0 0;
+  min-width: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+  color: var(--color-text);
+  opacity: 0.8;
+  text-align: right;
+}
+
+@media (max-width: 760px) {
+  .client-line-list__row { flex-direction: column; align-items: flex-start; gap: var(--space-2); }
+  .client-line-list__description { text-align: left; }
+}
+
+/* ---- Parallax frame · see ScrollMotion.jsx -------------------------------- */
+.parallax { position: absolute; inset: 0; overflow: hidden; }
+.parallax__inner { width: 100%; height: 100%; will-change: transform; }
+.parallax__inner > img,
+.parallax__inner > video { display: block; width: 100%; height: 100%; object-fit: cover; }

@@ -1,0 +1,125 @@
+/* ClientLogoGrid — Figma 1658:1509 / 1708:1323
+
+   Measured from the frame: panel p-32 at radius 20 on --container; logo cells
+   240 x 87.27 (the artboard is the column, and the rules span it); 64 between columns with the vertical rule down the middle (so 32
+   each side); 64 between rows with the horizontal rule across the middle (32
+   above and below). The vertical rules are 88 long and start at 0 and 136 in a
+   224 column — that is the cell plus 8, so each stops 24 short of the row
+   boundary and never meets the horizontal rule. Same for the horizontal rules:
+   as wide as the cell, 32 clear of the verticals. Nothing crosses. */
+
+.logo-section {
+  padding-block: var(--section-inset);
+}
+
+.logo-section__inner {
+  /* Hugs at the panel's width and sits centred on the page; the label stays
+     on the panel's left edge. */
+  max-width: 1056px;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.logo-section__label {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+  color: var(--color-text);
+}
+
+.logo-grid {
+  --gutter: 64px;
+  --row-gap: 32px;
+  --rule-reach: -8px;     /* vertical rules stop 8 short of the cell's top/bottom where a row meets another (Figma: 79 of 87) */
+
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 200px));
+  justify-content: center;
+  column-gap: var(--gutter);
+  row-gap: var(--row-gap);
+  width: 100%;
+  /* Figma 1708:1323 hugs its content: 4 x 200 cells + 3 x 64 gutters + 2 x 32
+     padding = 1056. The wrapper above centres it; narrower screens fill. */
+  padding: var(--space-8);
+  border-radius: 20px;
+  background: var(--color-container);
+}
+
+.logo-cell {
+  --reach-top: var(--rule-reach);
+  --reach-bottom: var(--rule-reach);
+  position: relative;
+  aspect-ratio: 200 / 87;
+}
+
+/* The artboard fills the cell exactly; mask-size is the whole box, not
+   `contain`, so the 220 x 80 file maps one-to-one and the logo's own placement
+   inside it is what the viewer sees. */
+.logo-cell__mark {
+  position: absolute;
+  inset: 0;
+  display: block;
+  background-color: var(--color-text);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: 120% auto;
+  mask-size: 120% auto;
+}
+
+/* Horizontal rule, under the cell. */
+.logo-cell::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + var(--row-gap) / 2);
+  height: 1px;
+  background: var(--color-rule-soft);
+}
+
+/* Vertical rule, in the gutter to the cell's right. */
+.logo-cell::after {
+  content: '';
+  position: absolute;
+  left: calc(100% + var(--gutter) / 2);
+  top: calc(var(--reach-top) * -1);
+  bottom: calc(var(--reach-bottom) * -1);
+  width: 1px;
+  margin-left: -0.5px;
+  background: var(--color-rule-soft);
+}
+
+/* Four across. Last column has no vertical; the first row's vertical starts
+   flush with its cell; the last row has no horizontal and its vertical ends
+   flush. */
+@media (min-width: 901px) {
+  .logo-cell:nth-child(4n)::after { display: none; }
+  .logo-cell:nth-child(-n + 4) { --reach-top: 0px; }
+  .logo-cell:nth-last-child(-n + 4) { --reach-bottom: 0px; }
+  .logo-cell:nth-last-child(-n + 4)::before { display: none; }
+}
+
+/* Two across — four rows of two, from a wide phone down to the narrowest. */
+@media (max-width: 900px) {
+  .logo-grid { grid-template-columns: repeat(2, minmax(0, 200px)); }
+  .logo-cell:nth-child(2n)::after { display: none; }
+  .logo-cell:nth-child(-n + 2) { --reach-top: 0px; }
+  .logo-cell:nth-last-child(-n + 2) { --reach-bottom: 0px; }
+  .logo-cell:nth-last-child(-n + 2)::before { display: none; }
+}
+
+/* The page loses its side inset on a phone so the panel runs the full width,
+   and the panel tightens with it. The cells stay 220:80 and simply scale. */
+@media (max-width: 560px) {
+  .logo-section__inner { padding-inline: 0; }
+  .logo-grid {
+    --gutter: 32px;
+    --row-gap: 32px;
+    padding: var(--space-6) var(--space-4);
+  }
+}

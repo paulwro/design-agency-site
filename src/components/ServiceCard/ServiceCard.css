@@ -1,0 +1,73 @@
+/* ServiceCard — Figma 1651:1464 */
+
+.service-card {
+  position: relative;                 /* anchors the stretched price link */
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-8);
+  padding: var(--space-4);
+  border-radius: var(--space-6);
+  cursor: pointer;
+  background: var(--color-container);
+}
+
+.service-card__body {
+  grid-column: span 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-12) var(--space-4) 20px;
+}
+
+.service-card__title {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: var(--step-2);
+  line-height: var(--leading-display);
+  color: var(--color-text);
+}
+
+.service-card__lede {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+  color: var(--color-text-muted);
+}
+
+.service-card__aside {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.service-card__media {
+  margin: 0;
+  aspect-ratio: 363 / 275;
+  overflow: hidden;
+  border-radius: var(--radius-media);
+  background: var(--color-border);
+}
+
+.service-card__img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+.service-card__clients {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* Above the stretched price link, so the pills keep their own destinations. */
+.service-card__clients .pill-link { position: relative; z-index: 1; }
+
+/* Figma 1649:1447 — 12 above and below each line, one more rule closing the
+   list before the price. */
+.service-card .ruled-list { padding-block: var(--space-2); }
+.service-card .ruled-list__item { padding-block: var(--space-3); }
+
+@media (max-width: 900px) {
+  .service-card { grid-template-columns: 1fr; }
+  .service-card__body { grid-column: auto; padding: var(--space-4); }
+}

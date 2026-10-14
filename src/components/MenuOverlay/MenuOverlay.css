@@ -1,0 +1,139 @@
+/* MenuOverlay — Figma 902:1447 */
+
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9;                 /* below .navbar (10) so the toggle stays live */
+  display: flex;
+  justify-content: center;
+  background: var(--color-background);
+  /* Anchored to the top edge of the screen, so it expands downward and takes
+     over rather than blooming from the middle. */
+  transform-origin: top center;
+  transform: scale(0.94);
+  opacity: 0;
+  visibility: hidden;
+  /* This rule is the CLOSING state, and closing is quicker than opening — the
+     menu should get out of the way faster than it arrived. The .is-open rule
+     below carries the slower opening numbers. */
+  transition: transform var(--dur-quick) var(--ease-out-expo),
+    opacity var(--dur-fast) var(--ease-in-out-sine),
+    visibility 0s linear var(--dur-quick);
+}
+
+.menu-overlay.is-open {
+  transform: scale(1);
+  opacity: 1;
+  visibility: visible;
+  /* Collins' overlay: transform 0.8s expo, opacity 0.5s sine. The fade
+     finishing first is what makes it read as a surface arriving rather than a
+     panel being resized. */
+  transition: transform var(--dur-slow) var(--ease-menu),
+    opacity var(--dur-base) var(--ease-in-out-sine),
+    visibility 0s;
+}
+
+.menu-overlay__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  padding-block: var(--space-8);
+  overflow-y: auto;
+}
+
+/* Matches the real navbar's height so the content below clears it. */
+.menu-overlay__navbar-spacer { height: 96px; flex-shrink: 0; }
+
+.menu-overlay__row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--rhythm-64);
+  width: 100%;
+}
+
+.menu-overlay__nav {
+  display: flex;
+  flex: 1 0 0;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-5);
+  min-width: 0;
+}
+
+.menu-overlay__link {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--step-4);
+  line-height: var(--leading-display);
+  color: var(--color-text);
+  text-decoration: none;
+  /* Staggered reveal — each link follows the one before it. */
+  opacity: 0;
+  transform: translateY(var(--reveal-rise));
+  /* Everything the link transitions is declared here, in one place. A second
+     `.menu-overlay__link { transition: color … }` rule used to follow this one
+     and silently replaced the whole shorthand, leaving the closed state with no
+     opacity or transform transition at all — the links blinked out of existence
+     while the surface behind them was still fading.
+     Colour is still kept out of the staggered group below: a shared
+     transition-delay would postpone the hover response by up to 320ms.
+     On close the links fade, and the rise resets only once they are invisible —
+     watching them travel backwards is what makes a menu feel like it is being
+     rewound rather than dismissed. */
+  transition: opacity var(--dur-fast) var(--ease-in-out-sine),
+    transform 0s linear var(--dur-fast),
+    color var(--dur-color) var(--ease-out-cubic);
+}
+
+.menu-overlay.is-open .menu-overlay__link {
+  opacity: 1;
+  transform: translateY(0);
+  /* Delay only the reveal, never the colour. */
+  transition: opacity var(--dur-base) var(--ease-in-out-sine) calc(var(--i) * var(--reveal-stagger) + 0.08s),
+    transform var(--dur-slow) var(--ease-out-expo) calc(var(--i) * var(--reveal-stagger) + 0.08s),
+    color var(--dur-color) var(--ease-out-cubic);
+}
+
+/* Hovering a link recedes the others. The one under the cursor holds full
+   strength — the :hover rule below outranks the parent rule by specificity. */
+.menu-overlay__nav:hover .menu-overlay__link { color: var(--color-text-muted); }
+.menu-overlay__nav .menu-overlay__link:hover { color: var(--color-text); }
+
+.menu-overlay__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-8);
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.menu-overlay__copyright {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step--2);
+  line-height: var(--leading-reading);
+  color: var(--color-text);
+}
+
+.menu-overlay__socials {
+  display: flex;
+  align-items: center;
+  gap: var(--space-10);
+}
+
+@media (max-width: 900px) {
+  .menu-overlay__row { flex-direction: column; gap: var(--space-12); }
+  .menu-overlay__footer { flex-direction: column; align-items: flex-start; gap: var(--space-4); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-overlay { transform: none; }
+  .menu-overlay,
+  .menu-overlay__link { transition-duration: 0.01ms; }
+  .menu-overlay.is-open .menu-overlay__link { transition-delay: 0s; }
+}
+
+.menu-overlay__content.container { padding-inline: var(--nav-gutter); }

@@ -1,0 +1,122 @@
+/* ContactForm — Figma 1074:851 */
+
+/* Figma 1074:1075 — the form is a bare stack on the page ground: no fill, no
+   padding, gap-32. The container it used to sit in is gone, and with it the
+   reason the field rules needed a special colour (see FormField.css). */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);                  /* Figma 1074:1075: gap-40 */
+  width: 100%;
+}
+
+.contact-form__submit {
+  position: relative;
+  padding-top: var(--space-4);
+}
+
+/* The hover glow. Reconstructed from the semantic palette rather than copied:
+   the original lived on the old site's Integrated Partnership button, and
+   those files are not in this project. A wide multi-stop gradient, blurred
+   well past its own edges and drifting while hovered, so it reads as a wash of
+   colour behind the pill rather than five identifiable swatches.
+
+   It sits on the wrapper, not the button: a child at z-index -1 cannot get
+   behind its own parent's background. */
+.contact-form__submit::before {
+  content: '';
+  position: absolute;
+  inset: var(--space-4) 0 0 0;
+  border-radius: 12px;
+  background: linear-gradient(100deg,
+    var(--glow-1), var(--glow-2), var(--glow-3),
+    var(--glow-4), var(--glow-5), var(--glow-1));
+  background-size: 300% 100%;
+  filter: blur(18px);
+  opacity: 0;
+  transform: scale(0.97);
+  pointer-events: none;
+  transition: opacity var(--dur-base) var(--ease-in-out-sine),
+    transform var(--dur-slow) var(--ease-out-expo);
+}
+
+.contact-form__submit:has(.contact-form__btn:hover:not(:disabled))::before,
+.contact-form__submit:has(.contact-form__btn:focus-visible:not(:disabled))::before {
+  opacity: 0.78;
+  transform: scale(1.03);
+  animation: glow-drift 7s linear infinite;
+}
+
+/* Dark mode has no white page to dilute the colour, so the same opacity reads
+   louder. Pulled back, and blurred further. */
+.dark-mode .contact-form__submit:has(.contact-form__btn:hover:not(:disabled))::before,
+.dark-mode .contact-form__submit:has(.contact-form__btn:focus-visible:not(:disabled))::before {
+  opacity: 0.6;
+}
+
+@keyframes glow-drift {
+  to { background-position: 300% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-form__submit::before { transition: none; }
+  .contact-form__submit:has(.contact-form__btn:hover)::before,
+  .contact-form__submit:has(.contact-form__btn:focus-visible)::before {
+    animation: none;
+    transform: none;
+  }
+}
+
+/* Figma 1074:1090 — full width, radius 12, 58 tall. Shares .btn-primary's
+   fill and its hover character, but not its pill shape. */
+.contact-form__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 58px;
+  padding: var(--space-4) var(--space-8);
+  border: none;
+  border-radius: 12px;
+  background: var(--color-text);
+  color: var(--color-background);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+  cursor: pointer;
+  transition: filter var(--dur-base) var(--ease-in-out-sine),
+    opacity var(--dur-base) var(--ease-in-out-sine);
+}
+
+.contact-form__btn:hover:not(:disabled),
+.contact-form__btn:focus-visible:not(:disabled) {
+  filter: drop-shadow(0 2px 4px rgba(8, 16, 32, 0.16))
+    drop-shadow(0 12px 22px rgba(8, 16, 32, 0.22));
+}
+
+.dark-mode .contact-form__btn:hover:not(:disabled),
+.dark-mode .contact-form__btn:focus-visible:not(:disabled) {
+  filter: drop-shadow(0 2px 6px rgba(255, 255, 255, 0.10))
+    drop-shadow(0 14px 28px rgba(255, 255, 255, 0.07));
+}
+
+/* Inactive until every required field is valid: dimmed, no hover, not clickable. */
+.contact-form__btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.contact-form__success {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-1);
+  line-height: var(--leading-display);
+  color: var(--color-success);
+}
+
+.contact-form__error {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step--1);
+  line-height: var(--leading-reading);
+  color: var(--color-error);
+}
+
+

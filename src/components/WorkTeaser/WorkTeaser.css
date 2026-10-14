@@ -1,0 +1,152 @@
+.work-teaser {
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+  padding-block: var(--section-inset);
+  overflow-x: hidden;
+}
+
+.work-teaser-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rhythm-64);
+}
+
+.work-teaser-kicker-headline {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.work-teaser-kicker {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+  color: var(--color-text);
+}
+
+.work-teaser-headline {
+  margin: 0;
+  max-width: 960px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--step-4);
+  line-height: var(--leading-display);
+  color: var(--color-text);
+}
+
+.work-teaser-logos {
+  width: 100%;
+  max-width: 960px;                      /* Figma: logo grid max-w-960 */
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);                   /* Figma: gap-32 between 200 artboards */
+  padding-bottom: var(--space-8);
+}
+
+.work-teaser-logo {
+  flex: 0 1 200px;                       /* Figma: artboard 200 x 73; shrinks before it overflows */
+  min-width: 0;
+  aspect-ratio: 200 / 73;
+}
+
+.work-teaser-logo__mark {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-text);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+/* Desktop/tablet: Framer Motion drag-scroll row, cards upright, overflowing
+   past the viewport edge on the right. First card aligns to the same left
+   edge as the container content above it. */
+
+.work-carousel-desktop {
+  padding-left: max(var(--container-gutter), calc((100vw - var(--container-max)) / 2 + var(--container-gutter)));
+  cursor: grab;
+}
+
+.work-carousel-desktop:active {
+  cursor: grabbing;
+}
+
+.work-carousel-track {
+  display: flex;
+  gap: 24px;
+  width: max-content;
+  touch-action: pan-y;
+}
+
+.work-carousel-card {
+  flex-shrink: 0;
+  width: 350px;
+  height: 622px;
+  border-radius: var(--radius-media);
+  /* Work Sample Video placeholder fill — was --color-success, which the
+     new neutral palette retired. Same treatment as other media slots. */
+  background: var(--color-container);
+  user-select: none;
+}
+
+.work-carousel-mobile {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  .work-teaser {
+    gap: 40px;
+    padding: 40px 0;
+  }
+
+  .work-teaser-header {
+    gap: 40px;
+  }
+
+  .work-teaser-kicker-headline {
+    gap: 12px;
+  }
+
+  .work-teaser-logos {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));   /* two across on narrow screens */
+    gap: 24px 16px;
+    padding-bottom: 24px;
+  }
+
+  .work-teaser-logo {
+    width: 100%;
+  }
+
+  .work-carousel-desktop {
+    display: none;
+  }
+
+  .work-carousel-mobile {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 20px;
+    scrollbar-width: none;
+  }
+
+  .work-carousel-mobile::-webkit-scrollbar {
+    display: none;
+  }
+
+  .work-carousel-mobile .work-carousel-card {
+    width: calc(100vw - 80px);
+    max-width: 320px;
+    height: auto;
+    aspect-ratio: 350 / 622;
+    scroll-snap-align: center;
+  }
+}

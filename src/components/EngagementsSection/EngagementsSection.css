@@ -1,0 +1,189 @@
+.engagements {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--rhythm-96);                 /* Figma: gap-96 */
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  /* Figma: the section is the full 1280 and carries no side padding of its own —
+     the header and each row hold their own 32, so text lands on the same edge as
+     every other section. Adding the gutter here as well pushed it in 64. */
+  padding: var(--section-inset) 0;
+}
+
+.engagements-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--rhythm-64);                 /* Figma: heading block -> button, 64 */
+  width: 100%;
+  max-width: 1010px;
+  padding: 0 var(--container-gutter);
+}
+
+/* Figma 1457:1238 — kicker + headline are one unit (gap 16); the paragraph sits
+   32 below it; the button is a further 64 on (the header's own gap). */
+.engagements-heading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  width: 100%;
+}
+
+.engagements-heading__stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* Step 0 at 60%, per Figma. */
+.engagements-body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+  color: var(--color-text);
+  opacity: 0.6;
+}
+
+.engagements-kicker {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  opacity: 0.9;                       /* Figma: opacity 90 */
+  line-height: var(--leading-body);
+  color: var(--color-text);
+}
+
+.engagements-headline {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--step-4);
+  line-height: var(--leading-display);
+  color: var(--color-text);
+}
+
+.engagements-list {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-6);                   /* Figma: 24 between rows */
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.engagements-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);                   /* Figma: 32 label -> description */
+  width: 100%;
+  padding: var(--space-6) var(--space-8); /* Figma: py-24 px-32 */
+  border-radius: 20px;
+  text-decoration: none;
+  /* The fill and the dimming are the same gesture, so they share the colour
+     duration — at 0.2s the row lit up before the eye had finished moving to it. */
+  transition: background-color var(--dur-color) var(--ease-out-cubic),
+    opacity var(--dur-color) var(--ease-in-out-sine);
+}
+
+.engagements-row:hover,
+.engagements-row:focus-visible {
+  background: var(--color-text);
+}
+
+/* Hovering/focusing one row dims the others — same gentle timing as
+   wearecollins.com's homepage Programs list. */
+.engagements-list:hover .engagements-row:not(:hover),
+.engagements-list:focus-within .engagements-row:not(:focus-visible) {
+  opacity: 0.6;
+}
+
+/* 360 is Figma's width at 1440, where it is 29% of the row. Held flat it
+   became half the row at tablet and squeezed the description to 42 characters,
+   so it keeps the ratio instead of the pixel and bottoms out at a width that
+   still fits the longest label on two lines. */
+.engagements-label {
+  margin: 0;
+  flex-shrink: 0;
+  width: clamp(200px, 29%, 360px);
+  max-width: 100%;
+  font-family: var(--font-body);         /* Figma: Helvetica Neue Regular */
+  font-weight: 400;
+  font-size: var(--step-2);
+  text-align: left;
+  line-height: var(--leading-display);
+  color: var(--color-text);
+  transition: color var(--dur-color) var(--ease-out-cubic);
+}
+
+.engagements-description {
+  flex: 1;
+  min-width: 0;
+  max-width: 650px;
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+  color: var(--color-text);
+  opacity: 0.8;                       /* Figma: opacity 80 */
+  transition: color var(--dur-color) var(--ease-out-cubic);
+}
+
+.engagements-row:hover .engagements-label,
+.engagements-row:hover .engagements-description,
+.engagements-row:focus-visible .engagements-label,
+.engagements-row:focus-visible .engagements-description {
+  color: var(--color-background);
+}
+
+/* Mobile: label stacks above description; hover-invert (a mouse-only
+   affordance) gives way to a divider line between each row instead. */
+@media (max-width: 760px) {
+  .engagements {
+    gap: 40px;
+    padding: 40px 0;
+  }
+
+  .engagements-header {
+    gap: 20px;
+    padding: 0 20px;
+  }
+
+  .engagements-list {
+    gap: 0;
+    padding: 0 20px;
+  }
+
+  .engagements-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 22px 0 24px;
+    border-radius: 0;
+  }
+
+  .engagements-row:hover,
+  .engagements-row:focus-visible {
+    background: none;
+  }
+
+  .engagements-row:hover .engagements-label,
+  .engagements-row:hover .engagements-description,
+  .engagements-row:focus-visible .engagements-label,
+  .engagements-row:focus-visible .engagements-description {
+    color: var(--color-text);
+  }
+
+  .engagements-label {
+    width: 100%;
+  }
+
+  .engagements-item + .engagements-item {
+    border-top: 1px solid var(--color-rule);
+    margin-top: 20px;
+    padding-top: 20px;
+  }
+}

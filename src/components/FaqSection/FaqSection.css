@@ -1,0 +1,145 @@
+.faq {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-6);                   /* Figma Home: 24 */
+  padding-block: var(--section-inset);
+  padding-inline: var(--container-gutter);
+}
+
+.faq-headline {
+  flex-shrink: 0;
+  margin: 0;
+  width: 392px;
+  max-width: 100%;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--step-4);
+  line-height: var(--leading-display);
+  color: var(--color-text);
+}
+
+.faq-list {
+  display: flex;
+  flex: 1 0 0;
+  flex-direction: column;
+  max-width: 704px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.faq-item {
+  position: relative;
+  padding-top: var(--space-6);                   /* Figma: py-24 */
+}
+
+/* Figma 1037:857 — the rule is inset 16 from each side and sits 24 down. It
+   stays a rule: it does not brighten on hover, focus or open. On hover the
+   copy slides 8 further in; the background fill that used to come with it is
+   gone for now (Paul, Oct 2026), so the rule stays put. */
+.faq-item::before {
+  content: '';
+  position: absolute;
+  top: var(--space-6);
+  left: var(--space-4);
+  right: var(--space-4);
+  height: 1px;
+  background: var(--color-rule);
+  transition: opacity var(--dur-quick) var(--ease-in-out-sine);
+}
+
+.faq-question {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  width: 100%;
+  /* Figma: 16 below the rule, 24 under the text; px 16 (the rule's inset) + 4. */
+  padding: var(--space-4) calc(var(--space-4) + var(--space-1)) var(--space-6);
+  border: none;
+  border-radius: var(--space-4);                 /* Figma: hover radius 16 */
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  color: inherit;
+  transition: padding-inline var(--dur-quick) var(--ease-out-expo);
+}
+
+/* Figma Hover Collapsed: the copy sits 8 further in. */
+.faq-question:hover,
+.faq-question:focus-visible {
+  padding-inline: 28px;                          /* Figma: 28, from 20 */
+}
+
+.faq-question__text {
+  flex: 1 0 0;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--step-0-strong);
+  line-height: var(--leading-body);
+  letter-spacing: var(--tracking-strong);
+  color: var(--color-text);
+}
+
+.faq-question__icon {
+  flex-shrink: 0;
+  width: 14px;
+  height: 7px;
+  margin-top: 10px;
+  background-color: var(--color-text);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  /* Matches the panel's own height duration, so the chevron and the answer
+     finish together rather than the arrow arriving first. */
+  transition: transform var(--dur-quick) var(--ease-out-expo);
+}
+
+.faq-question__icon.is-open {
+  transform: rotate(180deg);
+}
+
+.faq-answer-wrap {
+  overflow: hidden;
+}
+
+.faq-answer {
+  margin: 0;
+  /* Left inset matches .faq-question's, so answer and question share an edge. */
+  padding: 0 calc(var(--space-4) + var(--space-1)) var(--space-6);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+  color: var(--color-text-muted);
+}
+
+/* The headline column is a fixed 392 (Figma's number at 1440) and the answers
+   take what is left. Two columns therefore stop working well before the layout
+   breakpoint: at 820 the answers were down to 305px — about 36 characters,
+   well under a readable measure — while the headline kept its full desktop
+   width. The headline cannot simply shrink with them, because at step 4 a
+   240px column cannot even hold the word "Frequently". So the pair stacks as
+   soon as the answer column would fall below roughly 50 characters. */
+@media (max-width: 1030px) {
+  .faq {
+    flex-direction: column;
+    gap: var(--space-12);
+  }
+
+  .faq-headline {
+    width: 100%;
+  }
+}
+
+@media (max-width: 760px) {
+  .faq {
+    gap: 24px;
+    padding: 40px 20px;
+  }
+
+  .faq-list {
+    max-width: none;
+  }
+}

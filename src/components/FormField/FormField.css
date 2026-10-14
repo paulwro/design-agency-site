@@ -1,0 +1,205 @@
+/* ==========================================================================
+   Form controls — Figma 1074:1076 (Form Field), 1074:1087 (Dropdown),
+   1401:1529 (radio btn option)
+
+   Figma draws only the resting state: a bottom rule, 8px above / 16px below,
+   placeholder at step 0. The float-label motion is carried over from the
+   previous site and translated from Tailwind @apply to tokens.
+   ========================================================================== */
+
+:root {
+  --field-float-y: -24px;   /* distance the label travels on focus/fill */
+}
+
+/* No reserved air above the field: the label floats up into the 32px gap
+     between fields instead, which keeps the resting row at Figma's 53 rather
+     than inflating every field by 24. */
+.form-field {
+  position: relative;
+  width: 100%;
+}
+
+/* ---- Input ---------------------------------------------------------------
+   Bottom rule only. Rest = Borders & Lines, hover = Muted Text,
+   focus = full-strength Text. */
+.form-input {
+  width: 100%;
+  padding: var(--space-2) 0 var(--space-4);
+  border: 0;
+  border-bottom: 1px solid var(--color-border);
+  border-radius: 0;
+  background: transparent;
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+  outline: none;
+  /* Borders & Lines, straight from Figma: #ECECEC on white, #2B2B2B on black. */
+  transition: border-color var(--dur-color) var(--ease-out-cubic);
+}
+
+/* Transparent rather than absent so :placeholder-shown still works —
+   that pseudo-class is what drives the label without any JS. */
+.form-input::placeholder { color: transparent; }
+
+/* The rule is the only thing marking a field, so it carries the whole state:
+   muted at rest, part-way on hover, full strength on focus. */
+.form-input:hover { border-bottom-color: var(--color-text-muted); }
+.form-input:focus { border-bottom-color: var(--color-rule-strong); }
+
+.form-input--textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* ---- Error message · Figma 1735:1822 --------------------------------------
+   12 below the field, step -2, --error. The rule keeps its resting colour in
+   Figma; the message alone carries the state. */
+.form-field__error {
+  margin: var(--space-3) 0 0;
+  color: var(--color-error);
+  font-family: var(--font-body);
+  font-size: var(--step--2);
+  line-height: var(--leading-reading);
+}
+
+/* ---- Floating label ------------------------------------------------------ */
+.form-label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding-top: var(--space-2);
+  color: var(--color-text);
+  opacity: 0.9;
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+  pointer-events: none;
+  transform-origin: left top;
+  /* The label travels a few pixels and shrinks — short movement, quick tier.
+     Its fade is shorter again so the label looks like it settles into the
+     caption position rather than arriving there. */
+  transition: transform var(--dur-quick) var(--ease-out-expo),
+    font-size var(--dur-quick) var(--ease-out-expo),
+    opacity var(--dur-fast) var(--ease-in-out-sine);
+}
+
+/* `:placeholder-shown` is only ever true for <input> and <textarea> — a
+   <select> never matches it, so a bare `:not(:placeholder-shown)` is true for
+   every select and floated their labels permanently, with nothing chosen. The
+   data-has-value guard below was dead code until the select was excluded here. */
+.form-input:focus + .form-label,
+.form-input:not(.form-input--select):not(:placeholder-shown) + .form-label,
+.form-input--select[data-has-value='true'] + .form-label {
+  transform: translateY(var(--field-float-y));
+  font-size: var(--step--2);
+  opacity: 1;
+}
+
+/* ---- Select -------------------------------------------------------------- */
+.form-input--select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: var(--space-8);
+  cursor: pointer;
+}
+
+/* 24px icon slot, per Figma. Masked so it inherits the theme colour; the
+   glyph is the dropdown chevron already in the project (FaqSection). */
+.form-field__chevron {
+  position: absolute;
+  right: 0;
+  top: 14px;                              /* where bottom: 16px put it on a 54px field */
+  width: 24px;
+  height: 24px;
+  background-color: var(--color-text);
+  -webkit-mask: var(--chevron-src) no-repeat center / 14px 7px;
+  mask: var(--chevron-src) no-repeat center / 14px 7px;
+  pointer-events: none;
+  transition: transform var(--dur-quick) var(--ease-out-expo);
+}
+
+.form-input--select:focus ~ .form-field__chevron { transform: rotate(180deg); }
+
+/* ---- Radio group · 1401:1529 --------------------------------------------
+   Built in markup rather than imported flat: the control has checked and
+   unchecked states that a static asset cannot express. */
+.radio-group {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.radio-group__legend {
+  padding: 0;
+  margin-bottom: var(--space-6);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+}
+
+.radio-group__options {
+  padding-left: var(--space-2);            /* Figma 1074:1082: pl-8 */
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4) var(--space-8);
+}
+
+.radio-option {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  cursor: pointer;
+}
+
+.radio-option input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.radio-option__dot {
+  flex-shrink: 0;
+  position: relative;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--color-text-muted);
+  border-radius: 50%;
+  transition: border-color var(--dur-color) var(--ease-out-cubic);
+}
+
+.radio-option__dot::after {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  background: var(--color-text);
+  transform: scale(0);
+  transition: transform var(--dur-quick) var(--ease-overshoot);
+}
+
+.radio-option:hover .radio-option__dot { border-color: var(--color-rule-strong); }
+.radio-option input:checked + .radio-option__dot { border-color: var(--color-rule-strong); }
+.radio-option input:checked + .radio-option__dot::after { transform: scale(1); }
+.radio-option input:focus-visible + .radio-option__dot {
+  outline: 2px solid var(--color-text);
+  outline-offset: 3px;
+}
+
+.radio-option__text {
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--step--1);
+  line-height: var(--leading-reading);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .form-input,
+  .form-label,
+  .form-field__chevron,
+  .radio-option__dot,
+  .radio-option__dot::after { transition: none; }
+}

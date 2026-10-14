@@ -1,0 +1,191 @@
+.footer {
+  width: 100%;
+  background: var(--color-background);
+}
+
+.footer-desktop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 200px;       /* links/CTA to legal + social. Was 128 (Figma); Paul: 200, global */
+  padding-block: var(--section-inset) var(--space-4);    /* Figma: pt-128 pb-16 */
+}
+
+.footer-mobile {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 72px;
+  padding-block: var(--section-inset) var(--space-4);   /* Figma: pt-128 pb-16 */
+  padding-inline: var(--container-gutter);
+}
+
+@media (max-width: 760px) {
+  .footer-desktop {
+    display: none;
+  }
+
+  .footer-mobile {
+    display: flex;
+  }
+}
+
+.footer-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-12);                                  /* Figma: gap-48 */
+  max-width: 700px;                                      /* Figma: max-w-700 */
+  text-align: center;
+}
+
+.footer-headline {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--step-4);
+  line-height: var(--leading-display);
+  color: var(--color-text);
+}
+
+/* Desktop pill nav */
+
+.footer-desktop .footer-cta {
+  justify-content: center;
+  min-height: 300px;                                     /* Figma: CTA box h-300 */
+}
+
+.footer-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.footer-pill-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 32px 17px;
+  border-radius: 100px;
+  text-decoration: none;
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+  white-space: nowrap;
+  outline: none;
+  transition: transform var(--dur-slow) var(--ease-out-expo),
+    box-shadow var(--dur-base) var(--ease-in-out-sine);
+}
+
+/* Mouse-hover lift lives on .footer-pill itself (see below) so it travels
+   with the sliding pill instead of racing ahead of it. :focus-visible stays
+   here since keyboard focus doesn't move the pill. */
+.footer-pill-btn:focus-visible {
+  transform: scale(1.04);
+  box-shadow: var(--shadow-lift);
+}
+
+.footer-pill-btn:active {
+  transform: scale(0.98);
+}
+
+.footer-pill-btn span {
+  position: relative;
+  z-index: 1;
+  color: var(--color-text);
+  transition: color var(--dur-color) var(--ease-out-cubic);
+}
+
+.footer-pill-btn span.is-active {
+  color: var(--color-background);
+}
+
+.footer-pill {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: 100px;
+  background: var(--color-text);
+}
+
+.footer-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-body);
+  color: var(--color-text);
+}
+
+.footer-legal {
+  margin: 0;
+  font-size: var(--step--2);
+}
+
+.footer-social {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  font-size: var(--step-0);
+}
+
+/* Same treatment as the menu overlay: underline at half strength, full on
+   hover — not an opacity fade. See .text-link in styles/controls.css. */
+.footer-social a {
+  position: relative;
+  text-decoration: none;
+  padding-bottom: 1px;
+}
+
+.footer-social a::after,
+.footer-link-col a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1.5px;
+  background: currentColor;
+  opacity: 0.5;
+  transition: opacity var(--dur-base) var(--ease-in-out-sine);
+}
+
+.footer-social a:hover::after,
+.footer-social a:focus-visible::after,
+.footer-link-col a:hover::after,
+.footer-link-col a:focus-visible::after { opacity: 1; }
+
+
+
+/* Mobile layout */
+
+.footer-link-grid {
+  display: flex;
+  width: 100%;
+  gap: 40px;
+}
+
+.footer-link-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footer-link-col a {
+  position: relative;
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  text-decoration: none;
+  padding-bottom: 1px;
+}
+
+
+
+.footer-legal--mobile {
+  text-align: center;
+}

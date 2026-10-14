@@ -1,0 +1,222 @@
+.tac-desktop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  padding-block: var(--section-inset);
+  overflow: hidden;
+}
+
+.tac-stage {
+  position: relative;
+  width: 100%;
+  touch-action: pan-y;
+  cursor: grab;
+}
+
+.tac-stage.is-dragging {
+  cursor: grabbing;
+}
+
+.tac-stage:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 8px;
+}
+
+.tac-card {
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  width: 368px;
+  max-width: 100%;
+  margin-left: -184px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+  padding: 24px;
+  min-height: 580px;
+  border-radius: 24px;
+  background: var(--color-testimonial-card);
+  color: var(--color-testimonial-text);
+  /* No shadow. The card already separates from the page by fill alone — black
+     on white, #121212 on black — and the arc stacks them, so a shadow on every
+     card compounds into a smudge behind the whole fan. */
+  touch-action: none;
+  user-select: none;
+}
+
+.tac-card__logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 120px;
+  padding: 8px;
+}
+
+.tac-card__logo-mark {
+  flex-shrink: 0;
+  background-color: var(--color-testimonial-text);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+.tac-card--sizer {
+  position: relative;
+  top: auto;
+  left: auto;
+  margin: 40px auto 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Quote and attribution fill the card; the gap between them is auto
+   (space-between), so shorter quotes keep the same card height. */
+.tac-card__text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-8);
+  width: 100%;
+}
+
+.tac-card__quote-body {
+  display: grid;
+  flex: 1;
+}
+
+.tac-card__quote-body > p {
+  grid-area: 1 / 1;
+}
+
+.tac-card__quote-ghost {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.tac-card__quote {
+  display: flex;
+  align-items: flex-start;
+  gap: 1px;
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+  color: var(--color-testimonial-text);
+}
+
+.tac-card__quote-mark {
+  flex-shrink: 0;
+  opacity: 0.9;
+}
+
+.tac-card__quote p {
+  margin: 0;
+  flex: 1;
+}
+
+.tac-card__attribution {
+  margin: 0;
+  padding: 0 var(--space-2);                 /* Figma: px-8 */
+  width: 100%;
+  opacity: 0.6;                              /* muted text, 60% */
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+  color: var(--color-testimonial-text);
+}
+
+.tac-card__attribution-role {
+  opacity: 1;
+}
+
+.tac-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);                       /* Figma: gap-16 */
+}
+
+.tac-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  padding: 10px;
+  border: 1px solid var(--color-text);
+  border-radius: 100px;
+  background: none;
+  cursor: pointer;
+  transition: opacity var(--dur-base) var(--ease-in-out-sine);
+}
+
+.tac-arrow:hover {
+  opacity: 0.6;
+}
+
+.tac-arrow__mark {
+  display: block;
+  width: 6px;
+  height: 12px;
+  background-color: var(--color-text);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+.tac-arrow--next .tac-arrow__mark {
+  transform: rotate(180deg);
+}
+
+/* Mobile: single centered card, neighbors peeking at the edges, swipeable */
+
+.tac-mobile {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  .tac-desktop {
+    display: none;
+  }
+
+  .tac-mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    padding-block: var(--space-24) 40px;
+  }
+
+  .tac-mobile-track {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 40px;
+    scrollbar-width: none;
+  }
+
+  .tac-mobile-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tac-mobile .tac-card {
+    position: static;
+    top: auto;
+    left: auto;
+    margin-left: 0;
+    flex: 0 0 auto;
+    min-height: 0;
+    width: calc(100vw - 120px);
+    max-width: 340px;
+    scroll-snap-align: center;
+  }
+}

@@ -1,0 +1,98 @@
+/* Hero — Figma 1015:922. See 01_branding/figma-spec-home.md */
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--rhythm-64);
+  padding-block: var(--section-inset);
+}
+
+.hero-superheader {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 760px;
+  padding-block: var(--rhythm-96);
+}
+
+.hero-headline {
+  margin: 0;
+  width: 100%;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--step-5);
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-display);
+  color: var(--color-text);
+  text-align: center;
+  text-wrap: balance;
+}
+
+.hero-quote {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-8);                  /* 32 */
+  width: 100%;
+  max-width: 760px;
+}
+
+/* Highlight pill — step -2 (strong), Medium 500 */
+.hero-quote__badge {
+  margin: 0;
+  padding: var(--space-2) var(--space-4);
+  border-radius: 8px;
+  background: var(--color-container);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--step--2);
+  line-height: var(--leading-reading);
+  color: var(--color-text);
+  text-align: center;
+}
+
+.hero-quote__text {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-1);
+  line-height: var(--leading-display);  /* 32.5 at step 1 */
+  color: var(--color-text);
+  text-align: center;
+  text-wrap: balance;
+}
+
+.hero-quote__attribution {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step--1);
+  line-height: var(--leading-reading);  /* 25.6 at step -1 */
+  color: var(--color-text);
+  text-align: center;
+}
+
+/* Phone. together.agency puts 88 above its headline and 16 beneath it before
+   the next element; we were at 112 and 96, which is where the hero read as
+   drifting rather than composed. These bring the headline closer to the top of
+   the screen and tighten what follows it, without touching the desktop frame. */
+@media (max-width: 760px) {
+  .hero { gap: var(--space-10); }                      /* 40 */
+  .hero-superheader { padding-block: var(--space-8); } /* 32 */
+  /* Centred reads well at 1440 over two lines. On a phone the same headline
+     runs to three or four, and centred display type over that many lines is
+     the heaviest arrangement available — every line starts somewhere
+     different, so the eye has no edge to return to.
+
+     The whole stack goes left, not just the headline: a left headline above a
+     centred badge and quote reads as two layouts stacked, and the eye loses
+     the edge again one element down. One shared edge, phone only. */
+  .hero,
+  .hero-quote { align-items: flex-start; }
+
+  .hero-headline,
+  .hero-quote__badge,
+  .hero-quote__text,
+  .hero-quote__attribution { text-align: left; }
+
+  .hero-quote__text { text-wrap: pretty; }
+}

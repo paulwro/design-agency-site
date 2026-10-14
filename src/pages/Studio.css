@@ -1,0 +1,246 @@
+/* Studio page — Figma 1055:1227 · see 01_branding/figma-spec-studio.md */
+
+.studio-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--section-gap);
+  padding-block: var(--section-inset);
+}
+
+/* "Who we work with" (1055:1283) is a two-row grid with gap-y 128, so the
+   heading sits a full section-gap further from its content than elsewhere. */
+.studio-section--wide-gap { gap: var(--section-inset); }
+
+/* ---- The three-column chassis every Studio section is built on ------------
+   Figma: 3 equal columns, 64 between them. Rows differ per section, so the
+   row gap is set by the modifier rather than baked in here. */
+.studio-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: var(--rhythm-64);
+  row-gap: var(--rhythm-96);
+  align-items: start;
+}
+
+.studio-grid__span-2 { grid-column: span 2; }
+
+/* The 2×2 of capabilities that fills columns 2–3 of 1236:1197.
+   Figma: gap-x 64, gap-y 96. */
+.studio-grid--2-inner {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: var(--rhythm-64);
+  row-gap: var(--rhythm-96);
+  align-items: start;
+}
+
+/* A column of stacked pieces inside one grid cell. 64 apart, per Figma. */
+.studio-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rhythm-64);
+}
+
+.studio-col--top { align-self: start; }
+
+/* Figma's lede is step 1 at 50% — not step 0, and not full strength. */
+.studio-lede {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-1);
+  line-height: var(--leading-display);
+  color: var(--color-text-soft);
+}
+
+/* Lead copy in the problem statement and bio is 60%, the rest of the page 50%. */
+.studio-grid--soft .title-body__body { color: var(--color-text-soft); }
+
+/* Figma separates stacked paragraphs by 24 inside one text block. */
+.studio-para { margin: 0; }
+.studio-para + .studio-para { margin-top: var(--space-6); }
+
+/* ---- How we work · 1133:1136 --------------------------------------------
+   A --container box at p-32 / radius 20 holding two ruled columns. The
+   vertical rule between them comes from DividedRow; the horizontal rules
+   inside each column come from the adjacent-sibling rule below. */
+.studio-steps {
+  padding: var(--space-8);
+  border-radius: 20px;
+  background: var(--color-container);
+}
+
+.studio-steps__col {
+  display: flex;
+  flex-direction: column;
+}
+
+.studio-steps__col > * + * {
+  border-top: 1px solid var(--color-rule);
+  padding-top: var(--space-8);
+  margin-top: var(--space-8);
+}
+
+/* Figma 1378:1467 draws the divider between the two columns as three segments
+   aligned to the rows, not one continuous line — so the rule moves off the
+   column and onto each entry inside it. Above the one-column breakpoint only;
+   below that DividedRow turns every rule horizontal. */
+@media (min-width: 761px) {
+  .studio-steps .divided-row--vertical > * + * {
+    border-left: 0;
+    padding-left: 0;
+  }
+  .studio-steps .divided-row--vertical > * + * > * {
+    border-left: 1px solid var(--color-rule);
+    padding-left: var(--space-8);
+  }
+}
+
+/* ---- Bio · 1228:1165 -----------------------------------------------------
+   One row of three columns in Figma: headshot in column 1, heading and body
+   stacked 64 apart across columns 2–3. They are three separate grid children
+   rather than a nested text block, because Figma's annotation wants mobile
+   ordered heading → image → text, which a nested block cannot produce. */
+.studio-bio {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: var(--rhythm-64);
+  row-gap: var(--rhythm-64);
+  padding-block: var(--section-inset);
+}
+
+.studio-bio__slot {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  align-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.studio-bio__card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 300px;
+  max-width: 100%;
+  margin: 0;
+  padding: var(--space-2);
+  border-radius: 12px;
+  background: var(--color-container);
+}
+
+/* Figma 1354:1328: 163.7deg from the card colour to a deep violet, dark theme only. */
+.dark-mode .studio-bio__card {
+  background-image: linear-gradient(163.7deg, var(--color-container) 71.3%, rgb(80, 10, 137) 117.3%);
+}
+
+.studio-bio__portrait {
+  aspect-ratio: 1;
+  border-radius: var(--radius-media);
+  background: var(--color-border);
+  /* Figma anchors the crop to the bottom of the frame. */
+  object-position: bottom;
+}
+
+.studio-bio__caption {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  font-family: var(--font-body);
+}
+
+.studio-bio__id {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.studio-bio__name {
+  font-size: var(--step-1);
+  line-height: var(--leading-display);
+  color: var(--color-text);
+}
+
+/* Figma: step 0 at 50% — not step −1. */
+.studio-bio__role {
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+  color: var(--color-text-muted);
+}
+
+/* Figma: 24px icon in an 8px-padded slot, bottom-aligned with the card. */
+.studio-bio__social {
+  flex-shrink: 0;
+  align-self: flex-end;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2);
+  transition: opacity var(--dur-base) var(--ease-in-out-sine);
+}
+
+.studio-bio__social:hover,
+.studio-bio__social:focus-visible { opacity: 0.6; }
+
+.studio-bio__social-mark {
+  display: block;
+  width: 24px;
+  height: 24px;
+  background-color: var(--color-text);
+  -webkit-mask: var(--linkedin-src) no-repeat center / contain;
+  mask: var(--linkedin-src) no-repeat center / contain;
+}
+
+/* Figma binds this to step 4, despite the group being named "Step 3_Step 0". */
+.studio-bio__heading {
+  grid-column: 2 / span 2;
+  grid-row: 1;
+  align-self: start;
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--step-4);
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-display);
+  color: var(--color-text);
+  text-wrap: balance;
+}
+
+.studio-bio__body {
+  grid-column: 2 / span 2;
+  grid-row: 2;
+  align-self: start;
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+  color: var(--color-text-soft);
+}
+
+/* ---- Collapse ------------------------------------------------------------
+   Figma's annotations are specific about mobile order: problem statement goes
+   heading → carousel card → text, and the bio goes heading → image → text. */
+/* The problem-statement grid is three siblings with no span, so a 2-up tier
+   would orphan the third — same rule as the expertise cards: three or one.
+   The bio is two items (portrait, text) and cannot orphan, so it keeps its
+   middle tier. */
+@media (max-width: 1200px) {
+  .studio-bio { grid-template-columns: repeat(2, 1fr); }
+  .studio-bio__heading,
+  .studio-bio__body { grid-column: 2; }
+}
+
+@media (max-width: 760px) {
+  .studio-grid,
+  .studio-grid--2-inner { grid-template-columns: 1fr; row-gap: var(--space-12); }
+  .studio-grid__span-2 { grid-column: auto; }
+  .studio-bio { grid-template-columns: 1fr; gap: var(--space-12); }
+  /* Figma: heading, then image, then text. */
+  .studio-bio__heading { grid-column: 1; grid-row: auto; order: 1; }
+  .studio-bio__slot { grid-column: 1; grid-row: auto; order: 2; justify-content: flex-start; }
+  .studio-bio__body { grid-column: 1; grid-row: auto; order: 3; }
+  .studio-section { gap: var(--space-12); }
+  .studio-section--wide-gap { gap: var(--space-12); }
+}

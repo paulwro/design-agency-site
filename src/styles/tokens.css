@@ -1,0 +1,338 @@
+/* ==========================================================================
+   paulwro.com design tokens
+   Source of truth: Figma U1PDzTkFFiLR3CC4RhLo43
+   Type scale: anchor 18px · reading ratio 9:8 down · display ratio √φ up
+   See 01_branding/{typography,color palette,spacing}
+   ========================================================================== */
+
+:root {
+  /* ---- Color · light ---------------------------------------------------- */
+  --color-background: #FFFFFF;
+  --color-container: #F9F9F9;
+  --color-border: #ECECEC;
+  /* Hairlines are their own tokens so they can be tuned apart from
+     --color-border (which is also a surface fill). In dark mode Figma's
+     Borders & Lines is now #2B2B2B on a #121212 container, so the rules take
+     that value directly; light mode keeps its soft black tint. Rules come to
+     full strength (--color-rule-strong) on hover and press. */
+  --color-rule: rgba(0, 0, 0, 0.12);
+  --color-rule-strong: var(--color-text);
+  /* Logo-grid rules: Borders & Lines (#ECECEC) on the #F9F9F9 container, as
+     Figma draws them. Dark mode uses the same token (#2B2B2B on #121212). */
+  --color-rule-soft: var(--color-border);
+  --color-text: #000000;
+  --color-text-soft: rgba(0, 0, 0, 0.6);       /* Figma "Text at 60%" — ledes and lead copy */
+  --color-text-muted: rgba(0, 0, 0, 0.6);      /* "Muted Text" — now the same 60% as soft */
+  --color-muted-toggle: #DADADA;
+
+  /* Testimonial card: Figma "Testimonial Card" / "Testimonial Text" (light #F9F9F9 / #000). */
+  --color-testimonial-card: #F9F9F9;
+  --color-testimonial-text: #000000;
+
+
+  /* ---- Lightbox · Figma 1785:1438 (light) / 1784:1585 -------------------
+     The site recedes into a flat rounded strip behind the card, so these are
+     the card's own palette, not the page's. Close button stays white with a
+     black X in both modes: it floats over imagery, not over the panel. */
+  --lightbox-background: #F9F9F9;
+  --lightbox-text: #000000;       /* Figma: identical in both modes */
+  --collapsed-site-background: #ECECEC;
+  --lightbox-close-bg: #FFFFFF;
+  --lightbox-close-x: #000000;
+
+  /* Semantic — identical in both modes. */
+  --color-warning: #EBCA07;
+  --color-orange: #EC7936;
+  --color-error: #E84536;
+  --color-pink: #EC3AA8;
+  --color-success: #81C941;
+  /* Type that sits ON a photo or video: white in both themes (it does not flip with the page). */
+  --color-on-media: #FFFFFF;
+  --color-info: #0152F0;   /* the former Brand Blue — lives on as Info */
+
+  /* Pill Container Link: default is Borders & Lines; the hover value is a
+     literal in the Figma variant, not a variable. Dark hover is inferred. */
+  /* Video/media placeholder. Figma 1015:962 fills this #38445a and knocks the
+     text out in --background, so the fill must stay dark in BOTH themes. */
+  --color-media-placeholder: #38445A;
+
+  --color-pill: #ECECEC;         /* Figma: Pill Container */
+  --color-pill-hover: #E3E2E2;   /* Figma: Pill Container Hover */
+
+  /* The hover glow on the submit button, drawn from the semantic palette.
+     Heavily blurred and held under 80% opacity, so these read as a wash of
+     colour rather than five identifiable swatches. */
+  --glow-1: #EC3AA8;
+  --glow-2: #EC7936;
+  --glow-3: #EBCA07;
+  --glow-4: #81C941;
+  --glow-5: #0152F0;
+
+  /* Client brand (Inbox Health case study) */
+  --color-inbox-yellow: #FBCB50;
+  --color-inbox-green: #A4D865;
+  --color-inbox-blue: #2BBFE4;
+
+  /* ---- Type ------------------------------------------------------------- */
+  --font-display: 'neue-haas-grotesk-display', 'Inter Tight', Arial, sans-serif;
+  --font-body: 'helvetica-neue-lt-pro', 'Inter', Arial, sans-serif;
+  /* The PW wordmark. Deliberately does NOT fall back to the display face —
+     if neue-haas-unica is missing from the kit it should look wrong, not
+     quietly pass as Neue Haas Grotesk. */
+  --font-mark: 'neue-haas-unica', Helvetica, Arial, sans-serif;
+
+  /* Fluid 390 → 1440, and the *ratio* interpolates with it — which is the whole
+     point of the system. At 1440 the scale opens to √φ (1.27202) above step 0.
+     At 390 it closes to a single 9:8 (1.125), the same ratio it already used
+     going DOWN from step 0. So a phone gets one uniform ratio through the whole
+     scale, and the display end fans out into its second ratio only as the
+     screen earns the room.
+
+     That compression is what the phone layout needed. At ∛φ the hero headline
+     came out at 37.9 — 18% larger than together.agency's 32 at the same width —
+     and a four-line centred block at that size dominates the screen. At 9:8 it
+     lands at 30.6, and the leading hyperbola answers on its own: 1.25 at the
+     phone end against 1.005 at 1440, with no change to the formula.
+
+     Steps −1 and −2 keep their own floors: 9:8 all the way down would put the
+     smallest size at 13.4, and 14 is the floor for legal and caption text. */
+  --step--2: clamp(0.8125rem, 0.8021rem + 0.0397vw, 0.8333rem);  /* 13.0 → 13.3 */
+  --step--1: clamp(0.875rem,  0.8518rem + 0.0952vw, 0.9375rem);  /* 14.0 → 15.0 */
+  /* Step 0 is a flat 16 — the browser default, and the base the whole scale now
+     grows from. It had been 17 (Figma's body size); Paul moved it down for a
+     more spacious page, and every other step re-derived from it: 9:8 below,
+     9:8 closing to √φ above on the 390 → 1440 track. */
+  --step-0:  1rem;                                                 /* 16    */
+  /* "step 0 (strong)" stays 18 in Figma (Bold, -0.25 tracking): it is its own
+     style, not step 0 made bold, so it did not move with it. */
+  --step-0-strong: 1.0625rem;                                      /* 17    */
+  --step-1:  clamp(1.1250rem, 1.0704rem + 0.2240vw, 1.2720rem);  /* 18.0 → 20.4 */
+  --step-2:  clamp(1.2656rem, 1.1347rem + 0.5370vw, 1.6180rem);  /* 20.2 → 25.9 */
+  --step-3:  clamp(1.4238rem, 1.1882rem + 0.9666vw, 2.0582rem);  /* 22.8 → 32.9 */
+  --step-4:  clamp(1.6018rem, 1.2243rem + 1.5485vw, 2.6180rem);  /* 25.6 → 41.9 */
+  --step-5:  clamp(1.8020rem, 1.2344rem + 2.3286vw, 3.3302rem);  /* 28.8 → 53.3 */
+
+  /* Leading. One hyperbola — 0.75·size + 15.3px — expressed so it stays
+     correct as the sizes interpolate. Flat 1.6 at step 0 and below. */
+  --leading-display: calc(0.75em + 0.9rem);
+  --leading-reading: 1.6;
+  /* At 16px a 1.7 line gives a 27.2px line box — open, in the way
+     together.agency's body copy is. Steps -1 and -2 are still 1.6. */
+  --leading-body: 1.7;
+
+  --tracking-strong: -0.25px;   /* step 0 (strong) */
+  --tracking-display: -0.0078em;  /* step 5 — -0.5px at 64px, kept proportional
+                                     so it holds as the size interpolates */
+
+  /* ---- Spacing ---------------------------------------------------------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  /* Figma draws 128 flat. Rendered at real font sizes that reads tight, so the
+     rhythm is fluid and tops out higher — one number to dial for the whole site. */
+  /* Figma: every section is py-128, both sides. Two stacked sections
+     therefore put 256 between their content — that is the rhythm. */
+  --section-inset: clamp(72px, 11.1vw, 160px);
+  --section-gap: clamp(56px, 8.9vw, 128px);    /* heading -> its content */
+
+  /* Rhythm. Figma's 64 and 96 are DESKTOP numbers, and held flat they are what
+     made the phone layout feel loose: the type compresses 37% between 1440 and
+     390 while the air around it did not, so every section drifted apart as the
+     screen got smaller. These interpolate on the same 390→1440 track as the
+     scale, halving by the time they reach a phone. Use them wherever 64 or 96
+     is section-scale rhythm; --space-16 / --space-24 stay for the fixed
+     component-level padding Figma really does hold constant.
+     Reference point: together.agency runs 96 between sections at 375 and 48
+     inside them, which is almost exactly where these land. */
+  --rhythm-64: clamp(40px, 1.7rem + 3.81vw, 80px);   /* 40 → 80  */
+  --rhythm-96: clamp(64px, 2.55rem + 6.1vw, 128px);  /* 64 → 128 */
+
+  /* ---- Breakpoints ---------------------------------------------------------
+     Media queries cannot read custom properties, so these are a convention,
+     not tokens. Use only these four:
+
+       1200px  three- and four-column grids step down ONE tier (3→2, 4→2).
+               Not a device width — it is where a 3-up text column drops below
+               ~36 characters, which is where a measure stops being comfortable.
+               Figma has no tablet frame; its annotations say "three columns on
+               desktop and tablet", but taken to a portrait iPad that is a
+               24-character line, so the measure decides and two columns hold.
+       900px   layouts whose second column has a minimum useful width — a
+               sidebar, an info card, overlapping media.
+       760px   everything to one column; navbar becomes the container pill.
+       480px   small phones.
+     ------------------------------------------------------------------------ */
+
+  /* ---- Layout ----------------------------------------------------------- */
+  /* Content runs to 1440 with a 32px margin each side; the margin shrinks on
+     small screens. The navbar and menu keep the older, wider 80px inset. */
+  --container-max: 1280px;
+  --container-gutter: clamp(24px, 2.223vw, 32px);
+  /* Column gap for multi-column grids: wider than the old flat 32. */
+  --grid-gap: clamp(24px, 3.33vw, 48px);
+  --page-gutter-wide: var(--container-gutter);
+  --nav-gutter: clamp(24px, 5.556vw, 80px);
+
+  /* Every image and video slot on the site. */
+  --radius-media: 12px;
+
+  /* ---- Elevation -------------------------------------------------------- */
+  --shadow-lift:
+    0 21px 13px rgba(0, 0, 0, 0.04),
+    0 9px 9px rgba(0, 0, 0, 0.06),
+    0 2px 5px rgba(0, 0, 0, 0.07);
+
+  /* ---- Client logo grid --------------------------------------------------
+     The cell is a fixed box; the cap is what equalises logos of differing
+     aspect ratio. Raise the cap and every mark grows together. */
+  --logo-cell-height: 90px;
+  --logo-cap-height: 40px;
+  --logo-cap-width: 160px;
+
+  /* ---- Icon sources ------------------------------------------------------ */
+  --chevron-src: url('../assets/faq/dropdown-icon.svg');
+  --arrow-src: url('../assets/arrow.svg');                 /* diagonal — PillLink */
+  /* Icon_Arrow 43:6809, exported from Figma through the Plugin API.
+     Default (43:6810) is the bare chevron; Hover (43:6814) adds the shaft and
+     is the one the News bullet travels. Both are used as masks, so the stroke
+     colour in the file is irrelevant — the element's own colour shows through. */
+  --arrow-right-src: url('../assets/arrow-right.svg');
+  --chevron-right-src: url('../assets/chevron-right.svg');
+  --linkedin-src: url('../assets/social/linkedin.svg');
+
+  /* ---- Motion -------------------------------------------------------------
+     Measured off wearecollins.com, not guessed at. Their three transitions:
+
+       transform   0.8s  cubic-bezier(.19, 1, .22, 1)       ease-out-expo
+       colour      0.7s  cubic-bezier(.215, .61, .355, 1)   ease-out-cubic
+       opacity     0.5s  cubic-bezier(.445, .05, .55, .95)  ease-in-out-sine
+
+     So expo was never the problem — 0.3s was. The curve spends ~80% of its
+     travel in the first third, which at a short duration reads as a snap and
+     at 0.8s reads as a glide. Same curve, opposite character.
+
+     The rule that falls out of it, and that the rest of the site follows:
+     movement is slow and decelerating, fades are quicker and symmetric, and
+     the two are never given the same duration on the same element. */
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);            /* movement */
+  --ease-out-cubic: cubic-bezier(0.215, 0.61, 0.355, 1);      /* colour, fills */
+  --ease-in-out-sine: cubic-bezier(0.445, 0.05, 0.55, 0.95);  /* opacity */
+  /* A restrained overshoot for things that arrive rather than resolve — the
+     tamed cousin of Collins' elastic spring on their scale-in buttons. */
+  --ease-overshoot: cubic-bezier(0.34, 1.32, 0.64, 1);
+  --ease-menu: var(--ease-out-expo);               /* overlay take-over */
+
+  /* Durations are chosen by HOW FAR a thing travels, not by how important it
+     is. A full-bleed overlay crossing the screen and a 10px dot settling
+     cannot share a duration and both look right — the overlay reads as a snap,
+     or the dot reads as sludge. Four tiers, longest travel first:
+
+       --dur-slow    whole surfaces and hover growth: overlays, button scale
+       --dur-color   colour and fill, which have no distance and so get their
+                     own number — long enough to feel considered, no movement
+       --dur-quick   small elements moving a short way: cards, panels, dots
+       --dur-fast    micro-feedback that must feel instant: underlines, :active
+
+     And on any one element, movement outlasts its own fade. That gap is what
+     makes something look like it is settling into place rather than sliding. */
+  --dur-slow: 0.8s;
+  --dur-color: 0.7s;
+  --dur-quick: 0.5s;
+  --dur-base: 0.5s;         /* fades that accompany --dur-slow movement */
+  --dur-fast: 0.2s;
+  --dur-toggle: 0.9s;       /* the theme toggle's do-si-do */
+
+  /* ---- Reveal --------------------------------------------------------------
+     One rise distance and one cadence for the whole site, so sections entering
+     the viewport feel like one system rather than per-component decisions.
+     Consumed by components/blocks/Reveal.jsx. */
+  --reveal-rise: 28px;
+  --dur-reveal: 0.9s;
+  --reveal-stagger: 0.07s;
+
+  /* The quick tier, for grids of small cards. Figma's annotation on
+     1015:966 asks for exactly this: "the cards quickly fade up … with a very
+     very minor delay between each". A card is a short, light object; giving it
+     the full section rise makes it look like it is being lowered in on a wire. */
+  --reveal-rise-sm: 18px;
+  --dur-reveal-sm: 0.55s;
+  --reveal-stagger-sm: 0.045s;
+
+  /* ---- Control sizing ------------------------------------------------------ */
+  --toggle-dot: 14px;       /* each circle in the theme toggle */
+  --toggle-overlap: 4px;    /* how far they sit over one another at rest */
+  --toggle-spread: 2.5px;   /* how far each drifts on hover */
+  --bullet-rest: 10px;      /* News bullet at rest */
+  --bullet-hover: 20px;     /* the circle it grows into — also the arrow's mask */
+  --bullet-arrow: 13px;     /* the arrow travelling through it */
+
+  /* The PW wordmark. Figma specs 40 at 1440, and it used to sit there flat —
+     which meant that between 760 and 1200 the logo was LARGER than the section
+     headings beneath it (40 against step 3's 38.4 at 820), and on a phone it
+     was 92% the size of the h1. A wordmark that outranks the headline is a
+     wordmark that reads as a mistake.
+
+     So it rides the same curve as the display steps: 40 at 1440 down to 26.1
+     at 390. Derived from step 3's clamp scaled by 40/37.05, so the mark keeps
+     its exact relationship to the headings at every width rather than only at
+     the two ends — which is why its floor moved when step 3's did. */
+  --mark-size: clamp(1.5375rem, 1.1578rem + 1.0825vw, 2.2250rem);  /* 24.6 → 35.6 */
+}
+
+.dark-mode {
+  --color-background: #000000;
+  --color-container: #121212;
+  --color-border: #2B2B2B;
+  --color-text: #FFFFFF;
+  --color-rule: var(--color-border);
+  --color-rule-strong: #FFFFFF;
+  --color-rule-soft: var(--color-border);
+  --color-text-soft: rgba(255, 255, 255, 0.6);
+  --color-text-muted: rgba(255, 255, 255, 0.6);
+  --color-muted-toggle: #3F3F3F;
+
+
+  /* Figma: the lightbox card is #F9F9F9 with black text in both modes. */
+  --lightbox-background: #F9F9F9;
+  --lightbox-text: #000000;
+  --collapsed-site-background: #121212;
+
+  --color-testimonial-card: #121212;
+  --color-testimonial-text: #FFFFFF;
+
+  --color-pill: #131313;         /* Figma: Pill Container */
+  --color-pill-hover: #0F0F0F;   /* Figma: Pill Container Hover */
+
+  /* Semantic colours are mode-independent and are not redeclared here. */
+
+  /* Shadows read as nothing on pure black — elevation is carried by the
+     container fill (#2B2B2B on #000000) instead. */
+  --shadow-lift: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-slow: 0.01ms;
+    --dur-color: 0.01ms;
+    --dur-quick: 0.01ms;
+    --dur-base: 0.01ms;
+    --dur-fast: 0.01ms;
+    --dur-toggle: 0.01ms;
+    --dur-reveal: 0.01ms;
+    --dur-reveal-sm: 0.01ms;
+    --reveal-rise: 0px;
+    --reveal-rise-sm: 0px;
+    --reveal-stagger: 0s;
+    --reveal-stagger-sm: 0s;
+  }
+}

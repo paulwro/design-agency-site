@@ -1,0 +1,129 @@
+/* Lightbox — Figma 1785:1438 / 1784:1585. Behaviour is in Lightbox.jsx. */
+/* The card is light in both themes (Figma), so anything inside it that reads the
+   page tokens needs the light values even when the page is dark. */
+.dark-mode .lightbox {
+  --color-background: #FFFFFF;
+  --color-container: #F9F9F9;
+  --color-border: #ECECEC;
+  --color-text: #000000;
+  --color-text-soft: rgba(0, 0, 0, 0.6);
+  --color-text-muted: rgba(0, 0, 0, 0.6);
+  --color-rule: rgba(0, 0, 0, 0.12);
+  --color-rule-strong: #000000;
+  --color-rule-soft: #ECECEC;
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 20;               /* above the navbar (10) and the menu (9) */
+  color: var(--lightbox-text);
+}
+
+/* The receded site: 10px of it shows above the card, 40px in from each edge. */
+.lightbox__site {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: var(--collapsed-site-background);
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  cursor: pointer;
+}
+
+.lightbox__panel {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--lightbox-background);
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
+  /* 88 left / 120 right: the right side reserves the close button's 48px and
+     its 32px gap from Figma, so the column stays optically centred. */
+  padding: 40px 120px 40px 88px;
+  color: var(--lightbox-text);
+}
+
+.lightbox__column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--rhythm-96);
+  padding-bottom: var(--rhythm-96);
+}
+
+.lightbox__figure {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+  margin: 0;
+}
+
+.lightbox__media {
+  height: 700px;
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--color-media-placeholder);
+}
+.lightbox__media img,
+.lightbox__media video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.lightbox__caption {
+  font-size: var(--step--1);
+  line-height: 1.6;
+  opacity: 0.6;
+}
+
+.lightbox__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  width: 100%;
+  max-width: 760px;
+}
+.lightbox__headline {
+  margin: 0;
+  font-size: var(--step-3);
+  line-height: var(--leading-display);
+}
+.lightbox__body {
+  margin: 0;
+  font-size: var(--step-0);
+  line-height: var(--leading-reading);
+  opacity: 0.6;
+}
+
+.lightbox__close {
+  position: absolute;
+  top: 50px;
+  right: 40px;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--lightbox-close-bg);
+  color: var(--lightbox-close-x);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+}
+.lightbox__close:focus-visible { outline: 2px solid var(--lightbox-text); outline-offset: 3px; }
+
+@media (max-width: 900px) {
+  .lightbox__site { left: 16px; right: 16px; }
+  .lightbox__panel { padding: 72px 16px 24px; border-top-left-radius: 20px; border-top-right-radius: 20px; }
+  .lightbox__media { height: auto; aspect-ratio: 4 / 5; border-radius: 12px; }
+  .lightbox__close { top: 20px; right: 16px; }
+}

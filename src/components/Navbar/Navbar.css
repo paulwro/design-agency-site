@@ -1,0 +1,201 @@
+/* Navbar — Figma 1552:1391 (desktop 96px) / 1651:1516 (mobile pill) */
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+/* Scroll veil. A full-bleed layer behind the bar: page colour fading to
+   nothing, with a blur that fades out on the same ramp, so content scrolling
+   under the links dissolves instead of colliding. Invisible at the top of the
+   page and while the menu is open. */
+.navbar::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 50%;
+  width: 100vw;
+  margin-left: -50vw;
+  height: calc(100% + var(--space-8));
+  pointer-events: none;
+  opacity: 0;
+  /* Mostly blur, barely colour: the tint starts at 35% and eases out, the
+     blur holds a little longer then dissolves on the same ramp. */
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--color-background) 35%, transparent) 0%,
+    color-mix(in srgb, var(--color-background) 18%, transparent) 50%,
+    transparent 100%
+  );
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  -webkit-mask-image: linear-gradient(to bottom, #000 35%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 35%, transparent 100%);
+  transition: opacity var(--dur-base) var(--ease-in-out-sine);
+}
+.navbar.is-scrolled:not(.is-menu-open)::before { opacity: 1; }
+
+.navbar__inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 96px;
+}
+
+/* Equal-width end slots keep the PW mark optically centred. */
+.navbar__slot {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  width: 64px;
+}
+
+.navbar__slot--end { justify-content: flex-end; }
+
+/* Neue Haas Unica Medium, 40 / 0.9. Third family — see --font-mark. */
+.navbar__mark {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mark);
+  font-weight: 500;
+  font-size: var(--mark-size);
+  line-height: 0.9;
+  color: var(--color-text);
+  white-space: nowrap;
+  text-decoration: none;
+  transition: transform var(--dur-fast) var(--ease-out-cubic);
+}
+
+/* Pressed: the whole mark gives a little, as together's logo does (95%). */
+.navbar__mark:active { transform: translateX(-50%) scale(0.95); }
+
+.navbar__letter { display: inline-block; }
+
+/* Click only — nothing happens on hover (a hover trigger re-fired as the pointer
+   moved and read as flicker). Measured off together.agency: letters snap to 0.1, then each fades back to 1
+   in sequence, ~0.4s end to end, decelerating. With two letters the stagger is
+   wider than their 8-letter 17ms so the wave still reads. */
+@keyframes mark-ripple {
+  from { opacity: 0.1; }
+  to   { opacity: 1; }
+}
+.navbar__letter--pulse { animation: mark-ripple 0.4s var(--ease-out-cubic) both; }
+.navbar__letter--pulse + .navbar__letter--pulse { animation-delay: 0.07s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .navbar__letter { animation: none !important; }
+  .navbar__mark:active { transform: translateX(-50%); }
+}
+
+.navbar__menu {
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+  color: var(--color-text);
+  text-align: right;
+  transition: opacity var(--dur-base) var(--ease-in-out-sine);
+}
+
+.navbar__menu:hover { opacity: 0.6; }
+
+/* ---- Menu / Close swap ---------------------------------------------------
+   One line-box tall and clipped, with the two labels stacked inside it. */
+.navbar__menu-swap {
+  position: relative;
+  display: block;
+  height: calc(var(--step-0) * var(--leading-body));
+  overflow: hidden;
+}
+
+.navbar__menu-label {
+  display: block;
+  transition: transform var(--dur-base) var(--ease-out-expo);
+}
+
+/* "Close" waits one line below the opening, out of sight. */
+.navbar__menu-label--close {
+  position: absolute;
+  inset: 0;
+  transform: translateY(100%);
+}
+
+.navbar__menu[aria-expanded='true'] .navbar__menu-label--menu {
+  transform: translateY(-100%);
+}
+
+.navbar__menu[aria-expanded='true'] .navbar__menu-label--close {
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navbar__menu-label { transition: none; }
+}
+
+/* ---- Mobile: the three slots collapse into a container pill --------------- */
+@media (max-width: 760px) {
+  .navbar__inner {
+    height: auto;
+    gap: var(--space-4);
+    max-width: 420px;
+    margin: var(--space-4) auto 0;
+    padding: var(--space-5) var(--space-8);
+    border-radius: 128px;
+    background: var(--color-container);
+  }
+
+  .navbar__mark {
+    position: static;
+    flex: 1 0 0;
+    transform: none;
+    /* No step down here any more: --mark-size is fluid, so it has already
+       reached 33 by the time this breakpoint applies and 29.7 at 390.
+       Multiplying it again reintroduced the jump the clamp exists to avoid. */
+    letter-spacing: 0.18px;
+    text-align: center;
+  }
+}
+
+/* The bar keeps the wider 80px inset while content sections sit at 32. */
+.navbar.container { padding-inline: var(--nav-gutter); }
+
+
+/* ---- Logo-click page wipe ---------------------------------------------------
+   A band 300vh tall: soft edge (100vh), solid (100vh), soft edge (100vh). It
+   starts below the screen and travels up and off, so the background colour
+   sweeps over the page, holds for an instant fully covering it, then sweeps
+   away. Symmetric easing puts the fully-covered moment at the midpoint, which
+   is when Navbar.jsx changes the route. The colour is the page background, so
+   it is black in dark mode and white in light. */
+.page-wipe {
+  --dur-wipe: 1.3s;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 300vh;
+  z-index: 30;                 /* above the lightbox (20) */
+  pointer-events: auto;        /* swallow clicks while the page is covered */
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    var(--color-background) 33.3%,
+    var(--color-background) 66.7%,
+    transparent 100%
+  );
+  transform: translateY(100vh);
+  will-change: transform;
+  animation: page-wipe var(--dur-wipe) cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+@keyframes page-wipe {
+  from { transform: translateY(100vh); }
+  to   { transform: translateY(-200vh); }
+}
