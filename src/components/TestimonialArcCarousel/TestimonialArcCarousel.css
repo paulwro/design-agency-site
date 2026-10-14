@@ -37,11 +37,11 @@
   padding: 24px;
   min-height: 580px;
   border-radius: 24px;
-  background: var(--color-testimonial-card);
-  color: var(--color-testimonial-text);
-  /* No shadow. The card already separates from the page by fill alone — black
-     on white, #121212 on black — and the arc stacks them, so a shadow on every
-     card compounds into a smudge behind the whole fan. */
+  background: var(--tac-bg);
+  color: var(--tac-fg);
+  /* No shadow. The card already separates from the page by its own fill, and the
+     arc stacks them, so a shadow on every card compounds into a smudge behind
+     the whole fan. */
   touch-action: none;
   user-select: none;
 }
@@ -57,7 +57,7 @@
 
 .tac-card__logo-mark {
   flex-shrink: 0;
-  background-color: var(--color-testimonial-text);
+  background-color: var(--tac-fg);
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   -webkit-mask-position: center;
@@ -108,7 +108,7 @@
   font-family: var(--font-body);
   font-size: var(--step-0);
   line-height: var(--leading-body);
-  color: var(--color-testimonial-text);
+  color: var(--tac-fg);
 }
 
 .tac-card__quote-mark {
@@ -129,7 +129,7 @@
   font-family: var(--font-body);
   font-size: var(--step-0);
   line-height: var(--leading-body);
-  color: var(--color-testimonial-text);
+  color: var(--tac-fg);
 }
 
 .tac-card__attribution-role {

@@ -25,9 +25,11 @@
   --color-text-muted: rgba(0, 0, 0, 0.6);      /* "Muted Text" — now the same 60% as soft */
   --color-muted-toggle: #DADADA;
 
-  /* Testimonial card: Figma "Testimonial Card" / "Testimonial Text" (light #F9F9F9 / #000). */
+  /* Work page cards (Figma "Testimonial Card" / "Testimonial Text"). The home
+     testimonial carousel no longer uses these: its cards carry fixed colours. */
   --color-testimonial-card: #F9F9F9;
   --color-testimonial-text: #000000;
+
 
 
   /* ---- Lightbox · Figma 1785:1438 (light) / 1784:1585 -------------------
@@ -299,6 +301,8 @@
   --color-rule-soft: var(--color-border);
   --color-text-soft: rgba(255, 255, 255, 0.6);
   --color-text-muted: rgba(255, 255, 255, 0.6);
+  --color-testimonial-card: #121212;
+  --color-testimonial-text: #FFFFFF;
   --color-muted-toggle: #3F3F3F;
 
 
@@ -307,8 +311,6 @@
   --lightbox-text: #000000;
   --collapsed-site-background: #121212;
 
-  --color-testimonial-card: #121212;
-  --color-testimonial-text: #FFFFFF;
 
   --color-pill: #131313;         /* Figma: Pill Container */
   --color-pill-hover: #0F0F0F;   /* Figma: Pill Container Hover */

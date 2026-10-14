@@ -4,6 +4,10 @@ import solarGatorLogo from '../../assets/testimonials/solargator-logo.svg';
 import sema4Logo from '../../assets/testimonials/sema4-logo.svg';
 import noteworthyLogo from '../../assets/testimonials/noteworthy-logo.svg';
 
+// Card colors are fixed (the same in light and dark mode), set per card in Figma:
+// `bg` is the card fill, `fg` the quote, attribution and logo colour. A logo that
+// carries its own colours (SolarGator) sets `logoFullColor` and is drawn as an
+// image instead of a single-colour mask.
 // To add a card, five inputs are needed: the company logo (svg, saved into
 // ../../assets/testimonials/), the quote, the person's name, their title,
 // and their company name (title + company become `role`, company alone is
@@ -23,6 +27,8 @@ export const testimonials = [
     role: 'CEO, Swept',
     logo: sweptLogo,
     logoAlt: 'Swept',
+    bg: 'var(--color-pink)',
+    fg: '#FFFFFF',
     logoWidth: 111,
     logoHeight: 36,
   },
@@ -33,6 +39,8 @@ export const testimonials = [
     role: 'Founder/Principal, Ever Wonder',
     logo: everWonderLogo,
     logoAlt: 'Ever Wonder',
+    bg: '#9747FF',
+    fg: '#FFFFFF',
     logoWidth: 41,
     logoHeight: 88,
   },
@@ -44,6 +52,8 @@ export const testimonials = [
     role: 'Creative Director, Sema4',
     logo: sema4Logo,
     logoAlt: 'Sema4',
+    bg: '#01ECF0',
+    fg: '#000000',
     logoWidth: 122,
     logoHeight: 26,
   },
@@ -55,6 +65,9 @@ export const testimonials = [
     role: 'Partner, SolarGator',
     logo: solarGatorLogo,
     logoAlt: 'SolarGator',
+    logoFullColor: true,
+    bg: 'var(--color-success)',
+    fg: '#000000',
     logoWidth: 71.7,
     logoHeight: 48,
   },
@@ -66,6 +79,8 @@ export const testimonials = [
     role: 'Head of Marketing, Noteworthy.ai',
     logo: noteworthyLogo,
     logoAlt: 'Noteworthy.ai',
+    bg: 'var(--color-warning)',
+    fg: '#000000',
     logoWidth: 190,
     logoHeight: 30,
   },

@@ -27,10 +27,22 @@ function opacityForOffset(offset) {
   return 1 - (abs - FADE_START) / (FADE_END - FADE_START);
 }
 
+/** Fixed per-card colours (same in light and dark) from testimonials-data. */
+const cardColors = (item) => ({ '--tac-bg': item.bg, '--tac-fg': item.fg });
+
 function CardContent({ item }) {
   return (
     <>
       <div className="tac-card__logo">
+        {item.logoFullColor ? (
+          <img
+            src={item.logo}
+            alt={item.logoAlt}
+            width={item.logoWidth}
+            height={item.logoHeight}
+            draggable={false}
+          />
+        ) : (
         <span
           className="tac-card__logo-mark"
           role="img"
@@ -42,6 +54,7 @@ function CardContent({ item }) {
             WebkitMaskImage: `url("${item.logo}")`,
           }}
         />
+        )}
       </div>
       <div className="tac-card__text">
         <div className="tac-card__quote">
@@ -77,7 +90,7 @@ function ArcCard({ item, offset, isDragging }) {
   return (
     <motion.div
       className="tac-card"
-      style={{ zIndex }}
+      style={{ zIndex, ...cardColors(item) }}
       initial={{ opacity: 0 }}
       animate={{ x, y, rotate, opacity }}
       transition={isDragging ? DRAG_TRANSITION : SNAP_TRANSITION}
@@ -167,7 +180,7 @@ function ArcCarousel() {
           if (e.key === 'ArrowRight') advance(1);
         }}
       >
-        <div className="tac-card tac-card--sizer" aria-hidden="true">
+        <div className="tac-card tac-card--sizer" aria-hidden="true" style={cardColors(testimonials[0])}>
           <CardContent item={testimonials[0]} />
         </div>
         {visibleCards.map(({ item, offset }) => (
@@ -192,7 +205,7 @@ function MobilePeekCarousel() {
     <section className="tac-mobile" aria-label="Client testimonials">
       <div className="tac-mobile-track">
         {testimonials.map((item) => (
-          <div className="tac-card" key={item.id}>
+          <div className="tac-card" key={item.id} style={cardColors(item)}>
             <CardContent item={item} />
           </div>
         ))}
