@@ -59,7 +59,8 @@
 .navbar__mark {
   position: absolute;
   left: 50%;
-  transform: translateX(-50%);
+  translate: -50% 0;          /* `translate`, not `transform`: it is applied outside `scale`,
+                                 so the mark stays centred while it shrinks */
   font-family: var(--font-mark);
   font-weight: 500;
   font-size: var(--mark-size);
@@ -67,28 +68,27 @@
   color: var(--color-text);
   white-space: nowrap;
   text-decoration: none;
-  transition: transform var(--dur-fast) var(--ease-out-cubic);
 }
 
-/* Pressed: the whole mark gives a little, as together's logo does (95%). */
-.navbar__mark:active { transform: translateX(-50%) scale(0.95); }
-
-.navbar__letter { display: inline-block; }
-
-/* Click only — nothing happens on hover (a hover trigger re-fired as the pointer
-   moved and read as flicker). Measured off together.agency: letters snap to 0.1, then each fades back to 1
-   in sequence, ~0.4s end to end, decelerating. With two letters the stagger is
-   wider than their 8-letter 17ms so the wave still reads. */
-@keyframes mark-ripple {
-  from { opacity: 0.1; }
-  to   { opacity: 1; }
+/* Hover: the mark settles down 8% from its centre. Press: it squeezes in further
+   and springs back past rest on release (the overshoot easing), which is the
+   bounce. Uses the `scale` property so it never fights the `translate` that
+   centres the mark on desktop. Hover is gated to real pointers so a tap on a
+   phone does not leave it shrunk. */
+.navbar__mark { transition: scale var(--dur-slow) var(--ease-bounce); }
+@media (hover: hover) {
+  .navbar__mark:hover { scale: 0.92; }
 }
-.navbar__letter--pulse { animation: mark-ripple 0.4s var(--ease-out-cubic) both; }
-.navbar__letter--pulse + .navbar__letter--pulse { animation-delay: 0.07s; }
+.navbar__mark:active {
+  scale: 0.82;
+  transition-duration: var(--dur-fast);
+  transition-timing-function: var(--ease-out-cubic);
+}
 
 @media (prefers-reduced-motion: reduce) {
-  .navbar__letter { animation: none !important; }
-  .navbar__mark:active { transform: translateX(-50%); }
+  .navbar__mark,
+  .navbar__mark:hover,
+  .navbar__mark:active { scale: 1; transition: none; }
 }
 
 .navbar__menu {
@@ -154,7 +154,7 @@
   .navbar__mark {
     position: static;
     flex: 1 0 0;
-    transform: none;
+    translate: none;
     /* No step down here any more: --mark-size is fluid, so it has already
        reached 33 by the time this breakpoint applies and 29.7 at 390.
        Multiplying it again reintroduced the jump the clamp exists to avoid. */
@@ -165,37 +165,3 @@
 
 /* Same 1280 max and 32 inset as the content (Figma 1055:1396). */
 .navbar.container { padding-inline: var(--nav-gutter); }
-
-
-/* ---- Logo-click page wipe ---------------------------------------------------
-   A band 300vh tall: soft edge (100vh), solid (100vh), soft edge (100vh). It
-   starts below the screen and travels up and off, so the background colour
-   sweeps over the page, holds for an instant fully covering it, then sweeps
-   away. Symmetric easing puts the fully-covered moment at the midpoint, which
-   is when Navbar.jsx changes the route. The colour is the page background, so
-   it is black in dark mode and white in light. */
-.page-wipe {
-  --dur-wipe: 1.3s;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 300vh;
-  z-index: 30;                 /* above the lightbox (20) */
-  pointer-events: auto;        /* swallow clicks while the page is covered */
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    var(--color-background) 33.3%,
-    var(--color-background) 66.7%,
-    transparent 100%
-  );
-  transform: translateY(100vh);
-  will-change: transform;
-  animation: page-wipe var(--dur-wipe) cubic-bezier(0.65, 0, 0.35, 1) both;
-}
-
-@keyframes page-wipe {
-  from { transform: translateY(100vh); }
-  to   { transform: translateY(-200vh); }
-}

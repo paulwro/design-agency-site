@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { createPortal } from 'react-dom';
 import ThemeToggle from '../ThemeToggle/ThemeToggle';
 import { navigate } from '../../router';
 import './Navbar.css';
@@ -13,13 +12,6 @@ import './Navbar.css';
  * Theme state lives here; dark is the default and the toggle choice is remembered.
  */
 const THEME_KEY = 'pw-theme';
-
-/* Logo click: the page is wiped out in the page's own background colour
-   (black in dark mode, white in light) by a soft-edged band sweeping up the
-   screen, and wiped back in as it leaves — together.agency's gesture. The
-   route change and the scroll to top happen at the midpoint, while the screen
-   is fully covered. Keep WIPE_MS in step with --dur-wipe in Navbar.css. */
-const WIPE_MS = 1300;
 
 /**
  * First visit opens in dark. A choice made with the toggle is remembered and
@@ -46,30 +38,16 @@ export default function Navbar({
   const isControlled = themeProp !== undefined;
   const theme = isControlled ? themeProp : themeState;
   const isDark = theme === 'dark';
-  const [pulse, setPulse] = useState(0);
-  const [wiping, setWiping] = useState(false);
-  const wipeTimer = useRef(null);
   const fadeTimer = useRef(null);
-  useEffect(() => () => clearTimeout(wipeTimer.current), []);
 
   const goHome = useCallback((event) => {
-    setPulse((n) => n + 1);
     // Let modified clicks (new tab, etc.) behave like any link.
     if (event.metaKey || event.ctrlKey || event.shiftKey || event.button > 0) return;
     event.preventDefault();
-    if (wiping) return;
-    const arrive = () => {
-      if (menuOpen) onMenuClick?.();
-      navigate('/');
-      window.scrollTo(0, 0);
-    };
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      arrive();
-      return;
-    }
-    setWiping(true);
-    wipeTimer.current = setTimeout(arrive, WIPE_MS / 2);
-  }, [wiping, menuOpen, onMenuClick]);
+    if (menuOpen) onMenuClick?.();
+    navigate('/');
+    window.scrollTo(0, 0);
+  }, [menuOpen, onMenuClick]);
 
   useEffect(() => {
     document.body.classList.toggle('dark-mode', isDark);
@@ -104,17 +82,15 @@ export default function Navbar({
           <ThemeToggle isDark={isDark} onToggle={toggleTheme} />
         </div>
 
-        {/* The monogram takes together.agency's logo gesture: on hover and on
-            click every letter drops to 10% and ripples back to full, left to
-            right. The key restarts the animation on each click. */}
+        {/* The monogram: scales down a touch on hover and gives a springy bounce
+            on press (see .navbar__mark in Navbar.css). */}
         <a
           className="navbar__mark"
           href="/"
           aria-label="Paul Wronski — home"
           onClick={goHome}
         >
-          <span aria-hidden="true" key={`p${pulse}`} className={`navbar__letter${pulse ? ' navbar__letter--pulse' : ''}`}>P</span>
-          <span aria-hidden="true" key={`w${pulse}`} className={`navbar__letter${pulse ? ' navbar__letter--pulse' : ''}`}>W</span>
+          PW
         </a>
 
         <div className="navbar__slot navbar__slot--end">
@@ -137,11 +113,6 @@ export default function Navbar({
           </button>
         </div>
       </div>
-      {wiping &&
-        createPortal(
-          <div className="page-wipe" aria-hidden="true" onAnimationEnd={() => setWiping(false)} />,
-          document.body,
-        )}
     </header>
   );
 }

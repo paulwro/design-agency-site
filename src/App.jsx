@@ -56,7 +56,7 @@ function currentRoute(path = currentPath()) {
 
 /* Route change: the page fades out, the scroll returns to the top while nothing
    is visible, and the next page fades in — its own sections then rise on their
-   Reveals. Opacity only: with the logo wipe and the section reveals already
+   Reveals. Opacity only: with the section reveals already
    moving things, a second movement here would be one too many. */
 const PAGE_EASE = [0.445, 0.05, 0.55, 0.95];   /* --ease-in-out-sine */
 const routeKeyFor = (Page) => Object.keys(ROUTES).find((k) => ROUTES[k] === Page) ?? 'home';
