@@ -421,6 +421,8 @@
   .work-quote__by,
   .work-quote__logo { grid-column: auto; }
   .work-quote__logo { justify-self: start; }
+  /* The byline shares the quote mark's left edge, not 8 in from it. */
+  .work-quote__by { padding-inline: 0; }
 }
 
 @media (max-width: 760px) {

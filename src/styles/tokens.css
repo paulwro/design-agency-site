@@ -111,8 +111,8 @@
   --step-1:  clamp(1.1250rem, 1.0704rem + 0.2240vw, 1.2720rem);  /* 18.0 → 20.4 */
   --step-2:  clamp(1.2656rem, 1.1347rem + 0.5370vw, 1.6180rem);  /* 20.2 → 25.9 */
   --step-3:  clamp(1.4238rem, 1.1882rem + 0.9666vw, 2.0582rem);  /* 22.8 → 32.9 */
-  --step-4:  clamp(1.6018rem, 1.2243rem + 1.5485vw, 2.6180rem);  /* 25.6 → 41.9 */
-  --step-5:  clamp(1.8020rem, 1.2344rem + 2.3286vw, 3.3302rem);  /* 28.8 → 53.3 */
+  --step-4:  clamp(1.75rem, 1.4275rem + 1.324vw, 2.6180rem);  /* 28 → 41.9 (phones lifted from 25.6 so headings carry, as on together.agency) */
+  --step-5:  clamp(2.1875rem, 1.7627rem + 1.743vw, 3.3302rem);  /* 35 → 53.3 (phones lifted from 28.8) */
 
   /* Leading. One hyperbola — 0.75·size + 15.3px — expressed so it stays
      correct as the sizes interpolate. Flat 1.6 at step 0 and below. */

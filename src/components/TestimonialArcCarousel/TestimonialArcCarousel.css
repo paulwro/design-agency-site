@@ -200,7 +200,8 @@
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
-    padding: 0 40px;
+    padding: 0 var(--container-gutter);
+    scroll-padding-inline: var(--container-gutter);
     scrollbar-width: none;
   }
 
@@ -215,8 +216,8 @@
     margin-left: 0;
     flex: 0 0 auto;
     min-height: 0;
-    width: calc(100vw - 120px);
+    width: calc(100vw - var(--container-gutter) * 2 - 24px);
     max-width: 340px;
-    scroll-snap-align: center;
+    scroll-snap-align: start;
   }
 }
