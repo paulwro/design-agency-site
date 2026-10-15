@@ -17,7 +17,7 @@
  *   · Sentence case, no trailing periods on headlines.
  *   · Client names stay OUT of metadata and structured data. (The one client name that appears in code is a
  *     visible testimonial attribution and an Engagements pill, both set in Figma by Paul.)
- *   · Titles are "What it is | Paul Wronski" (Oct 2026 SEO/AEO handoff); descriptions
+ *   · Titles are "What it is / Paul Wronski" (Oct 2026 SEO/AEO handoff); descriptions
  *     lead with the business stake. Search engines may rewrite either.
  *   · Prices are stated plainly with "starts at"; they are the facts an answer
  *     engine is most likely to be asked for.
@@ -114,12 +114,12 @@ const engagementServices = () => [
 export const ROUTE_SEO = {
   home: {
     path: '/',
-    title: 'Brand Identity & Graphic Design Studio | Paul Wronski',
+    title: 'Brand Identity & Graphic Design Studio / Paul Wronski',
     description:
       "When your brand is underestimated, opportunities get harder to win. Paul Wronski brings senior creative expertise to branding, websites and business-critical design.",
     ogTitle: 'Shed the creative limitations holding your business back',
     graph: () => [
-      webPage('/', 'Brand Identity & Graphic Design Studio | Paul Wronski',
+      webPage('/', 'Brand Identity & Graphic Design Studio / Paul Wronski',
         'Independent creative director for startups to enterprise, working as an agency of one.', {
           '@type': ['WebPage', 'CollectionPage'],
         }),
@@ -128,7 +128,7 @@ export const ROUTE_SEO = {
   },
   work: {
     path: '/work',
-    title: 'Brand Identity & Graphic Design Portfolio | Paul Wronski',
+    title: 'Brand Identity & Graphic Design Portfolio / Paul Wronski',
     description:
       "See how brand identities, websites, campaigns and creative systems help businesses strengthen perception, communicate their value and prepare for what's next.",
     graph: () => [
@@ -142,7 +142,7 @@ export const ROUTE_SEO = {
   },
   studio: {
     path: '/studio',
-    title: 'Independent Creative Director & Designer | Paul Wronski',
+    title: 'Independent Creative Director & Designer / Paul Wronski',
     description:
       'Meet Paul Wronski, an independent creative director and designer with 20+ years of experience helping businesses solve consequential brand and creative challenges.',
     ogTitle: 'Become easier to trust, and harder to ignore',
@@ -167,7 +167,7 @@ export const ROUTE_SEO = {
   },
   engagements: {
     path: '/engagements',
-    title: 'Branding & Graphic Design Services | Paul Wronski',
+    title: 'Branding & Graphic Design Services / Paul Wronski',
     description:
       'Losing ground to sharper competitors? Get senior creative support for brand identity, websites and smarter ways of working\u2014through goals, sprints or partnerships.',
     ogTitle: 'Three ways to move forward',
@@ -191,7 +191,7 @@ export const ROUTE_SEO = {
   },
   contact: {
     path: '/contact',
-    title: 'Contact Paul Wronski | Branding & Creative Projects',
+    title: 'Contact Paul Wronski / Branding & Creative Projects',
     description:
       "Have a brand, website or creative challenge that's affecting your business? Talk directly with Paul Wronski about the problem, the opportunity and what comes next.",
     graph: () => [
@@ -211,13 +211,13 @@ export const ROUTE_SEO = {
   // Lightbox routes: /work/<slug> and /insight/<slug>. Placeholder until each has real copy.
   caseStudy: {
     path: '/work',
-    title: 'Case study | Paul Wronski',
+    title: 'Case study / Paul Wronski',
     description: 'A closer look at the thinking, process, and outcome behind a Paul Wronski project.',
     graph: () => [],
   },
   insight: {
     path: '/',
-    title: 'Insight | Paul Wronski',
+    title: 'Insight / Paul Wronski',
     description: 'Notes on brand, creative direction, and how businesses show up.',
     graph: () => [],
   },

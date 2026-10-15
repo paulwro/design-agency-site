@@ -53,7 +53,7 @@ export const testimonials = [
     name: 'Kellie Jones',
     role: 'Director of Marketing, WEX',
     logo: wexLogo,
-    logoAlt: 'Global commerce platform',
+    logoAlt: 'global commerce platform',
     bg: 'var(--color-error)',
     fg: '#FFFFFF',
     logoWidth: 83,

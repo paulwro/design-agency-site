@@ -41,7 +41,7 @@ export function applySeo(key) {
   const seo = ROUTE_SEO[key];
   if (!seo) return;
   const url = `${SITE.url}${seo.path === '/' ? '/' : seo.path}`;
-  const ogTitle = seo.ogTitle ? `${seo.ogTitle} | ${SITE.name}` : seo.title;
+  const ogTitle = seo.ogTitle ? `${seo.ogTitle} / ${SITE.name}` : seo.title;
 
   document.title = seo.title;
   setMeta('name', 'description', seo.description);
