@@ -102,17 +102,43 @@ export default function Lightbox({ kind, slug, onClose }) {
 
   return (
     <div className="lightbox" role="dialog" aria-modal="true" aria-label="Case study">
+      {/* The receded site. Opening: the page steps back first (insets close to 40,
+          corners round, the charcoal fades up behind it), THEN the card wipes up.
+          Closing runs in order the other way: the card drops away fast, then the
+          corners square off and the edges return to full bleed, and only then does
+          the charcoal fade out to leave the live page at 100%. */}
       <motion.div
         className="lightbox__site"
         initial={{ opacity: 0, left: reduce ? 40 : 0, right: reduce ? 40 : 0, borderTopLeftRadius: reduce ? 20 : 0, borderTopRightRadius: reduce ? 20 : 0 }}
-        animate={{ opacity: 1, left: 40, right: 40, borderTopLeftRadius: 20, borderTopRightRadius: 20 }}
-        exit={{ opacity: 0, left: reduce ? 40 : 0, right: reduce ? 40 : 0, borderTopLeftRadius: reduce ? 20 : 0, borderTopRightRadius: reduce ? 20 : 0 }}
-        transition={{
-          opacity: fade(0.5),
-          left: move(0.8),
-          right: move(0.8),
-          borderTopLeftRadius: move(0.8),
-          borderTopRightRadius: move(0.8),
+        animate={{
+          opacity: 1,
+          left: 40,
+          right: 40,
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
+          transition: {
+            opacity: fade(0.35),
+            left: move(0.65),
+            right: move(0.65),
+            borderTopLeftRadius: move(0.65),
+            borderTopRightRadius: move(0.65),
+          },
+        }}
+        exit={{
+          opacity: 0,
+          left: reduce ? 40 : 0,
+          right: reduce ? 40 : 0,
+          borderTopLeftRadius: reduce ? 20 : 0,
+          borderTopRightRadius: reduce ? 20 : 0,
+          transition: reduce
+            ? { duration: 0.2 }
+            : {
+                left: { duration: 0.5, ease: EXPO, delay: 0.28 },
+                right: { duration: 0.5, ease: EXPO, delay: 0.28 },
+                borderTopLeftRadius: { duration: 0.5, ease: EXPO, delay: 0.28 },
+                borderTopRightRadius: { duration: 0.5, ease: EXPO, delay: 0.28 },
+                opacity: { duration: 0.4, ease: SINE, delay: 0.6 },
+              },
         }}
         onClick={onClose}
       />
@@ -122,8 +148,8 @@ export default function Lightbox({ kind, slug, onClose }) {
         ref={panelRef}
         initial={reduce ? { opacity: 0 } : { y: '100%' }}
         animate={reduce ? { opacity: 1 } : { y: 0 }}
-        exit={reduce ? { opacity: 0 } : { y: '100%', transition: { duration: 0.5, ease: EXPO } }}
-        transition={reduce ? fade(0.3) : { duration: 0.8, ease: EXPO, delay: 0.08 }}
+        exit={reduce ? { opacity: 0 } : { y: '100%', transition: { duration: 0.34, ease: [0.55, 0, 0.9, 0.4] } }}
+        transition={reduce ? fade(0.3) : { duration: 0.7, ease: EXPO, delay: 0.3 }}
       >
         <div className="lightbox__column">
           {blocks.map((b, i) => (
@@ -139,8 +165,9 @@ export default function Lightbox({ kind, slug, onClose }) {
         aria-label="Close"
         onClick={onClose}
         initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1, transition: { opacity: fade(0.4, 0.45), scale: move(0.6, EXPO) } }}
-        exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.2, ease: SINE } }}
+        animate={{ opacity: 1, scale: 1, transition: { opacity: fade(0.4, 0.7), scale: move(0.6, EXPO) } }}
+        // delay above lets the panel arrive before the close button appears
+        exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.15, ease: SINE } }}
         whileHover={reduce ? undefined : { scale: 1.08 }}
         whileTap={reduce ? undefined : { scale: 0.96 }}
       >

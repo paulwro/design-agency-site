@@ -102,10 +102,15 @@
   color: var(--color-background);
 }
 
+.footer-nav { position: relative; }
+
 .footer-pill {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  height: 100%;
   z-index: 0;
+  pointer-events: none;
   border-radius: 100px;
   background: var(--color-text);
 }
