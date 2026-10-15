@@ -103,7 +103,7 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
-  padding: var(--space-2) 14px 15px var(--space-4);   /* bottom 15 per Paul, Oct 2026 */
+  padding: var(--space-2) 14px 8px var(--space-4);    /* bottom 8: one px under the old 9, per Paul */
   border-radius: 100px;
   background: var(--color-pill);
   color: var(--color-text);
