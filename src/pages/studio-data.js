@@ -190,12 +190,14 @@ export const howWeWork = {
    `video: { src, poster }`. `depth` is parallax travel in px: nearer slots
    (smaller, higher z) drift further. */
 export const heroCollage = {
-  stage: { w: 1271.17, h: 811 },
+  // Same five shapes as Figma 1787:1457, spread out so none of them touches
+  // another; the parallax depths differ widely so they pass at different speeds.
+  stage: { w: 1271, h: 1271 },
   items: [
-    { x: 0, y: 299.49, w: 511.51, h: 511.51, depth: 36, round: true, bg: '#4b3636' },
-    { x: 424.58, y: 393.62, w: 332.77, h: 370.8, depth: 96, bg: '#824242' },
-    { x: 248.58, y: 83.67, w: 585.67, h: 346.08, depth: 64, bg: '#9e6060' },
-    { x: 717.82, y: 0, w: 233.89, h: 233.89, depth: 160, bg: 'var(--color-border)' },
-    { x: 874.7, y: 116.94, w: 396.47, h: 494.4, depth: 128, bg: '#ece8e8' },
+    { x: 0, y: 0, w: 586, h: 346, depth: 28, bg: '#9e6060' },
+    { x: 790, y: 0, w: 234, h: 234, depth: 120, bg: 'var(--color-border)' },
+    { x: 875, y: 330, w: 396, h: 494, depth: 64, bg: '#ece8e8' },
+    { x: 60, y: 430, w: 512, h: 512, depth: 44, round: true, bg: '#4b3636' },
+    { x: 640, y: 900, w: 333, h: 371, depth: 96, bg: '#824242' },
   ],
 };

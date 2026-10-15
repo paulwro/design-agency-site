@@ -33,24 +33,13 @@
   color: var(--color-text);
 }
 
-/* Matches the LinkedIn / Instagram links in the menu overlay: the underline is
-   always present at half strength and comes to full on hover. The text itself
-   does not fade — it is the rule that answers, not the word. */
-.info-card__link {
-  text-decoration: underline;
-  text-underline-position: from-font;
-  text-decoration-thickness: 1.5px;
-  text-decoration-color: color-mix(in srgb, currentColor 50%, transparent);
-  transition: text-decoration-color var(--dur-color) var(--ease-out-cubic);
-}
+/* Email and phone use the site's .text-link: underline always present at 60%,
+   full strength on hover — the same treatment as Read more and the menu socials. */
 
-.info-card__link:hover,
-.info-card__link:focus-visible { text-decoration-color: currentColor; }
-
-/* Figma 1709:1392 — the location line sits 16 below the links (pt-16 on top of
+/* Figma 1709:1392 — the location line sits 24 below the links (pt-24 on top of
    the content's own gap of 4). */
 .info-card__location {
-  padding-top: var(--space-4);
+  padding-top: var(--space-6);
   font-size: var(--step--1);
   line-height: 24px;
   color: var(--color-text-muted);

@@ -7,19 +7,14 @@
 /* Work page hero sits on the 32px page margin rather than the 80px one. */
 .page-hero.page-hero--wide { padding-inline: var(--page-gutter-wide); }
 
-.page-hero__grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--space-8);
-}
-
-/* Content spans two of three columns; the third stays empty by design. */
 .page-hero__content {
-  grid-column: span 2;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: var(--space-12);
+  max-width: 696px;           /* Figma: Headings_Btn 696 inside a 760 hero */
+  margin-inline: auto;
+  text-align: center;
 }
 
 .page-hero__text {
@@ -51,6 +46,5 @@
 }
 
 @media (max-width: 900px) {
-  .page-hero__grid { grid-template-columns: 1fr; }
-  .page-hero__content { grid-column: auto; gap: var(--space-8); }
+  .page-hero__content { gap: var(--space-8); }
 }

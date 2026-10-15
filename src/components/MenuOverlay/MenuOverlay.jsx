@@ -78,7 +78,6 @@ export default function MenuOverlay({ open, onClose }) {
         </div>
 
         <div className="menu-overlay__footer">
-          <p className="menu-overlay__copyright">Paul Wronski Graphic Design, LLC</p>
           <div className="menu-overlay__socials">
             {SOCIALS.map((s) => (
               <a className="text-link" href={s.href} key={s.label} target="_blank" rel="noopener noreferrer">

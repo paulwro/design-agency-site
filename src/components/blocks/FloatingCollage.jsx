@@ -3,43 +3,37 @@ import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion
 import './blocks.css';
 
 /**
- * FloatingCollage — Figma "Floating Imgs" 1630:1384
+ * FloatingCollage — Figma "Floating Imgs" 1630:1384 / 1787:1457
  *
- * Overlapping media slots positioned as percentages of a 1127 x 873 stage, so
- * the arrangement scales intact instead of relying on fixed pixel offsets.
+ * Media slots positioned as percentages of a stage, so the arrangement scales
+ * intact instead of relying on fixed pixel offsets. The slots are spaced apart
+ * (at least ~60px between neighbours) rather than stacked on top of one another.
  *
- * MOTION. Two layers per slot, so they never fight over the same transform:
- *   outer  parallax — the slot drifts against the scroll at its own `depth`
- *          (px of travel each way across the section's pass through the
- *          viewport). Small, "closer" slots travel further than large ones,
- *          which is what makes the cluster read as sitting at different
- *          distances.
- *   inner  entrance — the slot fades up and settles once, staggered, on the
- *          site's usual two curves (see Reveal.jsx).
+ * MOTION. Pure parallax. Every slot is on screen from the start — nothing fades
+ * in, so you never see several images dissolving over each other — and each one
+ * travels against the scroll at its own `depth` (px of travel each way across
+ * the section's pass through the viewport). The depths differ a lot, so the
+ * slots slide past one another at different speeds and you see more or less of
+ * each as you scroll: small, "closer" slots move fastest, big ones barely move.
  *
- * Below 900px the overlap stops reading and the cluster becomes a plain grid;
- * parallax and the staggered entrance switch off with it. Reduced motion
- * renders the static arrangement.
+ * Below 900px the cluster becomes a plain grid and the parallax switches off
+ * with it. Reduced motion renders the static arrangement.
  *
  * Slots take { x, y, w, h, depth, round, bg, src, alt, video }. `bg` is a placeholder
  * fill until `src` or `video` ({ src, poster }) exists; a video autoplays muted on
- * a loop. `stage` ({ w, h }) sets the coordinate space the slots are placed in,
- * so a cluster drawn on a different artboard keeps its Figma coordinates.
+ * a loop. `stage` ({ w, h }) sets the coordinate space the slots are placed in.
  */
-const STAGE = { w: 1127, h: 873 };
+const STAGE = { w: 1160, h: 1100 };
 
 const DEFAULT_ITEMS = [
-  { x: 0, y: 83, w: 417, h: 520, depth: 36, bg: 'var(--color-border)' },
-  { x: 381, y: 0, w: 539, h: 364, depth: 64, bg: '#9e6060' },
-  { x: 172, y: 439, w: 434, h: 434, depth: 96, round: true, bg: '#4b3636' },
-  { x: 653, y: 451, w: 281, h: 374, depth: 128, bg: '#9e6060' },
-  { x: 881, y: 410, w: 246, h: 246, depth: 160, bg: 'var(--color-border)' },
+  { x: 0, y: 0, w: 417, h: 520, depth: 40, bg: 'var(--color-border)' },
+  { x: 588, y: 60, w: 539, h: 364, depth: 90, bg: '#9e6060' },
+  { x: 40, y: 600, w: 434, h: 434, depth: 56, round: true, bg: '#4b3636' },
+  { x: 560, y: 520, w: 281, h: 374, depth: 120, bg: '#9e6060' },
+  { x: 914, y: 700, w: 246, h: 246, depth: 150, bg: 'var(--color-border)' },
 ];
 
 const pct = (n, total) => `${(n / total) * 100}%`;
-
-const EASE_MOVE = [0.19, 1, 0.22, 1];     /* --ease-out-expo */
-const EASE_FADE = [0.445, 0.05, 0.55, 0.95]; /* --ease-in-out-sine */
 
 function useWide() {
   const [wide, setWide] = useState(
@@ -54,7 +48,7 @@ function useWide() {
   return wide;
 }
 
-function Slot({ item, index, progress, animate, stage }) {
+function Slot({ item, progress, animate, stage }) {
   const y = useTransform(progress, [0, 1], [item.depth ?? 0, -(item.depth ?? 0)]);
   const place = {
     left: pct(item.x, stage.w),
@@ -94,19 +88,7 @@ function Slot({ item, index, progress, animate, stage }) {
 
   return (
     <motion.div className="floating-collage__slot" style={{ ...place, y }}>
-      <motion.div
-        className="floating-collage__enter"
-        initial={{ opacity: 0, y: 48, scale: 0.97 }}
-        whileInView={{ opacity: 1, y: 0, scale: 1 }}
-        viewport={{ once: true, amount: 0.15 }}
-        transition={{
-          opacity: { duration: 0.6, ease: EASE_FADE, delay: index * 0.09 },
-          y: { duration: 1.1, ease: EASE_MOVE, delay: index * 0.09 },
-          scale: { duration: 1.1, ease: EASE_MOVE, delay: index * 0.09 },
-        }}
-      >
-        {figure}
-      </motion.div>
+      {figure}
     </motion.div>
   );
 }
@@ -132,7 +114,7 @@ export default function FloatingCollage({ items = DEFAULT_ITEMS, stage = STAGE }
         style={{ aspectRatio: `${stage.w} / ${stage.h}` }}
       >
         {items.map((item, i) => (
-          <Slot item={item} index={i} progress={scrollYProgress} animate={animate} stage={stage} key={i} />
+          <Slot item={item} progress={scrollYProgress} animate={animate} stage={stage} key={i} />
         ))}
       </div>
     </section>

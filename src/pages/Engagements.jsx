@@ -17,9 +17,7 @@ export default function Engagements() {
     <>
       <PageHero headline={hero.headline} lede={hero.lede} />
 
-      <Reveal>
-        <FloatingCollage />
-      </Reveal>
+      <FloatingCollage />
 
       <section className="engagements-page__section engagements-page__section--96 container">
         <Reveal>

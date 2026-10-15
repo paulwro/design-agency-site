@@ -8,7 +8,7 @@
   flex-direction: column;
   align-items: center;
   gap: 200px;       /* links/CTA to legal + social. Was 128 (Figma); Paul: 200, global */
-  padding-block: var(--section-inset) var(--space-4);    /* Figma: pt-128 pb-16 */
+  padding-block: var(--section-inset) var(--space-8);    /* pt-128, pb-32 (Paul: 32 bottom, global) */
 }
 
 .footer-mobile {
@@ -16,7 +16,7 @@
   flex-direction: column;
   align-items: center;
   gap: 72px;
-  padding-block: var(--section-inset) var(--space-4);   /* Figma: pt-128 pb-16 */
+  padding-block: var(--section-inset) var(--space-8);   /* pt-128, pb-32 */
   padding-inline: var(--container-gutter);
 }
 

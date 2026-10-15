@@ -33,9 +33,7 @@ export default function Studio() {
       />
 
       {/* Floating cluster · 1787:1464 — same gesture as Engagements, own artboard */}
-      <Reveal>
-        <FloatingCollage items={heroCollage.items} stage={heroCollage.stage} />
-      </Reveal>
+      <FloatingCollage items={heroCollage.items} stage={heroCollage.stage} />
 
       {/* Problem statement · 1236:1169 — 3 cols, gap-x 64 / gap-y 128 */}
       <section className="studio-section container">

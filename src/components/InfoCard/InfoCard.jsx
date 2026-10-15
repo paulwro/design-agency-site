@@ -16,10 +16,10 @@ export default function InfoCard({
       <p className="info-card__heading">{heading}</p>
 
       <div className="info-card__content">
-        <a className="info-card__line info-card__link" href={`mailto:${email}`}>
+        <a className="info-card__line text-link" href={`mailto:${email}`}>
           {email}
         </a>
-        <a className="info-card__line info-card__link" href={`tel:${phone.replace(/\s/g, '')}`}>
+        <a className="info-card__line text-link" href={`tel:${phone.replace(/\s/g, '')}`}>
           {phone}
         </a>
         <p className="info-card__line info-card__location">{location}</p>

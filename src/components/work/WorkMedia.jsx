@@ -1,3 +1,4 @@
+import { ScrollSettle, Parallax } from '../blocks/ScrollMotion';
 import './work.css';
 
 /**
@@ -12,13 +13,17 @@ import './work.css';
 export function Media({ media = {}, ratio }) {
   const { type, src, poster, alt = '', tone } = media;
   return (
-    <div className="work-media" data-tone={tone} style={ratio ? { '--ratio': ratio } : undefined}>
+    <ScrollSettle className="work-media" data-tone={tone} style={ratio ? { '--ratio': ratio } : undefined}>
       {src && type === 'video' ? (
-        <video src={src} poster={poster} autoPlay muted loop playsInline aria-label={alt || undefined} />
+        <Parallax>
+          <video src={src} poster={poster} autoPlay muted loop playsInline aria-label={alt || undefined} />
+        </Parallax>
       ) : src ? (
-        <img src={src} alt={alt} loading="lazy" />
+        <Parallax>
+          <img src={src} alt={alt} loading="lazy" />
+        </Parallax>
       ) : null}
-    </div>
+    </ScrollSettle>
   );
 }
 

@@ -68,6 +68,11 @@
   display: inline-flex;
   flex-direction: column;
   align-items: flex-start;
+  /* Hug the text. Inside a column flex parent the link would otherwise stretch
+     to the full width, taking the underline (and the hit area) with it. */
+  align-self: flex-start;
+  width: fit-content;
+  max-width: 100%;
   gap: 1px;
   font-family: var(--font-body);
   font-size: var(--step-0);
@@ -82,7 +87,7 @@
   width: 100%;
   height: 1.5px;
   background: currentColor;
-  opacity: 0.5;
+  opacity: 0.6;
   transition: opacity var(--dur-base) var(--ease-in-out-sine);
 }
 

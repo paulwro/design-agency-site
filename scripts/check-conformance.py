@@ -199,9 +199,9 @@ check('contact submit is disabled until the form is complete',
       'disabled={!complete' in read('components/ContactForm/ContactForm.jsx'))
 check('the submit button carries the gradient glow',
       '@keyframes glow-drift' in cf_css and '--glow-1' in tokens)
-check('InfoCard links match the text-link underline treatment',
-      'text-decoration-color' in read('components/InfoCard/InfoCard.css')
-      and 'opacity: 0.6' not in read('components/InfoCard/InfoCard.css'))
+check('InfoCard email and phone use the shared .text-link underline (60%)',
+      'text-link' in read('components/InfoCard/InfoCard.jsx')
+      and 'opacity: 0.6' in read('styles/controls.css'))
 check('InfoCard keeps its container — only the form lost one',
       re.search(r'\.info-card\s*\{[^}]*--color-container', read('components/InfoCard/InfoCard.css'), re.S))
 check('client tiles use a monogram, not a crushed wordmark',
