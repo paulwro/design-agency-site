@@ -1,7 +1,7 @@
+import { Fragment } from 'react';
 import PageHero from '../components/PageHero/PageHero';
 import SectionHeader from '../components/blocks/SectionHeader';
 import TitleBody from '../components/blocks/TitleBody';
-import DividedRow from '../components/blocks/DividedRow';
 import MediaPanel from '../components/blocks/MediaPanel';
 import CarouselCard from '../components/blocks/CarouselCard';
 import ClientLineList from '../components/blocks/ClientLineList';
@@ -149,15 +149,20 @@ export default function Studio() {
           <SectionHeader headline={howWeWork.heading} as="h2" width="two-thirds" level={3} />
         </Reveal>
         <Reveal className="studio-steps">
-          <DividedRow columns={2} rule="vertical">
-            {[0, 1].map((col) => (
-              <div className="studio-steps__col" key={col}>
+          {[0, 1].map((col) => (
+            <Fragment key={col}>
+              <div className="studio-steps__col">
                 {howWeWork.steps.slice(col * 3, col * 3 + 3).map((step, i) => (
                   <TitleBody key={i} title={step.title} body={step.body} emphasis="strong" />
                 ))}
               </div>
-            ))}
-          </DividedRow>
+              {col === 0 && (
+                <div className="studio-steps__rules" aria-hidden="true">
+                  <span /><span /><span />
+                </div>
+              )}
+            </Fragment>
+          ))}
         </Reveal>
       </section>
 

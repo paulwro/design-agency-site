@@ -212,7 +212,7 @@ check('FormField: a <select> is excluded from the :placeholder-shown float',
 check('FormField: no reserved air inflating the resting row past Figma 53',
       not re.search(r'\.form-field \{[^}]*padding-top', ff, re.S))
 check('Studio: the column divider is segmented, per Figma 1378:1467',
-      '.studio-steps .divided-row--vertical > * + * > *' in studio_css)
+      '.studio-steps__rules > span' in studio_css and 'column-gap: var(--space-8)' in studio_css)
 
 # ---- content and assets -----------------------------------------------------
 data_files = [f for f in SRC.rglob('*-data.js')]

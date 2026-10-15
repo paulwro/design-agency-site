@@ -172,7 +172,7 @@ export const howWeWork = {
     },
     {
       title: 'Creative Systems',
-      body: 'Give your team smarter tools, AI-enabled workflows, and better ways to work.',
+      body: 'Give your team smarter tools and better ways to work.',
     },
     {
       title: 'Campaigns & Communications',
