@@ -1,4 +1,8 @@
+import Reveal from '../blocks/Reveal';
 import { ScrollSettle, Parallax } from '../blocks/ScrollMotion';
+
+/* Each piece reveals on its own (low threshold: several are taller than a laptop viewport). */
+const IN = { amount: 0.1 };
 import './work.css';
 
 /**
@@ -28,9 +32,9 @@ export function Media({ media = {}, ratio }) {
 }
 
 /** Media plus its two-line caption. Either caption line may be omitted. */
-export function Figure({ media, client, description, ratio, inset = false, className = '' }) {
+export function Figure({ media, client, description, ratio, inset = false, className = '', delay = 0 }) {
   return (
-    <figure className={`work-figure${inset ? ' work-figure--inset' : ''} ${className}`.trim()}>
+    <Reveal as="figure" delay={delay} {...IN} className={`work-figure${inset ? ' work-figure--inset' : ''} ${className}`.trim()}>
       <Media media={media} ratio={ratio} />
       {(client || description) && (
         <figcaption className="work-figure__caption">
@@ -38,14 +42,14 @@ export function Figure({ media, client, description, ratio, inset = false, class
           {description && <span className="work-figure__desc">{description}</span>}
         </figcaption>
       )}
-    </figure>
+    </Reveal>
   );
 }
 
 /** Figma "Case study chapter": a step-1 title over one or more soft paragraphs. */
-export function Chapter({ title, paragraphs = [], strong = false, children }) {
+export function Chapter({ title, paragraphs = [], strong = false, children, delay = 0 }) {
   return (
-    <div className={`work-chapter${strong ? ' work-chapter--strong' : ''}`}>
+    <Reveal delay={delay} {...IN} className={`work-chapter${strong ? ' work-chapter--strong' : ''}`}>
       <p className="work-chapter__title">{title}</p>
       {paragraphs.length > 0 && (
         <div className="work-chapter__body">
@@ -55,7 +59,7 @@ export function Chapter({ title, paragraphs = [], strong = false, children }) {
         </div>
       )}
       {children}
-    </div>
+    </Reveal>
   );
 }
 
@@ -74,7 +78,7 @@ export function Logo({ src, alt, width, height, className = '' }) {
 /** Figma "Testimonial" (Feature / Outcome): quote across cols 2–3, byline and logo beneath. */
 export function PullQuote({ quote, name, role, logo }) {
   return (
-    <div className="work-quote">
+    <Reveal {...IN} className="work-quote">
       <p className="work-quote__text">
         <span aria-hidden="true">“</span>
         <span>{quote}”</span>
@@ -85,7 +89,7 @@ export function PullQuote({ quote, name, role, logo }) {
         {role}
       </p>
       {logo && <Logo {...logo} className="work-quote__logo" />}
-    </div>
+    </Reveal>
   );
 }
 

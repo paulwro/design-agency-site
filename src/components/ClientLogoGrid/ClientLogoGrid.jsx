@@ -1,3 +1,4 @@
+import { RevealGroup, RevealItem } from '../blocks/Reveal';
 import { clientLogos } from './client-logos-data';
 import './ClientLogoGrid.css';
 
@@ -22,11 +23,13 @@ export default function ClientLogoGrid({
 }) {
   return (
     <section className="logo-section container">
-      <div className="logo-section__inner">
-        {label && <p className="logo-section__label">{label}</p>}
+      <RevealGroup pace="quick" amount={0.1} className="logo-section__inner">
+        {label && (
+          <RevealItem as="p" className="logo-section__label">{label}</RevealItem>
+        )}
         <div className="logo-grid">
           {logos.map((logo, i) => (
-            <div className="logo-cell" key={`${logo.name}-${i}`}>
+            <RevealItem className="logo-cell" key={`${logo.name}-${i}`}>
               {/* Masked rather than <img> so the mark takes --color-text and
                   stays visible in dark mode — same technique as WorkTeaser. */}
               <span
@@ -38,10 +41,10 @@ export default function ClientLogoGrid({
                   WebkitMaskImage: `url("${logo.src}")`,
                 }}
               />
-            </div>
+            </RevealItem>
           ))}
         </div>
-      </div>
+      </RevealGroup>
     </section>
   );
 }

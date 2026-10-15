@@ -67,11 +67,26 @@
      16-24 of inset (the text sat 56 in from the screen edge on a phone); now it
      is the gutter + 8 + 12, so the copy gets room to breathe. */
   .service-card {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: var(--space-5);
     padding: var(--space-2);
     border-radius: var(--space-5);
   }
-  .service-card__body { grid-column: auto; padding: var(--space-3); }
-  .service-card__aside { gap: var(--space-4); }
+  .service-card__body { grid-column: auto; padding: var(--space-3); min-width: 0; }
+  .service-card__aside { gap: var(--space-4); min-width: 0; }
+
+  /* One scrolling row instead of a wrap that strands an orphan pill; it bleeds
+     to the card's edges so the cut-off pill says "there is more". */
+  .service-card__clients {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin-inline: calc(var(--space-3) * -1);
+    padding-inline: var(--space-3);
+    scroll-snap-type: x proximity;
+    scroll-padding-inline: var(--space-3);
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .service-card__clients::-webkit-scrollbar { display: none; }
+  .service-card__clients .pill-link { flex: 0 0 auto; scroll-snap-align: start; min-height: 44px; }
 }

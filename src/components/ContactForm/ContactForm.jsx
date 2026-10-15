@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { RevealGroup, RevealItem } from '../blocks/Reveal';
 import { FormField, FormSelect, RadioGroup } from '../FormField/FormField';
 import './ContactForm.css';
 
@@ -119,13 +120,14 @@ export default function ContactForm() {
   }
 
   return (
-    <form className="contact-form" onSubmit={handleSubmit} noValidate>
-      <FormField id="name" label="Name" autoComplete="name" {...bind('name')} />
-      <FormField id="email" label="Email" type="email" autoComplete="email" {...bind('email')} />
-      <FormField id="company" label="Company" autoComplete="organization" {...bind('company')} />
-      <FormSelect id="interest" label="I’m interested in..." options={INTERESTS} {...bind('interest')} />
-      <FormField id="projectDescription" label="Project description" textarea />
+    <RevealGroup as="form" pace="quick" amount={0.1} className="contact-form" onSubmit={handleSubmit} noValidate>
+      <RevealItem><FormField id="name" label="Name" autoComplete="name" {...bind('name')} /></RevealItem>
+      <RevealItem><FormField id="email" label="Email" type="email" autoComplete="email" {...bind('email')} /></RevealItem>
+      <RevealItem><FormField id="company" label="Company" autoComplete="organization" {...bind('company')} /></RevealItem>
+      <RevealItem><FormSelect id="interest" label="I’m interested in..." options={INTERESTS} {...bind('interest')} /></RevealItem>
+      <RevealItem><FormField id="projectDescription" label="Project description" textarea /></RevealItem>
 
+      <RevealItem>
       <RadioGroup
         name="budget"
         legend="What's your budget?"
@@ -133,13 +135,14 @@ export default function ContactForm() {
         value={values.budget}
         onChange={(val) => setValues((v) => ({ ...v, budget: val }))}
       />
+      </RevealItem>
 
-      <FormSelect id="timeline" label="How soon would you like to start?" options={TIMELINES} {...bind('timeline')} />
-      <FormSelect id="referral" label="How did you hear about us?" options={REFERRALS} {...bind('referral')} />
+      <RevealItem><FormSelect id="timeline" label="How soon would you like to start?" options={TIMELINES} {...bind('timeline')} /></RevealItem>
+      <RevealItem><FormSelect id="referral" label="How did you hear about us?" options={REFERRALS} {...bind('referral')} /></RevealItem>
 
       {/* Figma 1074:1090 — a full-width block at radius 12, not the pill
           .btn-primary used everywhere else. Inactive until the form is complete. */}
-      <div className="contact-form__submit">
+      <RevealItem className="contact-form__submit">
         <button
           type="submit"
           className="contact-form__btn"
@@ -147,7 +150,7 @@ export default function ContactForm() {
         >
           {status === 'sending' ? 'Sending…' : 'Submit'}
         </button>
-      </div>
+      </RevealItem>
 
       {status === 'error' && (
         <motion.p
@@ -159,6 +162,6 @@ export default function ContactForm() {
           That didn&rsquo;t send. Try again, or email hello@paulwro.com directly.
         </motion.p>
       )}
-    </form>
+    </RevealGroup>
   );
 }

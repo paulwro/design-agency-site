@@ -68,7 +68,7 @@ function Carousel({ slides = [] }) {
 
 function TestimonialCard({ quote, name, role, logo }) {
   return (
-    <figure className="work-card">
+    <Reveal as="figure" amount={0.1} delay={0.16} className="work-card">
       <blockquote className="work-card__quote">
         <span aria-hidden="true">“</span>
         <span>{quote}”</span>
@@ -81,34 +81,36 @@ function TestimonialCard({ quote, name, role, logo }) {
         </span>
         {logo && <Logo {...logo} className="work-card__logo" />}
       </figcaption>
-    </figure>
+    </Reveal>
   );
 }
 
 export function CaseStudy({ eyebrow, headline, lede, slides, chapters = [], testimonial }) {
   const [first, second] = chapters;
   return (
-    <Reveal as="section" className="work-section work-case" amount={0.1}>
+    <section className="work-section work-case">
       <div className="work-case__text">
         <div className="work-case__statement">
-          {eyebrow && <p className="work-case__eyebrow">{eyebrow}</p>}
-          <h2 className="work-heading work-heading--lg">{headline}</h2>
+          {eyebrow && <Reveal as="p" amount={0.1} className="work-case__eyebrow">{eyebrow}</Reveal>}
+          <Reveal as="h2" amount={0.1} delay={0.06} className="work-heading work-heading--lg">{headline}</Reveal>
         </div>
-        {lede && <p className="work-lede work-case__lede">{lede}</p>}
+        {lede && <Reveal as="p" amount={0.1} delay={0.12} className="work-lede work-case__lede">{lede}</Reveal>}
       </div>
 
-      <Carousel slides={slides} />
+      <Reveal amount={0.1}>
+        <Carousel slides={slides} />
+      </Reveal>
 
       <div className="work-case__cols">
         {first && <Chapter {...first} />}
         {second && (
-          <div className="work-case__col">
+          <Reveal amount={0.1} delay={0.08} className="work-case__col">
             <Chapter title={second.title} paragraphs={second.paragraphs} />
             {second.href && <ReadMore href={second.href} />}
-          </div>
+          </Reveal>
         )}
         {testimonial && <TestimonialCard {...testimonial} />}
       </div>
-    </Reveal>
+    </section>
   );
 }

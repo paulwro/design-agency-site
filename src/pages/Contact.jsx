@@ -16,9 +16,7 @@ export default function Contact() {
             Let&rsquo;s talk about you
           </Reveal>
           <RevealGroup className="contact__layout">
-            <RevealItem>
-              <ContactForm />
-            </RevealItem>
+            <ContactForm />
             <RevealItem>
               <InfoCard />
             </RevealItem>
@@ -26,9 +24,7 @@ export default function Contact() {
         </div>
       </section>
 
-      <Reveal>
-        <ClientLogoGrid />
-      </Reveal>
+      <ClientLogoGrid />
       <FaqSection items={contactFaqs} />
     </>
   );
