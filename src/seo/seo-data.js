@@ -15,9 +15,10 @@
  *   · Voice: "we" is deliberate (Paul, Oct 2026) — a group effort, ambiguity accepted.
           Never "I" or "Paul" in visible copy; the name lives in titles and schema.
  *   · Sentence case, no trailing periods on headlines.
- *   · Client names stay OUT of metadata and structured data; one client is never named anywhere in the code.
- *   · Titles <= ~60 characters, descriptions <= ~155, so they are not cut in
- *     results. Each page leads with what it IS, then the brand.
+ *   · Client names stay OUT of metadata and structured data. (The one client name that appears in code is a
+ *     visible testimonial attribution and an Engagements pill, both set in Figma by Paul.)
+ *   · Titles are "What it is | Paul Wronski" (Oct 2026 SEO/AEO handoff); descriptions
+ *     lead with the business stake. Search engines may rewrite either.
  *   · Prices are stated plainly with "starts at"; they are the facts an answer
  *     engine is most likely to be asked for.
  *
@@ -113,12 +114,12 @@ const engagementServices = () => [
 export const ROUTE_SEO = {
   home: {
     path: '/',
-    title: 'Agency of one: creative direction, brand & AI / Paul Wronski',
+    title: 'Brand Identity & Graphic Design Studio | Paul Wronski',
     description:
-      'Independent creative director for startups to enterprise: brand identity, websites, marketing systems, and AI-enabled creative, from an agency of one.',
+      "When your brand is underestimated, opportunities get harder to win. Paul Wronski brings senior creative expertise to branding, websites and business-critical design.",
     ogTitle: 'Shed the creative limitations holding your business back',
     graph: () => [
-      webPage('/', 'Agency of one: creative direction, brand & AI / Paul Wronski',
+      webPage('/', 'Brand Identity & Graphic Design Studio | Paul Wronski',
         'Independent creative director for startups to enterprise, working as an agency of one.', {
           '@type': ['WebPage', 'CollectionPage'],
         }),
@@ -127,9 +128,9 @@ export const ROUTE_SEO = {
   },
   work: {
     path: '/work',
-    title: 'Work: B2B brand, web, and campaign projects / Paul Wronski',
+    title: 'Brand Identity & Graphic Design Portfolio | Paul Wronski',
     description:
-      'Selected brand identity, website, and campaign work for B2B companies from startup to enterprise, with the thinking and outcomes behind each project.',
+      "See how brand identities, websites, campaigns and creative systems help businesses strengthen perception, communicate their value and prepare for what's next.",
     graph: () => [
       // Add a CreativeWork per project (name, image, alt, client-approved description)
       // once real case studies replace the placeholders.
@@ -141,9 +142,9 @@ export const ROUTE_SEO = {
   },
   studio: {
     path: '/studio',
-    title: 'Studio: B2B brand and creative leadership / Paul Wronski',
+    title: 'Independent Creative Director & Designer | Paul Wronski',
     description:
-      'An agency of one with 20+ years of brand and creative leadership for B2B companies in health tech, fintech, SaaS, and professional services. How we work.',
+      'Meet Paul Wronski, an independent creative director and designer with 20+ years of experience helping businesses solve consequential brand and creative challenges.',
     ogTitle: 'Become easier to trust, and harder to ignore',
     graph: () => [
       webPage('/studio', 'Studio', 'Who the studio works with, what it does, and how it works. An agency of one led by Paul Wronski.', {
@@ -166,9 +167,9 @@ export const ROUTE_SEO = {
   },
   engagements: {
     path: '/engagements',
-    title: 'Creative direction pricing and engagements / Paul Wronski',
+    title: 'Branding & Graphic Design Services | Paul Wronski',
     description:
-      'Goals from $3,500, sprints from $15,000, and fractional creative direction from $3,500 a month, for B2B brands from startup to enterprise.',
+      'Losing ground to sharper competitors? Get senior creative support for brand identity, websites and smarter ways of working\u2014through goals, sprints or partnerships.',
     ogTitle: 'Three ways to move forward',
     graph: () => [
       webPage('/engagements', 'Engagements', engagementTypes.headline, {
@@ -190,9 +191,9 @@ export const ROUTE_SEO = {
   },
   contact: {
     path: '/contact',
-    title: 'Contact: start a creative direction project / Paul Wronski',
+    title: 'Contact Paul Wronski | Branding & Creative Projects',
     description:
-      'Tell us about your brand, website, or campaign goals and timeline. A short note is enough to start, and every message gets a personal reply.',
+      "Have a brand, website or creative challenge that's affecting your business? Talk directly with Paul Wronski about the problem, the opportunity and what comes next.",
     graph: () => [
       webPage('/contact', 'Contact', 'Start a conversation about your brand, website, or campaign project.', {
         '@type': ['WebPage', 'ContactPage'],
@@ -210,13 +211,13 @@ export const ROUTE_SEO = {
   // Lightbox routes: /work/<slug> and /insight/<slug>. Placeholder until each has real copy.
   caseStudy: {
     path: '/work',
-    title: 'Case study / Paul Wronski',
+    title: 'Case study | Paul Wronski',
     description: 'A closer look at the thinking, process, and outcome behind a Paul Wronski project.',
     graph: () => [],
   },
   insight: {
     path: '/',
-    title: 'Insight / Paul Wronski',
+    title: 'Insight | Paul Wronski',
     description: 'Notes on brand, creative direction, and how businesses show up.',
     graph: () => [],
   },

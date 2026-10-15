@@ -38,7 +38,7 @@ const { ROUTE_SEO, SITE } = await import(pathToFileURL(join(root, 'src/seo/seo-d
 const template = readFileSync(join(root, 'dist/index.html'), 'utf8');
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 const PAGES = ['home', 'work', 'studio', 'engagements', 'contact'];
-const LINKS = PAGES.map((k) => `<a href="${ROUTE_SEO[k].path}">${esc(ROUTE_SEO[k].title.split(' / ')[0])}</a>`).join(' · ');
+const LINKS = PAGES.map((k) => `<a href="${ROUTE_SEO[k].path}">${esc(ROUTE_SEO[k].title.split(' | ')[0])}</a>`).join(' · ');
 
 function setTag(html, re, tag) {
   if (!re.test(html)) throw new Error(`template is missing ${re}`);
@@ -49,7 +49,7 @@ let count = 0;
 for (const key of PAGES) {
   const seo = ROUTE_SEO[key];
   const url = `${SITE.url}${seo.path === '/' ? '/' : seo.path}`;
-  const ogTitle = seo.ogTitle ? `${seo.ogTitle} / ${SITE.name}` : seo.title;
+  const ogTitle = seo.ogTitle ? `${seo.ogTitle} | ${SITE.name}` : seo.title;
   let html = template;
   html = setTag(html, /<title>.*?<\/title>/s, `<title>${esc(seo.title)}</title>`);
   html = setTag(html, /<meta name="description"[^>]*>/, `<meta name="description" content="${esc(seo.description)}" />`);
@@ -67,7 +67,7 @@ for (const key of PAGES) {
   }
   // Home keeps the richer summary already in index.html; other pages get their own.
   if (key !== 'home') {
-    const h1 = esc((seo.ogTitle || seo.title.split(' / ')[0]));
+    const h1 = esc((seo.ogTitle || seo.title.split(' | ')[0]));
     html = html.replace(
       /<noscript>[\s\S]*?<\/noscript>/,
       `<noscript><main><h1>${h1}</h1><p>${esc(seo.description)}</p><nav>${LINKS}</nav></main></noscript>`,

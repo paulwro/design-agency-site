@@ -3,6 +3,7 @@ import everWonderLogo from '../../assets/testimonials/ever-wonder-logo.svg';
 import solarGatorLogo from '../../assets/testimonials/solargator-logo.svg';
 import sema4Logo from '../../assets/testimonials/sema4-logo.svg';
 import noteworthyLogo from '../../assets/testimonials/noteworthy-logo.svg';
+import wexLogo from '../../assets/testimonials/wex-logo.svg';
 
 // Card colors are fixed (the same in light and dark mode), set per card in Figma:
 // `bg` is the card fill, `fg` the quote, attribution and logo colour. A logo that
@@ -13,7 +14,7 @@ import noteworthyLogo from '../../assets/testimonials/noteworthy-logo.svg';
 // and their company name (title + company become `role`, company alone is
 // `logoAlt`). logoWidth/logoHeight are the mark's rendered pixel size —
 // derive them from the logo file's own aspect ratio at a height that reads
-// as visually balanced against the other cards (swept is 36px tall,
+// as visually balanced against the other cards (swept is 40px tall,
 // ever-wonder is 88px tall — narrow/tall marks need more height than
 // wide/short ones to carry similar visual weight).
 const SHARED_QUOTE =
@@ -29,12 +30,13 @@ export const testimonials = [
     logoAlt: 'Swept',
     bg: 'var(--color-pink)',
     fg: '#FFFFFF',
-    logoWidth: 111,
-    logoHeight: 36,
+    logoWidth: 109,
+    logoHeight: 40,
   },
   {
     id: 'ever-wonder-sena',
-    quote: SHARED_QUOTE,
+    quote:
+      "Paul has an uncanny ability to seamlessly fuse logic and creativity into any brief he tackles. It's rare that a creative director can truly flex between left brain & right brain thinking, and still design beautiful assets. Paul's hungry, driven and organized \u2014 most importantly, he listens.\u201d",
     name: 'Brian Sena',
     role: 'Founder/Principal, Ever Wonder',
     logo: everWonderLogo,
@@ -43,6 +45,19 @@ export const testimonials = [
     fg: '#FFFFFF',
     logoWidth: 41,
     logoHeight: 88,
+  },
+  {
+    id: 'wex-jones',
+    quote:
+      'Paul has been an extension of our internal creative team for years now and brings a strategic external approach that\u2019s been an invaluable complement to our internal team. His vast creative design, production, and brand experience enables him to easily plug in to any creative need we have and execute quickly. He\u2019s a quick study and a valuable extension to any in-house creative team.\u201d',
+    name: 'Kellie Jones',
+    role: 'Director of Marketing, WEX',
+    logo: wexLogo,
+    logoAlt: 'Global commerce platform',
+    bg: 'var(--color-error)',
+    fg: '#FFFFFF',
+    logoWidth: 83,
+    logoHeight: 33,
   },
   {
     id: 'sema4-deluca',
