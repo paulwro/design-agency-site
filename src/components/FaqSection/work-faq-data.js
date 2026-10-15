@@ -34,6 +34,6 @@ export const workFaqs = [
     answer:
       'With a short conversation about what you are working on. Most projects begin as a ' +
       'Goal from $3,500 or a Sprint from $15,000, and some continue as ongoing creative ' +
-      'direction from $3,500 per month.',
+      'direction from $6,000 per month.',
   },
 ];

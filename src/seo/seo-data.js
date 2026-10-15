@@ -89,7 +89,7 @@ const engagementServices = () => [
     name: 'Integrated partnerships',
     description:
       'Ongoing senior creative direction embedded with your team, with continuity of creative judgment, context, and execution.',
-    price: 3500,
+    price: 6000,
     monthly: true,
   },
 ].map((s) => ({

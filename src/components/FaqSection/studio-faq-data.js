@@ -21,7 +21,7 @@ export const studioFaqs = [
       'A fractional creative director provides experienced creative leadership without a ' +
       'full-time hire: setting direction, guiding the brand, website, and marketing, and ' +
       'reviewing the work of internal teams and vendors. Our integrated partnerships work ' +
-      'this way and start at $3,500 per month.',
+      'this way and start at $6,000 per month.',
   },
   {
     id: 'studio-faq-enterprise',

@@ -26,7 +26,7 @@ export const contactFaqs = [
     question: 'How much does it cost to get started?',
     answer:
       'Goals start at $3,500, Sprints at $15,000, and Integrated Partnerships at ' +
-      '$3,500 a month. We agree the scope and price before any work begins.',
+      '$6,000 a month. We agree the scope and price before any work begins.',
   },
   {
     id: 'contact-faq-who',

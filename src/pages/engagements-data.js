@@ -64,9 +64,9 @@ export const engagementTypes = {
     },
     {
       title: 'Integrated Partnerships',
-      // Paul confirmed: go with the Figma price ($3,500/month) over the earlier
-      // $6,000 floor.
-      price: 'Starts at $3,500/month',
+      // Paul, Oct 2026: Integrated Partnerships start at $6,000 a month (this
+      // reverses the earlier $3,500/month Figma figure). Written "/mo." on the card.
+      price: 'Starts at $6,000/mo.',
       lede:
         'Ongoing creative support that flexes with your priorities, without adding ' +
         'another full-time hire or traditional agency relationship.',
@@ -215,7 +215,7 @@ export const engagementFaqs = [
       'defined outcomes, start at $3,500. Sprints, for bigger creative challenges like ' +
       'a repositioning, a new identity, a website, or a campaign, start at $15,000. ' +
       'Integrated Partnerships, ongoing creative direction embedded with your team, ' +
-      'start at $3,500 per month. Tell us what you are working on and we will point ' +
+      'start at $6,000 per month. Tell us what you are working on and we will point ' +
       'you to the right fit.',
   },
   {
@@ -249,7 +249,7 @@ export const engagementFaqs = [
     question: 'How do Integrated Partnership engagements work?',
     answer:
       'An Integrated Partnership, often called fractional creative direction, is ' +
-      'ongoing creative support set up as a monthly engagement starting at $3,500. ' +
+      'ongoing creative support set up as a monthly engagement starting at $6,000. ' +
       'We work alongside your team on a regular cadence, leading brand and creative ' +
       'direction, supporting your internal designers, and developing campaigns and ' +
       'initiatives through the year. Priorities evolve as the business does, so the ' +
