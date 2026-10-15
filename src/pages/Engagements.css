@@ -51,7 +51,11 @@
 .service-grid > * > * { height: 100%; }
 
 @media (max-width: 900px) {
-  .service-grid { grid-template-columns: 1fr; row-gap: var(--rhythm-64); }
+  /* Stacked cards read as a list: close together, not a section apart. */
+  .service-grid { grid-template-columns: 1fr; row-gap: var(--space-4); }
+  .engagements-page__cards { gap: var(--space-4); }
   .engagements-page__section,
-  .engagements-page__section--96 { gap: var(--space-12); }
+  .engagements-page__section--96,
+  .engagements-page__section--grid { gap: var(--space-10); }
+  .engagements-page__heading { padding-inline: 0; }   /* same edge as every other headline */
 }

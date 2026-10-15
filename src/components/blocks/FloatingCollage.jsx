@@ -16,8 +16,9 @@ import './blocks.css';
  * slots slide past one another at different speeds and you see more or less of
  * each as you scroll: small, "closer" slots move fastest, big ones barely move.
  *
- * Below 900px the cluster becomes a plain grid and the parallax switches off
- * with it. Reduced motion renders the static arrangement.
+ * Below 900px the cluster is re-laid out for a phone (`mobile`: its own stage
+ * and a position per slot, same shapes, larger and staggered) and keeps the
+ * parallax, with a shorter travel. Reduced motion renders the static arrangement.
  *
  * Slots take { x, y, w, h, depth, round, bg, src, alt, video }. `bg` is a placeholder
  * fill until `src` or `video` ({ src, poster }) exists; a video autoplays muted on
@@ -32,6 +33,20 @@ const DEFAULT_ITEMS = [
   { x: 560, y: 520, w: 281, h: 374, depth: 120, bg: '#9e6060' },
   { x: 914, y: 700, w: 246, h: 246, depth: 150, bg: 'var(--color-border)' },
 ];
+
+/* Phone arrangement for the default (Engagements) cluster, in a 342-wide stage:
+   the same five shapes, staggered left and right so each one passes the next as
+   you scroll. Nothing touches. */
+const DEFAULT_MOBILE = {
+  stage: { w: 342, h: 704 },
+  items: [
+    { x: 0, y: 0, w: 176, h: 220, depth: 18 },
+    { x: 146, y: 250, w: 196, h: 132, depth: 40 },
+    { x: 16, y: 404, w: 150, h: 150, depth: 26 },
+    { x: 186, y: 420, w: 156, h: 208, depth: 34 },
+    { x: 24, y: 574, w: 130, h: 130, depth: 46 },
+  ],
+};
 
 const pct = (n, total) => `${(n / total) * 100}%`;
 
@@ -93,11 +108,23 @@ function Slot({ item, progress, animate, stage }) {
   );
 }
 
-export default function FloatingCollage({ items = DEFAULT_ITEMS, stage = STAGE }) {
+export default function FloatingCollage({
+  items: desktopItems = DEFAULT_ITEMS,
+  stage: desktopStage = STAGE,
+  mobile = desktopItems === DEFAULT_ITEMS ? DEFAULT_MOBILE : null,
+}) {
   const stageRef = useRef(null);
   const reduce = useReducedMotion();
   const wide = useWide();
-  const animate = wide && !reduce;
+  const animate = !reduce;
+
+  /* On a phone each slot keeps its shape and fill and takes the mobile
+     position; with no mobile layout it falls back to the desktop one. */
+  const phone = !wide && mobile;
+  const stage = phone ? mobile.stage : desktopStage;
+  const items = phone
+    ? desktopItems.map((item, i) => ({ ...item, ...mobile.items[i] }))
+    : desktopItems;
 
   /* 0 as the stage's top edge enters at the bottom of the viewport, 1 as its
      bottom edge leaves at the top: the full pass, so the drift is continuous. */
@@ -107,7 +134,7 @@ export default function FloatingCollage({ items = DEFAULT_ITEMS, stage = STAGE }
   });
 
   return (
-    <section className="floating-collage container">
+    <section className={`floating-collage container${phone ? ' floating-collage--phone' : ''}`}>
       <div
         className="floating-collage__stage"
         ref={stageRef}

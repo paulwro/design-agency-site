@@ -196,7 +196,7 @@ check('Client logo grid: 200x87 cells, 240 artboards at 120%, rules drawn per ce
       and '.logo-cell::before' in read('components/ClientLogoGrid/ClientLogoGrid.css')
       and '.logo-cell::after' in read('components/ClientLogoGrid/ClientLogoGrid.css'))
 check('layout: 1280 max, 32px gutter, 12px media radius tokens',
-      '--container-max: 1280px' in tokens and 'clamp(24px, 2.223vw, 32px)' in tokens
+      '--container-max: 1280px' in tokens and 'clamp(20px, 2.223vw, 32px)' in tokens
       and '--radius-media: 12px' in tokens)
 check('contact submit is disabled until the form is complete',
       'disabled={!complete' in read('components/ContactForm/ContactForm.jsx'))
@@ -275,8 +275,8 @@ check('testimonial cards carry no drop shadow',
 check('section-scale rhythm is fluid, not pinned at Figma desktop values',
       '--rhythm-64: clamp(' in tokens and '--rhythm-96: clamp(' in tokens
       and 'var(--rhythm-96)' in read('components/Hero/Hero.css'))
-check('the phone gutter is 24, matching the reference',
-      '--container-gutter: clamp(24px' in tokens)
+check('the phone gutter is 20 (Paul, Oct 2026: 24 was too much room), 32 from 1440',
+      '--container-gutter: clamp(20px' in tokens)
 
 # ---- routing ----------------------------------------------------------------
 all_src = '\n'.join(read(str(f.relative_to(SRC))) for f in SRC.rglob('*.js*'))

@@ -200,4 +200,16 @@ export const heroCollage = {
     { x: 60, y: 430, w: 512, h: 512, depth: 44, round: true, bg: '#4b3636' },
     { x: 640, y: 900, w: 333, h: 371, depth: 96, bg: '#824242' },
   ],
+  // The phone arrangement: same five shapes in a 342-wide stage, staggered so
+  // they pass one another as you scroll. Order matches `items`.
+  mobile: {
+    stage: { w: 342, h: 690 },
+    items: [
+      { x: 0, y: 0, w: 230, h: 136, depth: 16 },
+      { x: 250, y: 24, w: 92, h: 92, depth: 44 },
+      { x: 150, y: 190, w: 192, h: 240, depth: 30 },
+      { x: 0, y: 260, w: 128, h: 128, depth: 24 },
+      { x: 40, y: 480, w: 168, h: 187, depth: 40 },
+    ],
+  },
 };

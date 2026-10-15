@@ -134,12 +134,18 @@
 }
 
 @media (max-width: 760px) {
-  .faq {
-    gap: 24px;
-    padding: 40px 20px;
-  }
+  .faq { gap: var(--space-6); }
 
-  .faq-list {
-    max-width: none;
-  }
+  .faq-list { max-width: none; }
+
+  /* On a phone the question runs the full width of the column: the rule, the
+     text and the answer all share the container's edges, with none of the
+     16 + 4 desktop inset, and no slide-in on hover (there is no hover). */
+  .faq-item { padding-top: 0; }
+  .faq-item::before { top: 0; left: 0; right: 0; }
+  .faq-question { padding-block: var(--space-5); }
+  .faq-question,
+  .faq-question:hover,
+  .faq-question:focus-visible { padding-inline: 0; }
+  .faq-answer { padding-inline: 0; }
 }

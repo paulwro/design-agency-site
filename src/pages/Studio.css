@@ -273,5 +273,9 @@
   .studio-bio__heading { grid-column: 1; grid-row: auto; order: 1; }
   .studio-bio__slot { grid-column: 1; grid-row: auto; order: 2; justify-content: flex-start; }
   .studio-bio__body { grid-column: 1; grid-row: auto; order: 3; }
-  .studio-section { gap: var(--space-12); }
+  .studio-section { gap: var(--space-10); }
+  /* Phone: the bio card takes the column, and the two boxed lists give their
+     padding back to the copy. */
+  .studio-bio__card { width: 100%; }
+  .studio-steps { padding: var(--space-5); }
 }

@@ -48,3 +48,9 @@
 @media (max-width: 900px) {
   .page-hero__content { gap: var(--space-8); }
 }
+
+/* On a phone the hero sits right under the nav pill; a full section inset above
+   and below it pushed the headline most of the way down the first screen. */
+@media (max-width: 760px) {
+  .page-hero { padding-block: var(--space-10); }
+}

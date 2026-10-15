@@ -63,6 +63,15 @@
 .service-card .ruled-list__item { padding-block: var(--space-3); }
 
 @media (max-width: 900px) {
-  .service-card { grid-template-columns: 1fr; }
-  .service-card__body { grid-column: auto; padding: var(--space-4); }
+  /* One column. The container gutter, the card and the copy each used to add
+     16-24 of inset (the text sat 56 in from the screen edge on a phone); now it
+     is the gutter + 8 + 12, so the copy gets room to breathe. */
+  .service-card {
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+    padding: var(--space-2);
+    border-radius: var(--space-5);
+  }
+  .service-card__body { grid-column: auto; padding: var(--space-3); }
+  .service-card__aside { gap: var(--space-4); }
 }

@@ -144,8 +144,8 @@
      rhythm is fluid and tops out higher — one number to dial for the whole site. */
   /* Figma: every section is py-128, both sides. Two stacked sections
      therefore put 256 between their content — that is the rhythm. */
-  --section-inset: clamp(72px, 11.1vw, 160px);
-  --section-gap: clamp(56px, 8.9vw, 128px);    /* heading -> its content */
+  --section-inset: clamp(56px, 1.09rem + 9.905vw, 160px);      /* 56 on a phone, 160 at 1440 */
+  --section-gap: clamp(40px, 0.456rem + 8.381vw, 128px);    /* heading -> its content: 40 on a phone, 128 at 1440 */
 
   /* Rhythm. Figma's 64 and 96 are DESKTOP numbers, and held flat they are what
      made the phone layout feel loose: the type compresses 37% between 1440 and
@@ -156,8 +156,8 @@
      component-level padding Figma really does hold constant.
      Reference point: together.agency runs 96 between sections at 375 and 48
      inside them, which is almost exactly where these land. */
-  --rhythm-64: clamp(40px, 1.7rem + 3.81vw, 80px);   /* 40 → 80  */
-  --rhythm-96: clamp(64px, 2.55rem + 6.1vw, 128px);  /* 64 → 128 */
+  --rhythm-64: clamp(32px, 0.886rem + 4.571vw, 80px);   /* 32 → 80  */
+  --rhythm-96: clamp(48px, 1.144rem + 7.619vw, 128px);  /* 48 → 128 */
 
   /* ---- Breakpoints ---------------------------------------------------------
      Media queries cannot read custom properties, so these are a convention,
@@ -179,13 +179,13 @@
   /* Content runs to 1440 with a 32px margin each side; the margin shrinks on
      small screens. The navbar and menu overlay share it. */
   --container-max: 1280px;
-  --container-gutter: clamp(24px, 2.223vw, 32px);
+  --container-gutter: clamp(20px, 2.223vw, 32px);   /* 20 on a phone, 32 from 1440 */
   /* Column gap for multi-column grids: wider than the old flat 32. */
   --grid-gap: clamp(24px, 3.33vw, 48px);
   --page-gutter-wide: var(--container-gutter);
   /* Figma 1055:1396: the navbar is max-width 1280 with 32 padding, the same box
      as the content, so toggle and Menu line up with the page edges. */
-  --nav-gutter: var(--container-gutter);
+  --nav-gutter: clamp(16px, 2.223vw, 32px);         /* the phone pill runs a little wider than the content */
 
   /* Every image and video slot on the site. */
   --radius-media: 12px;

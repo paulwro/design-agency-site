@@ -141,11 +141,15 @@
 
 /* ---- Mobile: the three slots collapse into a container pill --------------- */
 @media (max-width: 760px) {
+  /* The 16 above the pill lives on the header itself, so it is still there once
+     the bar sticks (it used to be a margin on the pill, which scrolled away). */
+  .navbar { padding-top: var(--space-4); }
+
   .navbar__inner {
     height: auto;
     gap: var(--space-4);
     max-width: 420px;
-    margin: var(--space-4) auto 0;
+    margin: 0 auto;
     padding: var(--space-5) var(--space-8);
     border-radius: 128px;
     background: var(--color-container);

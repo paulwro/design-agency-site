@@ -182,6 +182,8 @@
     padding-top: var(--space-8);
     margin-top: var(--space-8);
   }
+  /* No rules, no gap above: the stacked columns need air of their own. */
+  .divided-row--none { gap: var(--space-10); }
 }
 
 /* ---- RuledList · "Unordered List wHorizontal Rules" ----------------------- */
@@ -242,21 +244,25 @@
 
 .floating-collage__img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
-/* Overlap stops reading at small widths — fall back to an even grid. */
+/* Phone: the stage is a narrower, taller canvas (its own aspect ratio, set
+   inline) and stays centred. No grid fallback: the slots keep drifting. */
+.floating-collage--phone .floating-collage__stage { max-width: 560px; margin-inline: auto; }
+
+/* Only when a page gives no phone layout at all does the cluster become a grid. */
 @media (max-width: 900px) {
-  .floating-collage__stage {
+  .floating-collage:not(.floating-collage--phone) .floating-collage__stage {
     aspect-ratio: auto !important;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--space-4);
   }
-  .floating-collage__slot {
+  .floating-collage:not(.floating-collage--phone) .floating-collage__slot {
     position: static;
     width: auto !important;
     height: auto !important;
     aspect-ratio: 1;
   }
-  .floating-collage__slot:first-child { grid-column: span 2; aspect-ratio: 16 / 10; }
+  .floating-collage:not(.floating-collage--phone) .floating-collage__slot:first-child { grid-column: span 2; aspect-ratio: 16 / 10; }
 }
 
 
@@ -422,6 +428,7 @@
 }
 
 @media (max-width: 760px) {
+  .client-line-list { padding: var(--space-4); }
   .client-line-list__row { flex-direction: column; align-items: flex-start; gap: var(--space-2); }
   .client-line-list__description { text-align: left; }
   /* A long client name wraps instead of widening the page. */
