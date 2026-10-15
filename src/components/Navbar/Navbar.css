@@ -163,7 +163,7 @@
   }
 }
 
-/* The bar keeps the wider 80px inset while content sections sit at 32. */
+/* Same 1280 max and 32 inset as the content (Figma 1055:1396). */
 .navbar.container { padding-inline: var(--nav-gutter); }
 
 

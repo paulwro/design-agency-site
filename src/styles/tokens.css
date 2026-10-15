@@ -177,13 +177,15 @@
 
   /* ---- Layout ----------------------------------------------------------- */
   /* Content runs to 1440 with a 32px margin each side; the margin shrinks on
-     small screens. The navbar and menu keep the older, wider 80px inset. */
+     small screens. The navbar and menu overlay share it. */
   --container-max: 1280px;
   --container-gutter: clamp(24px, 2.223vw, 32px);
   /* Column gap for multi-column grids: wider than the old flat 32. */
   --grid-gap: clamp(24px, 3.33vw, 48px);
   --page-gutter-wide: var(--container-gutter);
-  --nav-gutter: clamp(24px, 5.556vw, 80px);
+  /* Figma 1055:1396: the navbar is max-width 1280 with 32 padding, the same box
+     as the content, so toggle and Menu line up with the page edges. */
+  --nav-gutter: var(--container-gutter);
 
   /* Every image and video slot on the site. */
   --radius-media: 12px;
