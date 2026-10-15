@@ -34,10 +34,11 @@
   color: var(--color-text-muted);
 }
 
-/* Media sits last and fills the remaining height so a row of cards bottoms out
-   evenly even when the lists differ in length. */
+/* Cards in a row share one height (the grid stretches them). The text block
+   keeps its natural height and the image is pushed to the bottom with an auto
+   top margin, so any slack from a shorter list opens up between the two. */
 .service-list-card__media {
-  margin: 0 0 auto;
+  margin: auto 0 0;
   width: 100%;
   aspect-ratio: 264 / 200;
   overflow: hidden;

@@ -21,7 +21,7 @@ export default function Engagements() {
 
       <section className="engagements-page__section engagements-page__section--96 container">
         <Reveal>
-          <SectionHeader headline={engagementTypes.headline} as="h2" width="two-thirds" level={3} />
+          <SectionHeader headline={engagementTypes.headline} as="h2" width="two-thirds" />
         </Reveal>
         <RevealGroup className="engagements-page__cards">
           {engagementTypes.cards.map((card, i) => (
@@ -58,7 +58,7 @@ export default function Engagements() {
         </Reveal>
       </section>
 
-      <MediaPanel items={[{}, {}]} ratio="680 / 544" />
+      <MediaPanel items={[{}, {}]} ratio="600 / 544" />
 
       <FaqSection items={engagementFaqs} />
     </>

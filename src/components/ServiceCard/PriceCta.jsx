@@ -8,9 +8,8 @@ import './PriceCta.css';
  * out of its slot while the matching letter of `hoverLabel` rolls in from below
  * with a small overshoot — the slot-machine effect from the previous site.
  *
- * The anchor is stretched over its whole card (see .price-cta::after), so the
- * entire card is a link to the contact form. The effect is triggered by the
- * price row itself, not by the card.
+ * Only the price row is the link and the hover target. The card around it is
+ * not clickable, so the effect starts when the pointer is on this row alone.
  *
  * Both strings sit in one grid cell, so the row is as wide as the longer of the
  * two and nothing reflows when the label changes.

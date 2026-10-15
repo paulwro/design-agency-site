@@ -17,8 +17,9 @@ import './Studio.css';
  * Studio — Figma 1055:1227 · see 01_branding/figma-spec-studio.md
  *
  * Section order follows Figma, which puts the FAQs *before* the arced
- * carousel. Every section headline is step 3 here, not the step 4 Home uses —
- * hence `level={3}` on each SectionHeader.
+ * carousel. Headlines are step 4 on the problem statement, "Put intellect…"
+ * and the bio, and step 3 on "Who we work with" and "How we work" (checked
+ * against the font size on each Figma text node) — hence `level={3}` on those two.
  *
  * The two frames hidden in Figma ("visual masonry board", "Testimonial
  * Full-Width") are intentionally not built.
@@ -38,7 +39,7 @@ export default function Studio() {
       {/* Problem statement · 1236:1169 — 3 cols, gap-x 64 / gap-y 128 */}
       <section className="studio-section container">
         <Reveal>
-          <SectionHeader headline={problemStatement.heading} as="h2" width="full" level={3} />
+          <SectionHeader headline={problemStatement.heading} as="h2" width="two-thirds" />
         </Reveal>
         <RevealGroup className="studio-grid studio-grid--3 studio-grid--soft">
           <RevealItem>
@@ -73,7 +74,7 @@ export default function Studio() {
       {/* Put intellect to work · 1236:1197 */}
       <section className="studio-section container">
         <Reveal>
-          <SectionHeader headline={capabilities.heading} as="h2" width="full" level={3} />
+          <SectionHeader headline={capabilities.heading} as="h2" width="full" />
         </Reveal>
         <RevealGroup className="studio-grid studio-grid--3">
           <RevealItem>
@@ -127,7 +128,7 @@ export default function Studio() {
       </RevealGroup>
 
       {/* Who we work with · 1055:1283 */}
-      <section className="studio-section studio-section--wide-gap container">
+      <section className="studio-section container">
         <Reveal>
           <SectionHeader headline={whoWeWorkWith.heading} as="h2" width="two-thirds" level={3} />
         </Reveal>

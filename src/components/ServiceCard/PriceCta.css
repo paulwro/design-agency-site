@@ -13,15 +13,6 @@
   cursor: pointer;
 }
 
-/* Stretch the link over the whole card. Anything that must stay separately
-   clickable (the client pills) is lifted above this with position + z-index. */
-.price-cta::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-}
-
 .price-cta:focus-visible { outline: none; }
 .price-cta:focus-visible .price-cta__icon { box-shadow: 0 0 0 2px var(--color-text); }
 

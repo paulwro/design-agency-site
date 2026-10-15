@@ -1,13 +1,11 @@
 /* ServiceCard — Figma 1651:1464 */
 
 .service-card {
-  position: relative;                 /* anchors the stretched price link */
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--space-8);
   padding: var(--space-4);
   border-radius: var(--space-6);
-  cursor: pointer;
   background: var(--color-container);
 }
 
@@ -58,9 +56,6 @@
   flex-wrap: wrap;
   gap: var(--space-2);
 }
-
-/* Above the stretched price link, so the pills keep their own destinations. */
-.service-card__clients .pill-link { position: relative; z-index: 1; }
 
 /* Figma 1649:1447 — 12 above and below each line, one more rule closing the
    list before the price. */

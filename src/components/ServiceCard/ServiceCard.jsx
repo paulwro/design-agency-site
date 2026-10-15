@@ -7,9 +7,9 @@ import './ServiceCard.css';
  * ServiceCard — Figma "Article (Service Card)" 1651:1464
  *
  * Full-width engagement card: a 3-column grid where the copy spans two columns
- * and the third carries a media slot plus client pill links. The whole card
- * links to the contact form through the price row (see PriceCta); the client
- * pills stay independently clickable.
+ * and the third carries a media slot plus client pill links. The price row
+ * (see PriceCta) is the only link to the contact form; the client pills have
+ * their own destinations.
  */
 export default function ServiceCard({ title, price, lede, items = [], media, clients = [], href = '/contact' }) {
   return (

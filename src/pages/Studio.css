@@ -7,10 +7,6 @@
   padding-block: var(--section-inset);
 }
 
-/* "Who we work with" (1055:1283) is a two-row grid with gap-y 128, so the
-   heading sits a full section-gap further from its content than elsewhere. */
-.studio-section--wide-gap { gap: var(--section-inset); }
-
 /* ---- The three-column chassis every Studio section is built on ------------
    Figma: 3 equal columns, 64 between them. Rows differ per section, so the
    row gap is set by the modifier rather than baked in here. */
@@ -268,7 +264,9 @@
 
 @media (max-width: 760px) {
   .studio-grid,
-  .studio-grid--2-inner { grid-template-columns: 1fr; row-gap: var(--space-12); }
+  .studio-grid--2-inner { grid-template-columns: minmax(0, 1fr); row-gap: var(--space-12); }
+  .studio-grid > *,
+  .studio-grid--2-inner > * { min-width: 0; }   /* long client names must wrap, not widen the page */
   .studio-grid__span-2 { grid-column: auto; }
   .studio-bio { grid-template-columns: 1fr; gap: var(--space-12); }
   /* Figma: heading, then image, then text. */
@@ -276,5 +274,4 @@
   .studio-bio__slot { grid-column: 1; grid-row: auto; order: 2; justify-content: flex-start; }
   .studio-bio__body { grid-column: 1; grid-row: auto; order: 3; }
   .studio-section { gap: var(--space-12); }
-  .studio-section--wide-gap { gap: var(--space-12); }
 }

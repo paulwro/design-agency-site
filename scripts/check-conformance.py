@@ -38,9 +38,9 @@ tokens, controls       = read('styles/tokens.css'), read('styles/controls.css')
 # ---- Studio · figma-spec-studio.md -----------------------------------------
 check('Studio: FAQs render before the arced carousel',
       studio_jsx.index('<FaqSection') < studio_jsx.index('<TestimonialArcCarousel'))
-check('Studio: every SectionHeader is level 3',
-      studio_jsx.count('<SectionHeader') == studio_jsx.count('level={3}'),
-      f"{studio_jsx.count('<SectionHeader')} headers vs {studio_jsx.count('level={3}')} level-3")
+check('Studio: step 4 on problem + capabilities, step 3 on who + how',
+      studio_jsx.count('<SectionHeader') == 4 and studio_jsx.count('level={3}') == 2,
+      f"{studio_jsx.count('<SectionHeader')} headers, {studio_jsx.count('level={3}')} at level 3 (who + how; problem and capabilities are step 4)")
 check('Studio: full-panel image is py-64 at ratio 1184/779',
       'ratio="1184 / 779"' in studio_jsx and 'inset="tight"' in studio_jsx)
 check('Studio: bio heading is step 4 (Figma names the group "Step 3")',
@@ -73,12 +73,15 @@ check('Engagements: "Services we offer" is a step-3 headline',
       re.search(r'\.engagements-page__heading\s*\{[^}]*--step-3', eng_css, re.S))
 check('Engagements: rail label inset 24',
       re.search(r'\.engagements-page__heading\s*\{[^}]*padding-inline:\s*var\(--space-6\)', eng_css, re.S))
-check('Engagements: the 96 and 24 gap modifiers exist and are used',
-      '--96 { gap: var(--rhythm-96); }' in eng_css and '--grid { gap: var(--space-6); }' in eng_css
+check('Engagements: the 96 and 64 gap modifiers exist and are used',
+      '--96 { gap: var(--rhythm-96); }' in eng_css and '--grid { gap: var(--rhythm-64); }' in eng_css
       and eng_jsx.count('engagements-page__section--96') == 2)
 
-check('Engagements: price row is a stretched contact link with the slot-machine roll',
+check('Engagements: price row alone is the contact link (not the whole card), with the slot-machine roll',
       "href = '/contact'" in read('components/ServiceCard/PriceCta.jsx')
+      and '.price-cta::after' not in read('components/ServiceCard/PriceCta.css')
+      and 'cursor: pointer' not in read('components/ServiceCard/ServiceCard.css')
+      and 'margin: auto 0 0' in read('components/ServiceListCard/ServiceListCard.css')
       and 'price-cta__line--in' in read('components/ServiceCard/PriceCta.css')
       and '--ease-overshoot' in read('components/ServiceCard/PriceCta.css'))
 check('Engagements: collage has scroll parallax and honours reduced motion',

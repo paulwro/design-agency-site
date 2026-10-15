@@ -207,10 +207,16 @@
 
 /* ---- FloatingCollage · "Floating Imgs" ------------------------------------ */
 .floating-collage {
-  padding-block: var(--section-inset);
-  /* The slots drift past the stage edge while they travel; clip them at the
-     section so they never ride over the hero or the section below. */
-  overflow: clip;
+  /* Figma 1787:1464 / 1630:1391: the cluster section is 16 above and below its
+     stage, not the 128 every other section has, so it sits close to the hero and
+     the section after it. */
+  padding-block: var(--space-4);
+  /* The slots drift up to ~150px past the stage edge while they travel. With
+     only 16 of padding the section can no longer hold that, so it clips
+     sideways only and lets the drift run into the hero's and the next
+     section's own padding (both empty) rather than slicing an image flat. */
+  overflow-x: clip;
+  overflow-y: visible;
 }
 
 .floating-collage__stage {
@@ -418,6 +424,9 @@
 @media (max-width: 760px) {
   .client-line-list__row { flex-direction: column; align-items: flex-start; gap: var(--space-2); }
   .client-line-list__description { text-align: left; }
+  /* A long client name wraps instead of widening the page. */
+  .client-line-list__symbol-name { flex-shrink: 1; min-width: 0; max-width: 100%; }
+  .client-line-list__name { white-space: normal; }
 }
 
 /* ---- Parallax frame · see ScrollMotion.jsx -------------------------------- */
