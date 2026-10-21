@@ -20,17 +20,15 @@
   margin: 0;
   padding-inline: var(--space-6);
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: var(--weight-regular);
   font-size: var(--step-3);
+  letter-spacing: var(--tracking-display);
   line-height: var(--leading-display);
   color: var(--color-text);
 }
 
-/* Figma 1195:1641 — body copy here is step -1, not step 0. */
-.engagements-page__why .title-body__body {
-  font-size: var(--step--1);
-  line-height: var(--leading-reading);
-}
+/* Figma 1195:1641 now sets the why-clients body in step 0 at 60% — the
+   TitleBody default — so the old step −1 override is gone. */
 
 .engagements-page__cards {
   display: flex;
@@ -58,4 +56,17 @@
   .engagements-page__section--96,
   .engagements-page__section--grid { gap: var(--space-10); }
   .engagements-page__heading { padding-inline: 0; }   /* same edge as every other headline */
+}
+
+/* Phones — Figma 1863:1542. Services and the why-clients reasons both become
+   ruled lists: a rule above each row, one closing the last. */
+@media (max-width: 760px) {
+  .service-grid { row-gap: 0; border-bottom: 1px solid var(--color-rule); }
+
+  .engagements-page__why { gap: 0; border-bottom: 1px solid var(--color-rule); }
+  .engagements-page__why > .title-body {
+    gap: var(--space-2);
+    padding-block: var(--space-6);
+    border-top: 1px solid var(--color-rule);
+  }
 }

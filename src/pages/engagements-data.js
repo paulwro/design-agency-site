@@ -12,42 +12,39 @@
  * numbers. Confirm before this page goes anywhere near a client.
  */
 
-// FIGMA 1388:1468
+// FIGMA 1863:1542 (390 mobile frame). Paul, 2026-10-21: the mobile frame's
+// shorter copy is the page's copy at every width.
 export const hero = {
-  headline: 'You’ve outgrown DIY (esp. with AI) – and it’s showing',
-  lede:
-    'Teams from startup to enterprise rarely need more design for its own sake. They need senior ' +
-    'creative help when how the business shows up has consequences, and an ' +
-    'engagement sized to the decision in front of them rather than a default ' +
-    'retainer or another vendor layer.',
+  headline: 'You’ve outgrown DIY',
+  lede: 'Senior creative support for the moments your business needs to show up stronger.',
 };
 
 export const engagementTypes = {
-  headline: 'Three ways to move forward',   // FIGMA 1161:1229 (eyebrow + lede were cut)
-  // FIGMA 1651:1464 / 1465 / 1484 — titles, ledes and lists are all Paul's text.
+  headline: 'Three ways to move forward',   // FIGMA 1863:1562
+  // FIGMA 1863:1564 / 1648 / 1734. The mobile frame ends each intro with the
+  // price ("… Starts at $3,500."); here the price stays in its own row so it
+  // keeps the contact-link hover (PriceCta), and the intro ends before it.
   cards: [
     {
       title: 'Goals',
       price: 'Starts at $3,500',
-      lede: 'Let us help you crush your objectives. We offer accomplishments-as-a-service:',
+      lede: 'Specific outcomes in a focused engagement.',
       items: [
         'Build a bespoke AI image-generation system for your brand',
         'Automate your PDF accessibility and compliance workflow',
-        'Build a smarter creative intake and briefing process',
         'Turn your brand standards into instructions AI can follow',
         'Make your presentations faster and easier to produce',
       ],
       clients: [
         { label: 'WEX', href: '#' },
-        { label: 'Pear Suite', href: '#' },
         { label: 'Inbox Health', href: '#' },
-        { label: 'Partner Name', href: '#' },
+        { label: 'Pear Suite', href: '#' },
       ],
     },
     {
       title: 'Sprints',
       price: 'Starts at $15,000',
-      lede: 'Focused engagements for bigger creative challenges.',
+      lede: 'Focused creative engagements for bigger challenges.',
       items: [
         'Reposition or refresh your brand',
         'Build a new visual identity',
@@ -59,142 +56,96 @@ export const engagementTypes = {
         { label: 'WEX', href: '#' },
         { label: 'Pear Suite', href: '#' },
         { label: 'Inbox Health', href: '#' },
-        { label: 'Partner Name', href: '#' },
       ],
     },
     {
       title: 'Integrated Partnerships',
-      // Paul, Oct 2026: Integrated Partnerships start at $6,000 a month (this
-      // reverses the earlier $3,500/month Figma figure). Written "/mo." on the card.
+      // Paul, Oct 2026: Integrated Partnerships start at $6,000 a month.
       price: 'Starts at $6,000/mo.',
       lede:
-        'Ongoing creative support that flexes with your priorities, without adding ' +
-        'another full-time hire or traditional agency relationship.',
+        'Ongoing creative support that flexes with your priorities — without adding ' +
+        'a full-time hire.',
       items: [
         'Lead brand and creative direction',
-        'Give your internal creative team senior-level support',
+        'Give your internal team senior-level creative support',
         'Develop campaigns and initiatives throughout the year',
         'Bring new AI and creative capabilities into your team',
         'Take high-priority creative work off your plate',
       ],
       clients: [
         { label: 'WEX', href: '#' },
-        { label: 'Pear Suite', href: '#' },
         { label: 'Inbox Health', href: '#' },
-        { label: 'Partner Name', href: '#' },
       ],
     },
   ],
 };
 
 export const services = {
-  heading: 'Services we offer',   // FIGMA — step 3 headline
-  // FIGMA 1189:1560 — all six cards are written in the file.
+  heading: 'Services we offer',   // FIGMA 1863:1828
+  // FIGMA 1863:1830–1931. Each service is now one sentence that folds the old
+  // five-item list into it.
   cards: [
     {
       title: 'Brand Identity',
-      lede:
-        'Build a distinctive brand foundation that makes your business easier to ' +
-        'understand, recognize and believe in.',
-      items: [
-        'Brand strategy and positioning',
-        'Brand refreshes and rebrands',
-        'Visual identity systems',
-        'AI-ready brand standards',
-        'Brand templates and toolkits',
-      ],
+      description:
+        'Build a distinctive brand foundation — strategy, visual identity, AI-ready ' +
+        'standards and toolkits — that makes your business easier to understand and believe in.',
     },
     {
       title: 'Creative Systems',
-      lede:
-        'Build smarter ways to create, manage and scale great work across your ' +
-        'team, partners and tools.',
-      items: [
-        'AI-enabled creative workflows',
-        'Creative intake and briefing systems',
-        'Brand asset libraries',
-        'Prompt and instruction libraries',
-        'Creative workflow automation',
-      ],
+      description:
+        'Smarter ways to create and scale work — AI-enabled workflows, briefing systems, ' +
+        'asset libraries, prompt libraries and workflow automation.',
     },
     {
       title: 'Imagery & Content',
-      lede:
-        'Create a distinctive visual world your team can use without looking like ' +
-        'everyone else.',
-      items: [
-        'Bespoke AI image libraries',
-        'Branded photography systems',
-        'AI photography and image generation',
-        'Social content systems',
-        'Image-generation guidelines',
-      ],
+      description:
+        'A distinctive visual world your team can actually use — bespoke AI image ' +
+        'libraries, branded photography systems, social content and image-generation guidelines.',
     },
     {
       title: 'Marketing Communications',
-      lede:
-        'Turn business objectives into ideas and communications people understand, ' +
-        'remember and act on.',
-      items: [
-        'Product and service launches',
-        'Sales presentations',
-        'E-books and thought leadership',
-        'Digital and social campaigns',
-        'Campaign concepts',
-      ],
+      description:
+        'Business objectives turned into ideas people remember and act on — launches, ' +
+        'sales presentations, thought leadership, digital and social campaigns.',
     },
     {
       title: 'Digital Experiences',
-      lede:
-        'Create digital experiences that make your business easier to understand, ' +
-        'trust and choose.',
-      items: [
-        'New/redesigned websites',
-        'SEO and AEO-ready content structure',
-        'Digital prototypes',
-        'Website design systems',
-        'UX/UI design',
-      ],
+      description:
+        'Websites and digital products that make your business easier to trust and ' +
+        'choose — redesigns, design systems, UX/UI, prototypes and SEO-ready content structure.',
     },
     {
       title: 'Creative Leadership',
-      lede:
-        'Bring experienced creative thinking closer to the business and the ' +
-        'decisions shaping what comes next.',
-      items: [
-        'Fractional creative direction',
-        'Brand and creative audits',
-        'Internal creative team support',
-        'AI creative strategy',
-        'Emerging technology evaluation',
-      ],
+      description:
+        'Experienced creative thinking closer to the decisions that matter — fractional ' +
+        'creative direction, brand audits, team support, AI creative strategy and emerging ' +
+        'tech evaluation.',
     },
   ],
 };
 
 export const whyClients = {
-  // Figma 1195:1635. The headline is still Figma's literal placeholder
-  // ("This is a headline about why people choose us"); working headline set Oct 2026,
-  // replace when Paul supplies his own. The three columns are real copy.
+  // FIGMA 1863:1946–1962 (390 frame) — the working headline is now Figma's own.
   heading: 'Why teams choose an agency of one',
   reasons: [
     {
       title: 'Collaborative expertise',
       body:
-        'With over 20 years of experience working with mid-market companies, startups, ' +
-        'and enterprise organizations, we know how to work together to create brands ' +
-        'that stand out and drive results.',
+        'Over 20 years working with mid-market companies, startups, and enterprise ' +
+        'organizations — creating brands that stand out and drive results.',
     },
     {
       title: 'Tailored solutions',
       body:
-        'No matter where you are in your branding journey, we customize our approach to ' +
-        'meet your unique needs—whether you’re building a foundation or unifying an ' +
-        'established identity.',
+        'We customize our approach to your stage — whether you’re building a foundation ' +
+        'or unifying an established identity.',
     },
     {
       title: 'Speed-to-market',
-      body: 'Get high-quality work without the rigidity of a traditional agency.',
+      body:
+        'High-quality creative work without the rigidity of a traditional agency or the ' +
+        'overhead of a full-time hire.',
     },
   ],
 };

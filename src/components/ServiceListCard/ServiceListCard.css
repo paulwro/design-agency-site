@@ -1,4 +1,4 @@
-/* ServiceListCard — Figma 1209:1675 */
+/* ServiceListCard — desktop Figma 1209:1675 · phone Figma 1863:1830 */
 
 .service-list-card {
   display: flex;
@@ -13,20 +13,20 @@
 .service-list-card__body {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
-  padding: var(--space-3) var(--space-4);
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4) var(--space-6);
 }
 
 .service-list-card__title {
   margin: 0;
   font-family: var(--font-body);
-  font-weight: 400;
   font-size: var(--step-2);
   line-height: var(--leading-display);
+  letter-spacing: 0;
   color: var(--color-text);
 }
 
-.service-list-card__lede {
+.service-list-card__description {
   margin: 0;
   font-family: var(--font-body);
   font-size: var(--step-0);
@@ -34,9 +34,8 @@
   color: var(--color-text-muted);
 }
 
-/* Cards in a row share one height (the grid stretches them). The text block
-   keeps its natural height and the image is pushed to the bottom with an auto
-   top margin, so any slack from a shorter list opens up between the two. */
+/* The text keeps its natural height and the image is pushed to the bottom, so
+   any slack from a shorter description opens up between the two. */
 .service-list-card__media {
   margin: auto 0 0;
   width: 100%;
@@ -48,8 +47,16 @@
 
 .service-list-card__img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
-@media (max-width: 900px) {
-  .service-list-card { gap: var(--space-3); padding: var(--space-2); border-radius: var(--space-5); }
-  .service-list-card__body { gap: var(--space-3); padding: var(--space-3); }
-  .service-list-card .ruled-list { padding-bottom: 0; }
+/* Phones (390 frame): no card, no image — a ruled row, py-20, title → body 8.
+   The rule above each row; the grid closes the last one (Engagements.css). */
+@media (max-width: 760px) {
+  .service-list-card {
+    gap: 0;
+    padding: var(--space-5) 0;
+    border-radius: 0;
+    border-top: 1px solid var(--color-rule);
+    background: none;
+  }
+  .service-list-card__body { padding: 0; }
+  .service-list-card__media { display: none; }
 }

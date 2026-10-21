@@ -64,7 +64,7 @@
 
 .menu-overlay__link {
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: var(--weight-regular);
   font-size: var(--step-4);
   line-height: var(--leading-display);
   color: var(--color-text);

@@ -2,8 +2,8 @@
 /* The card is light in both themes (Figma), so anything inside it that reads the
    page tokens needs the light values even when the page is dark. */
 .dark-mode .lightbox {
-  --color-background: #FFFFFF;
-  --color-container: #F9F9F9;
+  --color-background: #FAFAFA;
+  --color-container: #F2F2F2;
   --color-border: #ECECEC;
   --color-text: #000000;
   --color-text-soft: rgba(0, 0, 0, 0.6);
@@ -94,6 +94,7 @@
 .lightbox__headline {
   margin: 0;
   font-size: var(--step-3);
+  letter-spacing: var(--tracking-display);
   line-height: var(--leading-display);
 }
 .lightbox__body {

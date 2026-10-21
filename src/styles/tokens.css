@@ -1,26 +1,28 @@
 /* ==========================================================================
    paulwro.com design tokens
    Source of truth: Figma U1PDzTkFFiLR3CC4RhLo43
-   Type scale: anchor 18px · reading ratio 9:8 down · display ratio √φ up
+   Type: Neue Haas Unica Pro Regular, one weight · base 16 · ratio √1.5 at 390 → √φ at 1440
    See 01_branding/{typography,color palette,spacing}
    ========================================================================== */
 
 :root {
   /* ---- Color · light ---------------------------------------------------- */
-  --color-background: #FFFFFF;
-  --color-container: #F9F9F9;
+  /* Figma variables, audited 2026-10-20. Neither mode uses pure black or
+     white for page or type: Text and Background mirror each other. */
+  --color-background: #FAFAFA;
+  --color-container: #F2F2F2;
   --color-border: #ECECEC;
   /* Hairlines are their own tokens so they can be tuned apart from
      --color-border (which is also a surface fill). In dark mode Figma's
-     Borders & Lines is now #2B2B2B on a #121212 container, so the rules take
+     Borders & Lines is #2E2E2E on a #1C1C1C container, so the rules take
      that value directly; light mode keeps its soft black tint. Rules come to
      full strength (--color-rule-strong) on hover and press. */
   --color-rule: rgba(0, 0, 0, 0.12);
   --color-rule-strong: var(--color-text);
-  /* Logo-grid rules: Borders & Lines (#ECECEC) on the #F9F9F9 container, as
-     Figma draws them. Dark mode uses the same token (#2B2B2B on #121212). */
+  /* Logo-grid rules: Borders & Lines (#ECECEC) on the #F2F2F2 container, as
+     Figma draws them. Dark mode uses the same token (#2E2E2E on #1C1C1C). */
   --color-rule-soft: var(--color-border);
-  --color-text: #000000;
+  --color-text: #0F0F0F;
   --color-text-soft: rgba(0, 0, 0, 0.6);       /* Figma "Text at 60%" — ledes and lead copy */
   --color-text-muted: rgba(0, 0, 0, 0.6);      /* "Muted Text" — now the same 60% as soft */
   --color-muted-toggle: #DADADA;
@@ -58,8 +60,13 @@
      text out in --background, so the fill must stay dark in BOTH themes. */
   --color-media-placeholder: #38445A;
 
-  --color-pill: #ECECEC;         /* Figma: Pill Container */
-  --color-pill-hover: #E3E2E2;   /* Figma: Pill Container Hover */
+  --color-pill: #ECECEC;         /* Figma: Pill-Btn Container */
+  --color-pill-hover: #E3E2E2;   /* Figma: Pill-Btn Container Hover */
+
+  /* Filled buttons. Light keeps the inverted pill (Text fill, Background label);
+     dark mode no longer flips to white — see .dark-mode below. */
+  --btn-bg: var(--color-text);
+  --btn-text: var(--color-background);
 
   /* The hover glow on the submit button, drawn from the semantic palette.
      Heavily blurred and held under 80% opacity, so these read as a wash of
@@ -75,56 +82,54 @@
   --color-inbox-green: #A4D865;
   --color-inbox-blue: #2BBFE4;
 
-  /* ---- Type ------------------------------------------------------------- */
-  --font-display: 'neue-haas-grotesk-display', 'Inter Tight', Arial, sans-serif;
-  --font-body: 'helvetica-neue-lt-pro', 'Inter', Arial, sans-serif;
-  /* The PW wordmark. Deliberately does NOT fall back to the display face —
-     if neue-haas-unica is missing from the kit it should look wrong, not
-     quietly pass as Neue Haas Grotesk. */
-  --font-mark: 'neue-haas-unica', Helvetica, Arial, sans-serif;
+  /* ---- Type ---------------------------------------------------------------
+     One family, one weight: Neue Haas Unica Pro Regular, self-hosted from
+     public/fonts (see global.css). Paul, 2026-10-20: "Just Regular." Every
+     family token points at it, so nothing in the site can reach for another
+     face, and font-synthesis is off so nothing can fake a bold either. */
+  --font-unica: 'Neue Haas Unica', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-display: var(--font-unica);
+  --font-body: var(--font-unica);
+  --font-mark: var(--font-unica);
+  --weight-regular: 400;
 
-  /* Fluid 390 → 1440, and the *ratio* interpolates with it — which is the whole
-     point of the system. At 1440 the scale opens to √φ (1.27202) above step 0.
-     At 390 it closes to a single 9:8 (1.125), the same ratio it already used
-     going DOWN from step 0. So a phone gets one uniform ratio through the whole
-     scale, and the display end fans out into its second ratio only as the
-     screen earns the room.
-
-     That compression is what the phone layout needed. At ∛φ the hero headline
-     came out at 37.9 — 18% larger than together.agency's 32 at the same width —
-     and a four-line centred block at that size dominates the screen. At 9:8 it
-     lands at 30.6, and the leading hyperbola answers on its own: 1.25 at the
-     phone end against 1.005 at 1440, with no change to the formula.
-
-     Steps −1 and −2 keep their own floors: 9:8 all the way down would put the
-     smallest size at 13.4, and 14 is the floor for legal and caption text. */
-  --step--2: clamp(0.8125rem, 0.8021rem + 0.0397vw, 0.8333rem);  /* 13.0 → 13.3 */
-  --step--1: clamp(0.875rem,  0.8518rem + 0.0952vw, 0.9375rem);  /* 14.0 → 15.0 */
-  /* Step 0 is a flat 16 — the browser default, and the base the whole scale now
-     grows from. It had been 17 (Figma's body size); Paul moved it down for a
-     more spacious page, and every other step re-derived from it: 9:8 below,
-     9:8 closing to √φ above on the 390 → 1440 track. */
+  /* Fluid 390 → 1440, base 16 at both ends, and the RATIO interpolates:
+     √1.5 (1.22474) on a phone, √φ (1.27202) on desktop. So every second step is
+     a perfect fifth (×1.5) at 390 and the golden ratio at 1440. The phone end
+     came from Paul's 390 "Mobile pilot" frame (1863:1542): 16 / 20 / 24 / 30 /
+     36 there are this chain rounded. Step 5 runs the ratio (44.1), not the
+     pilot's 48 — Paul, 2026-10-20: "let's use 44 and see". Desktop is
+     unchanged. Spec: 01_branding/typography/typography.md */
+  --step--2: clamp(0.7500rem, 0.7198rem + 0.1238vw, 0.8313rem);  /* 12.0 → 13.3 */
+  --step--1: clamp(0.8750rem, 0.8518rem + 0.0952vw, 0.9375rem);  /* 14.0 → 15.0 */
   --step-0:  1rem;                                                 /* 16    */
-  /* "step 0 (strong)" stays 18 in Figma (Bold, -0.25 tracking): it is its own
-     style, not step 0 made bold, so it did not move with it. */
-  --step-0-strong: 1.0625rem;                                      /* 17    */
-  --step-1:  clamp(1.1250rem, 1.0704rem + 0.2240vw, 1.2720rem);  /* 18.0 → 20.4 */
-  --step-2:  clamp(1.2656rem, 1.1347rem + 0.5370vw, 1.6180rem);  /* 20.2 → 25.9 */
-  --step-3:  clamp(1.4238rem, 1.1882rem + 0.9666vw, 2.0582rem);  /* 22.8 → 32.9 */
-  --step-4:  clamp(1.75rem, 1.4275rem + 1.324vw, 2.6180rem);  /* 28 → 41.9 (phones lifted from 25.6 so headings carry, as on together.agency) */
-  --step-5:  clamp(2.1875rem, 1.7627rem + 1.743vw, 3.3302rem);  /* 35 → 53.3 (phones lifted from 28.8) */
+  /* With one weight there is no strong style left: it is step 0. Kept as an
+     alias so the FAQ question and similar call sites still say what they are. */
+  --step-0-strong: var(--step-0);
+  --step-1:  clamp(1.2247rem, 1.2072rem + 0.0720vw, 1.2720rem);  /* 19.6 → 20.4 */
+  --step-2:  clamp(1.5000rem, 1.4562rem + 0.1799vw, 1.6180rem);  /* 24.0 → 25.9 */
+  --step-3:  clamp(1.8371rem, 1.7550rem + 0.3368vw, 2.0582rem);  /* 29.4 → 32.9 */
+  --step-4:  clamp(2.2500rem, 2.1133rem + 0.5608vw, 2.6180rem);  /* 36.0 → 41.9 */
+  --step-5:  clamp(2.7557rem, 2.5423rem + 0.8755vw, 3.3302rem);  /* 44.1 → 53.3 */
 
-  /* Leading. One hyperbola — 0.75·size + 15.3px — expressed so it stays
-     correct as the sizes interpolate. Flat 1.6 at step 0 and below. */
-  --leading-display: calc(0.75em + 0.9rem);
+  /* Section headlines. Desktop sets them in step 4; the phone frame sets every
+     one of them in step 3. Rather than a jump at a breakpoint, this one token
+     runs from step 3's phone size to step 4's desktop size. */
+  --step-section: clamp(1.8371rem, 1.5471rem + 1.1900vw, 2.6180rem);  /* 29.4 → 41.9 */
+
+  /* Leading. Steps 1–5: 0.75 × size + a constant that is itself fluid,
+     12.5px on a phone to 14.4px at 1440 — exact against both the pilot and
+     every desktop Figma style. Step 0: 24 → 27.2 (1.5 → 1.7). Steps −1/−2:
+     1.6 on desktop, tighter on phones (see the media query at the end). */
+  --leading-gap: clamp(0.7813rem, 0.7371rem + 0.1810vw, 0.9000rem);   /* 12.5 → 14.4 */
+  --leading-display: calc(0.75em + var(--leading-gap));
+  --leading-body: clamp(1.5rem, 1.4257rem + 0.3048vw, 1.7rem);         /* 24 → 27.2 at 16px */
   --leading-reading: 1.6;
-  /* At 16px a 1.7 line gives a 27.2px line box — open, in the way
-     together.agency's body copy is. Steps -1 and -2 are still 1.6. */
-  --leading-body: 1.7;
 
-  --tracking-strong: -0.25px;   /* step 0 (strong) */
-  --tracking-display: -0.0078em;  /* step 5 — -0.5px at 64px, kept proportional
-                                     so it holds as the size interpolates */
+  /* Tracking (Paul, 2026-10-20): 0 on reading steps (−2 to 2), −0.5% on
+     display steps (3–5 and the section headline), at every width. */
+  --tracking-strong: 0;
+  --tracking-display: -0.005em;
 
   /* ---- Spacing ---------------------------------------------------------- */
   --space-1: 4px;
@@ -179,13 +184,14 @@
   /* Content runs to 1440 with a 32px margin each side; the margin shrinks on
      small screens. The navbar and menu overlay share it. */
   --container-max: 1280px;
-  --container-gutter: clamp(20px, 2.223vw, 32px);   /* 20 on a phone, 32 from 1440 */
+  /* Paul, 2026-10-20: 24 on a phone (supersedes the earlier 20), 32 at 1440. */
+  --container-gutter: clamp(1.5rem, 1.3143rem + 0.7619vw, 2rem);   /* 24 → 32 */
   /* Column gap for multi-column grids: wider than the old flat 32. */
   --grid-gap: clamp(24px, 3.33vw, 48px);
   --page-gutter-wide: var(--container-gutter);
   /* Figma 1055:1396: the navbar is max-width 1280 with 32 padding, the same box
      as the content, so toggle and Menu line up with the page edges. */
-  --nav-gutter: clamp(16px, 2.223vw, 32px);         /* the phone pill runs a little wider than the content */
+  --nav-gutter: clamp(1.25rem, 0.9714rem + 1.1429vw, 2rem);   /* 20 → 32: the phone pill runs a little wider than the content (Figma 1891:1513) */
 
   /* Every image and video slot on the site. */
   --radius-media: 12px;
@@ -256,6 +262,7 @@
   --dur-base: 0.5s;         /* fades that accompany --dur-slow movement */
   --dur-fast: 0.2s;
   --dur-toggle: 0.9s;       /* the theme toggle's do-si-do */
+  --dur-ring: 4s;           /* one full turn of the button's gradient ring — slow and even */
 
   /* ---- Reveal --------------------------------------------------------------
      One rise distance and one cadence for the whole site, so sections entering
@@ -281,48 +288,48 @@
   --bullet-hover: 20px;     /* the circle it grows into — also the arrow's mask */
   --bullet-arrow: 13px;     /* the arrow travelling through it */
 
-  /* The PW wordmark. Figma specs 40 at 1440, and it used to sit there flat —
-     which meant that between 760 and 1200 the logo was LARGER than the section
-     headings beneath it (40 against step 3's 38.4 at 820), and on a phone it
-     was 92% the size of the h1. A wordmark that outranks the headline is a
-     wordmark that reads as a mistake.
-
-     So it rides the same curve as the display steps: 40 at 1440 down to 26.1
-     at 390. Derived from step 3's clamp scaled by 40/37.05, so the mark keeps
-     its exact relationship to the headings at every width rather than only at
-     the two ends — which is why its floor moved when step 3's did. */
-  --mark-size: clamp(1.5375rem, 1.1578rem + 1.0825vw, 2.2250rem);  /* 24.6 → 35.6 */
+  /* The PW wordmark: 32 on the 390 frame (1863:1542), 40 at 1440. Regular,
+     like everything else, since 2026-10-20. */
+  --mark-size: clamp(2rem, 1.8143rem + 0.7619vw, 2.5rem);  /* 32 → 40 */
 }
 
 .dark-mode {
-  --color-background: #000000;
-  --color-container: #121212;
-  --color-border: #2B2B2B;
-  --color-text: #FFFFFF;
+  --color-background: #0F0F0F;
+  --color-container: #1C1C1C;
+  --color-border: #2E2E2E;
+  --color-text: #FAFAFA;
   --color-rule: var(--color-border);
-  --color-rule-strong: #FFFFFF;
+  --color-rule-strong: var(--color-text);
   --color-rule-soft: var(--color-border);
   --color-text-soft: rgba(255, 255, 255, 0.6);
   --color-text-muted: rgba(255, 255, 255, 0.6);
-  --color-testimonial-card: #121212;
+  --color-testimonial-card: #1C1C1C;
   --color-testimonial-text: #FFFFFF;
   --color-muted-toggle: #3F3F3F;
-
 
   /* Figma: the lightbox card is #F9F9F9 with black text in both modes. */
   --lightbox-background: #F9F9F9;
   --lightbox-text: #000000;
-  --collapsed-site-background: #121212;
+  --collapsed-site-background: #1C1C1C;
 
+  --color-pill: #292929;         /* Figma: Pill-Btn Container */
+  --color-pill-hover: #2B2B2B;   /* Figma: Pill-Btn Container Hover */
 
-  --color-pill: #131313;         /* Figma: Pill Container */
-  --color-pill-hover: #0F0F0F;   /* Figma: Pill Container Hover */
+  /* Dark buttons are charcoal with light type, not a white pill (Figma
+     annotation on 1863:2030 — "less of a flip-flop"). */
+  --btn-bg: var(--color-pill);
+  --btn-text: var(--color-text);
 
   /* Semantic colours are mode-independent and are not redeclared here. */
 
-  /* Shadows read as nothing on pure black — elevation is carried by the
-     container fill (#2B2B2B on #000000) instead. */
+  /* Shadows read as nothing on a near-black page — elevation is carried by
+     the container fill (#1C1C1C on #0F0F0F) instead. */
   --shadow-lift: none;
+}
+
+/* Phones: small type is set tighter in the 390 frame (14/20, 12/16). */
+@media (max-width: 760px) {
+  :root { --leading-reading: 1.4; }
 }
 
 @media (prefers-reduced-motion: reduce) {

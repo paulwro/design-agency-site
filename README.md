@@ -31,12 +31,14 @@ Requires Node ^20.19 or >=22.12 (Vite 8).
 Everything visual comes from `src/styles/tokens.css`. Read that file before
 changing anything — it carries the reasoning, not just the values.
 
-**Type.** A fluid scale, steps −2 to 5, interpolating 390 → 1440. The *ratio*
-interpolates too: a single 9:8 at phone width, opening to √φ at desktop. So a
-phone gets one uniform ratio through the whole scale and the display end fans
-into its second ratio only once the screen earns the room. Leading is one
-hyperbola — `0.75em + 0.956rem` — which lands at 1.25 on a phone and 1.005 at
-1440 on its own.
+**Type.** One family, one weight: Neue Haas Unica Pro Regular, self-hosted from
+`public/fonts/` and preloaded in `index.html` (no Typekit). A fluid scale, steps
+−2 to 5, base 16, interpolating 390 → 1440, where the *ratio* interpolates too:
+√1.5 on a phone (a perfect fifth every two steps) opening to √φ at desktop (the
+golden ratio every two steps). Section headlines use `--step-section`, which runs
+from step 3 on a phone to step 4 at 1440. Leading for steps 1–5 is
+`0.75em + 12.5px → 14.4px`; step 0 is 24 → 27.2. Tracking is −0.5% on display
+steps only. Spec: `../01_branding/typography/typography.md`.
 
 **Motion.** Measured off wearecollins.com and together.agency, not guessed:
 movement `0.8s cubic-bezier(.19, 1, .22, 1)`, colour `0.7s ease-out-cubic`,
@@ -51,10 +53,17 @@ layout drift apart, because the type compresses 37% and the air does not.
 `--space-*` stays fixed for component-level padding Figma really does hold.
 
 **Rules.** `--color-rule` for hairlines on a raised `--container` surface,
-where Figma's dark Borders & Lines (#131313) is darker than the surface and
-inverts into a groove. `--color-border` — Borders & Lines as authored — for
-rules on the page ground, where it works in both modes. The contact form is
-the only deliberate `--color-border` hairline.
+`--color-border` — Borders & Lines as authored — for rules on the page ground. In dark
+mode Borders & Lines (`#2E2E2E` since 2026-10-20) sits above both the page (`#0F0F0F`) and
+the container (`#1C1C1C`), so it reads as a line on either. The contact form is the only
+deliberate `--color-border` hairline.
+
+**Colour.** Figma variables as of 2026-10-20: page `#FAFAFA` / `#0F0F0F`, container
+`#F2F2F2` / `#1C1C1C`. Filled buttons read `--btn-bg` / `--btn-text`: the inverted
+pill in light mode, charcoal `#292929` with `#FAFAFA` type in dark. Pill buttons
+hover with the scale + drop shadow; only the Contact form Submit (radius 12) adds
+the moving gradient ring (`.btn-ring` in `controls.css`). Table:
+`../01_branding/color palette/color palette.md`.
 
 ## Figma
 

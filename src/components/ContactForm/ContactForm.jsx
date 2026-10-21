@@ -145,7 +145,7 @@ export default function ContactForm() {
       <RevealItem className="contact-form__submit">
         <button
           type="submit"
-          className="contact-form__btn"
+          className="contact-form__btn btn-ring"
           disabled={!complete || status === 'sending'}
         >
           {status === 'sending' ? 'Sending…' : 'Submit'}

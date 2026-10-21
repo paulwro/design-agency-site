@@ -27,7 +27,7 @@
 .page-hero__headline {
   margin: 0;
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: var(--weight-regular);
   font-size: var(--step-5);
   line-height: var(--leading-display);
   letter-spacing: var(--tracking-display);
@@ -51,6 +51,11 @@
 
 /* On a phone the hero sits right under the nav pill; a full section inset above
    and below it pushed the headline most of the way down the first screen. */
+/* 390 frame (1863:1544): pt-64 pb-40, headline to lede 32, and set flush left
+   on the gutter rather than centred — a centred block of 44px type on a phone
+   read as a poster, flush left reads as the start of a page. */
 @media (max-width: 760px) {
-  .page-hero { padding-block: var(--space-10); }
+  .page-hero { padding-block: var(--space-16) var(--space-10); }
+  .page-hero__content { align-items: flex-start; text-align: left; margin-inline: 0; }
+  .page-hero__lede { font-size: var(--step-1); line-height: var(--leading-display); }
 }

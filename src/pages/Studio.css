@@ -230,8 +230,8 @@
   align-self: start;
   margin: 0;
   font-family: var(--font-display);
-  font-weight: 700;
-  font-size: var(--step-4);
+  font-weight: var(--weight-regular);
+  font-size: var(--step-section);
   line-height: var(--leading-display);
   letter-spacing: var(--tracking-display);
   color: var(--color-text);

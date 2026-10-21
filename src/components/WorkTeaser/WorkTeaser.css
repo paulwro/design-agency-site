@@ -30,8 +30,9 @@
   margin: 0;
   max-width: 960px;
   font-family: var(--font-display);
-  font-weight: 700;
-  font-size: var(--step-4);
+  font-weight: var(--weight-regular);
+  font-size: var(--step-section);
+  letter-spacing: var(--tracking-display);
   line-height: var(--leading-display);
   color: var(--color-text);
 }
@@ -134,7 +135,8 @@
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
-    padding: 0 20px;
+    padding: 0 var(--container-gutter);
+    scroll-padding-inline: var(--container-gutter);
     scrollbar-width: none;
   }
 

@@ -64,29 +64,33 @@
 
 @media (max-width: 900px) {
   /* One column. The container gutter, the card and the copy each used to add
-     16-24 of inset (the text sat 56 in from the screen edge on a phone); now it
-     is the gutter + 8 + 12, so the copy gets room to breathe. */
+     16-24 of inset; now it is the gutter + 8 + 12, per the 390 frame. */
   .service-card {
     grid-template-columns: minmax(0, 1fr);
-    gap: var(--space-5);
+    gap: var(--space-4);
     padding: var(--space-2);
     border-radius: var(--space-5);
   }
   .service-card__body { grid-column: auto; padding: var(--space-3); min-width: 0; }
   .service-card__aside { gap: var(--space-4); min-width: 0; }
+  .service-card .ruled-list { padding-block: 0; }
+  .service-card .ruled-list__item { padding-block: var(--space-4); }
+}
 
-  /* One scrolling row instead of a wrap that strands an orphan pill; it bleeds
-     to the card's edges so the cut-off pill says "there is more". */
+/* Phones — Figma 1863:1564. The client pills move up into the copy, under the
+   list, and the image closes the card. The pills wrap with 12 between them
+   rather than scrolling: with two or three clients a card there is nothing
+   hidden to hint at. */
+@media (max-width: 760px) {
+  .service-card { display: flex; flex-direction: column; }
+  .service-card__aside { display: contents; }
   .service-card__clients {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    margin-inline: calc(var(--space-3) * -1);
-    padding-inline: var(--space-3);
-    scroll-snap-type: x proximity;
-    scroll-padding-inline: var(--space-3);
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
+    order: 1;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    padding: 0 var(--space-3) var(--space-3);
+    margin-top: calc(var(--space-4) * -1);   /* sit 16 under the list, inside the copy's inset */
   }
-  .service-card__clients::-webkit-scrollbar { display: none; }
-  .service-card__clients .pill-link { flex: 0 0 auto; scroll-snap-align: start; min-height: 44px; }
+  .service-card__media { order: 2; aspect-ratio: 334 / 253; }
+  .service-card__clients .pill-link { min-height: 38px; }
 }

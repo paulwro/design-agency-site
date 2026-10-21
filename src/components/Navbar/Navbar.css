@@ -55,14 +55,15 @@
 
 .navbar__slot--end { justify-content: flex-end; }
 
-/* Neue Haas Unica Medium, 40 / 0.9. Third family — see --font-mark. */
+/* Neue Haas Unica, 40 / 0.9 at 1440, 32 on a phone. Regular since 2026-10-20,
+   the same face and weight as everything else. */
 .navbar__mark {
   position: absolute;
   left: 50%;
   translate: -50% 0;          /* `translate`, not `transform`: it is applied outside `scale`,
                                  so the mark stays centred while it shrinks */
   font-family: var(--font-mark);
-  font-weight: 500;
+  font-weight: var(--weight-regular);
   font-size: var(--mark-size);
   line-height: 0.9;
   color: var(--color-text);
@@ -148,14 +149,14 @@
 @media (max-width: 760px) {
   /* The 16 above the pill lives on the header itself, so it is still there once
      the bar sticks (it used to be a margin on the pill, which scrolled away). */
-  .navbar { padding-top: var(--space-4); }
+  .navbar { padding-top: var(--space-3); }      /* 390 frame 1891:1513: py-12 */
 
   .navbar__inner {
     height: auto;
     gap: var(--space-4);
     max-width: 420px;
     margin: 0 auto;
-    padding: var(--space-5) var(--space-8);
+    padding: var(--space-3) var(--space-6);       /* 390 frame 1890:1438: py-12 px-24 */
     border-radius: 128px;
     background: var(--color-container);
   }
@@ -164,10 +165,10 @@
     position: static;
     flex: 1 0 0;
     translate: none;
-    /* No step down here any more: --mark-size is fluid, so it has already
-       reached 33 by the time this breakpoint applies and 29.7 at 390.
-       Multiplying it again reintroduced the jump the clamp exists to avoid. */
-    letter-spacing: 0.18px;
+    /* --mark-size is fluid (32 at 390), so no step down here. The 390 frame
+       sets it 32 / 1.1 with +1% tracking. */
+    line-height: 1.1;
+    letter-spacing: 0.01em;
     text-align: center;
   }
 }

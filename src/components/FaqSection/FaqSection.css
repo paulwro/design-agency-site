@@ -12,8 +12,9 @@
   width: 392px;
   max-width: 100%;
   font-family: var(--font-display);
-  font-weight: 700;
-  font-size: var(--step-4);
+  font-weight: var(--weight-regular);
+  font-size: var(--step-section);
+  letter-spacing: var(--tracking-display);
   line-height: var(--leading-display);
   color: var(--color-text);
 }
@@ -73,7 +74,7 @@
 .faq-question__text {
   flex: 1 0 0;
   font-family: var(--font-body);
-  font-weight: 700;
+  font-weight: var(--weight-regular);
   font-size: var(--step-0-strong);
   line-height: var(--leading-body);
   letter-spacing: var(--tracking-strong);

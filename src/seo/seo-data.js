@@ -183,7 +183,7 @@ export const ROUTE_SEO = {
           '@type': 'ListItem',
           position: i + 1,
           name: c.title,
-          description: `${c.lede} ${c.items.join('; ')}.`,
+          description: c.description,
         })),
       },
       faqPage(engagementFaqs),

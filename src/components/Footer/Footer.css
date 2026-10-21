@@ -15,10 +15,13 @@
   display: none;
   flex-direction: column;
   align-items: center;
-  gap: 72px;
-  padding-block: var(--section-inset) var(--space-8);   /* pt-128, pb-32 */
+  gap: var(--space-12);                                  /* 390 frame 1863:2025: blocks 48 apart */
+  padding-block: var(--section-inset) var(--space-12);   /* 56 top on a phone, 48 bottom */
   padding-inline: var(--container-gutter);
 }
+
+/* 390 frame: CTA headline to the Contact button is 32. */
+.footer-mobile .footer-cta { gap: var(--space-8); }
 
 @media (max-width: 760px) {
   .footer-desktop {
@@ -42,8 +45,9 @@
 .footer-headline {
   margin: 0;
   font-family: var(--font-display);
-  font-weight: 700;
-  font-size: var(--step-4);
+  font-weight: var(--weight-regular);
+  font-size: var(--step-section);
+  letter-spacing: var(--tracking-display);
   line-height: var(--leading-display);
   color: var(--color-text);
 }
@@ -99,7 +103,7 @@
 }
 
 .footer-pill-btn span.is-active {
-  color: var(--color-background);
+  color: var(--btn-text);
 }
 
 .footer-nav { position: relative; }
@@ -112,8 +116,10 @@
   z-index: 0;
   pointer-events: none;
   border-radius: 100px;
-  background: var(--color-text);
+  background: var(--btn-bg);         /* charcoal in dark mode, like every filled button */
 }
+
+
 
 .footer-meta {
   display: flex;
@@ -191,6 +197,10 @@
 
 
 
+/* 390 frame 1863:2055: step −1 in Muted Text, centred. */
 .footer-legal--mobile {
+  font-size: var(--step--1);
+  line-height: var(--leading-reading);
+  color: var(--color-text-muted);
   text-align: center;
 }

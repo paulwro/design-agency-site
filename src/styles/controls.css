@@ -6,16 +6,21 @@
 /* ---- Btn · 606:667 default / 689:752 hover -------------------------------
    Annotation: "the button size grows 10% on hover (text size and placement
    remain unchanged), and a light drop shadow is applied on hover."
-   scale() grows the rendered box without touching layout or text metrics. */
+   scale() grows the rendered box without touching layout or text metrics.
+
+   2026-10-20: dark mode is charcoal with light type (--btn-bg / --btn-text),
+   not a white pill. Hover stays the scale + drop shadow; the gradient ring
+   (.btn-ring below) is the Contact form Submit's alone (Paul, 2026-10-21). */
 .btn-primary {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   padding: var(--space-4) var(--space-8) 17px;
   border: none;
   border-radius: 100px;
-  background: var(--color-text);
-  color: var(--color-background);
+  background: var(--btn-bg);
+  color: var(--btn-text);
   font-family: var(--font-body);
   font-size: var(--step-0);
   line-height: var(--leading-body);
@@ -48,12 +53,59 @@
     drop-shadow(0 12px 22px rgba(8, 16, 32, 0.22));
 }
 
-/* On black, a black shadow is invisible — the pill is white here, so the cast
-   has to come from the pill itself rather than from darkness beneath it. */
+/* On a near-black page a dark shadow reads as nothing, so the cast comes from
+   a faint light glow around the pill instead. */
 .dark-mode .btn-primary--deep:hover,
 .dark-mode .btn-primary--deep:focus-visible {
   filter: drop-shadow(0 2px 6px rgba(255, 255, 255, 0.10))
     drop-shadow(0 14px 28px rgba(255, 255, 255, 0.07));
+}
+
+/* ---- Gradient ring · Paul, 2026-10-20 -------------------------------------
+   "Some kind of cool moving gradient stroke border on button hover in both
+   light and dark modes" — then, 2026-10-21: only the Submit button (the
+   radius-12 block) gets it; pill buttons keep the scale + drop shadow.
+   A 1.5px ring drawn on the button's own edge (inside it, so nothing
+   shifts), in the semantic palette the Submit glow already uses. It fades in
+   on the quick tier and the gradient turns slowly and evenly while the
+   pointer stays. Opt in with .btn-ring. */
+@property --btn-ring-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.btn-ring::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  padding: 1.5px;
+  border-radius: inherit;
+  background: conic-gradient(from var(--btn-ring-angle),
+    var(--glow-1), var(--glow-2), var(--glow-3), var(--glow-4), var(--glow-5), var(--glow-1));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  opacity: 0;
+  pointer-events: none;
+  animation: btn-ring-turn var(--dur-ring) linear infinite paused;
+  transition: opacity var(--dur-quick) var(--ease-in-out-sine);
+}
+
+.btn-ring { position: relative; }
+
+.btn-ring:hover::before,
+.btn-ring:focus-visible::before {
+  opacity: 1;
+  animation-play-state: running;
+}
+
+/* A disabled button does not promise anything, so it does not light up. */
+.btn-ring:disabled::before { opacity: 0; }
+
+@keyframes btn-ring-turn {
+  to { --btn-ring-angle: 360deg; }
 }
 
 .btn-primary:active {
@@ -108,7 +160,7 @@
   background: var(--color-pill);
   color: var(--color-text);
   font-family: var(--font-body);
-  font-weight: 500;
+  font-weight: var(--weight-regular);
   font-size: var(--step--2);
   line-height: var(--leading-reading);
   text-decoration: none;
@@ -123,6 +175,11 @@
 .pill-link:focus-visible {
   transform: scale(1.04);
   background: var(--color-pill-hover);
+}
+
+/* Phones: the pill label is 14/21 (Figma "Mobile pilot/link", 1863:1542). */
+@media (max-width: 760px) {
+  .pill-link { padding: var(--space-2) 14px 9px var(--space-4); font-size: var(--step--1); line-height: 21px; }
 }
 
 .pill-link__arrow {
@@ -160,6 +217,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  /* The ring still appears; it just does not turn. */
+  .btn-ring::before { animation: none; }
   .btn-primary,
   .pill-link,
   .arrow-btn { transition: none; }

@@ -43,8 +43,9 @@
 .expertise-headline {
   margin: 0;
   font-family: var(--font-display);
-  font-weight: 700;
-  font-size: var(--step-4);
+  font-weight: var(--weight-regular);
+  font-size: var(--step-section);
+  letter-spacing: var(--tracking-display);
   line-height: var(--leading-display);
   color: var(--color-text);
   text-wrap: balance;

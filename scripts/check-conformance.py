@@ -43,8 +43,8 @@ check('Studio: step 4 on problem + capabilities, step 3 on who + how',
       f"{studio_jsx.count('<SectionHeader')} headers, {studio_jsx.count('level={3}')} at level 3 (who + how; problem and capabilities are step 4)")
 check('Studio: full-panel image is py-64 at ratio 1184/779',
       'ratio="1184 / 779"' in studio_jsx and 'inset="tight"' in studio_jsx)
-check('Studio: bio heading is step 4 (Figma names the group "Step 3")',
-      re.search(r'\.studio-bio__heading\s*\{[^}]*--step-4', studio_css, re.S))
+check('Studio: bio heading is the section step (step 4 on desktop, step 3 on a phone)',
+      re.search(r'\.studio-bio__heading\s*\{[^}]*--step-section', studio_css, re.S))
 check('Studio: bio role is step 0, not step -1',
       re.search(r'\.studio-bio__role\s*\{[^}]*--step-0', studio_css, re.S))
 check('Studio: problem-statement lede is step 1 and 60% (soft)',
@@ -195,9 +195,9 @@ check('Client logo grid: 200x87 cells, 240 artboards at 120%, rules drawn per ce
       'aspect-ratio: 200 / 87' in read('components/ClientLogoGrid/ClientLogoGrid.css')
       and '.logo-cell::before' in read('components/ClientLogoGrid/ClientLogoGrid.css')
       and '.logo-cell::after' in read('components/ClientLogoGrid/ClientLogoGrid.css'))
-check('layout: 1280 max, 32px gutter, 12px media radius tokens',
-      '--container-max: 1280px' in tokens and 'clamp(20px, 2.223vw, 32px)' in tokens
-      and '--radius-media: 12px' in tokens)
+check('layout: 1280 max, 24 → 32 gutter, 12px media radius tokens',
+      '--container-max: 1280px' in tokens and '--container-gutter: clamp(1.5rem,' in tokens
+      and '2rem);' in tokens and '--radius-media: 12px' in tokens)
 check('contact submit is disabled until the form is complete',
       'disabled={!complete' in read('components/ContactForm/ContactForm.jsx'))
 check('the submit button carries the gradient glow',
@@ -246,8 +246,8 @@ check('News is gone: no route, no nav link, no menu promo',
 check('Footer is rendered once, by App, and by no page',
       read('App.jsx').count('<Footer />') == 1
       and not any('Footer' in read(f'pages/{n}.jsx') for n in ('Home','Studio','Engagements','Contact','Upcoming')))
-check('Step 0 is a flat 16 and step 0 (strong) is 17',
-      re.search(r'--step-0:\s*1rem;', tokens) and re.search(r'--step-0-strong:\s*1\.0625rem;', tokens))
+check('Step 0 is a flat 16, and with one weight step 0 (strong) is just step 0',
+      re.search(r'--step-0:\s*1rem;', tokens) and re.search(r'--step-0-strong:\s*var\(--step-0\);', tokens))
 
 # ---- type scale -------------------------------------------------------------
 # Every font-size comes from the fluid scale. A literal px size is a size that
@@ -275,8 +275,43 @@ check('testimonial cards carry no drop shadow',
 check('section-scale rhythm is fluid, not pinned at Figma desktop values',
       '--rhythm-64: clamp(' in tokens and '--rhythm-96: clamp(' in tokens
       and 'var(--rhythm-96)' in read('components/Hero/Hero.css'))
-check('the phone gutter is 20 (Paul, Oct 2026: 24 was too much room), 32 from 1440',
-      '--container-gutter: clamp(20px' in tokens)
+check('the phone gutter is 24 (Paul, 2026-10-20, superseding 20), 32 from 1440',
+      '--container-gutter: clamp(1.5rem' in tokens)
+
+# ---- 2026-10-20 system ------------------------------------------------------
+all_css = '\n'.join(read(str(f.relative_to(SRC))) for f in SRC.rglob('*.css'))
+check('one family: every font token is Neue Haas Unica, no Typekit',
+      "--font-unica: 'Neue Haas Unica'" in tokens
+      and 'var(--font-unica)' in tokens
+      and 'typekit' not in (SRC.parent / 'index.html').read_text(encoding='utf-8'))
+check('the self-hosted Regular is declared and preloaded',
+      "url('/fonts/NeueHaasUnicaPro-Regular.woff2')" in read('styles/global.css')
+      and (SRC.parent / 'public/fonts/NeueHaasUnicaPro-Regular.woff2').exists()
+      and 'rel="preload" href="/fonts/NeueHaasUnicaPro-Regular.woff2"' in (SRC.parent / 'index.html').read_text(encoding='utf-8'))
+check('one weight: no 500/600/700/bold anywhere, and no faux bold',
+      not re.search(r'font-weight:\s*(500|600|700|bold)', all_css)
+      and 'font-synthesis: none' in read('styles/global.css'))
+check('ratio √1.5 at 390 → √φ at 1440 (step 5: 44.1 → 53.3)',
+      '--step-5:  clamp(2.7557rem' in tokens and '3.3302rem)' in tokens
+      and '--step-3:  clamp(1.8371rem' in tokens)
+check('section headlines run step 3 (phone) → step 4 (desktop)',
+      '--step-section: clamp(1.8371rem' in tokens and 'var(--step-4)' not in read('components/FaqSection/FaqSection.css')
+      and 'var(--step-section)' in read('components/Footer/Footer.css'))
+check('display steps carry −0.5% tracking, reading steps none',
+      '--tracking-display: -0.005em' in tokens and '--tracking-strong: 0' in tokens)
+check('2026-10-20 colours: page #FAFAFA / #0F0F0F, light container #F2F2F2, dark container #1C1C1C',
+      '--color-background: #FAFAFA' in tokens and '--color-background: #0F0F0F' in tokens
+      and '--color-container: #F2F2F2' in tokens and '--color-container: #1C1C1C' in tokens
+      and '--color-border: #2E2E2E' in tokens and '--color-pill: #292929' in tokens)
+check('dark buttons are charcoal (--btn-bg), not a white pill',
+      '--btn-bg: var(--color-pill)' in tokens and 'background: var(--btn-bg)' in read('styles/controls.css')
+      and 'background: var(--btn-bg)' in read('components/ContactForm/ContactForm.css'))
+check('only Submit carries the moving gradient ring; pill buttons keep scale + shadow',
+      '@property --btn-ring-angle' in read('styles/controls.css')
+      and 'btn-ring' in read('components/ContactForm/ContactForm.jsx')
+      and '.btn-primary::before' not in read('styles/controls.css')
+      and '.footer-pill::before' not in read('components/Footer/Footer.css')
+      and 'transform: scale(1.04)' in read('styles/controls.css'))
 
 # ---- routing ----------------------------------------------------------------
 all_src = '\n'.join(read(str(f.relative_to(SRC))) for f in SRC.rglob('*.js*'))

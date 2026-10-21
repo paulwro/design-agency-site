@@ -16,14 +16,14 @@
 .work-heading {
   margin: 0;
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: var(--weight-regular);
   font-size: var(--step-3);
   line-height: var(--leading-display);
   letter-spacing: var(--tracking-display);
   color: var(--color-text);
   text-wrap: balance;
 }
-.work-heading--lg { font-size: var(--step-4); }
+.work-heading--lg { font-size: var(--step-section); letter-spacing: var(--tracking-display); }
 
 .work-lede {
   margin: 0;
@@ -99,7 +99,7 @@
 .work-chapter--strong { gap: var(--space-1); }
 .work-chapter--strong .work-chapter__title {
   font-size: var(--step-0-strong);
-  font-weight: 700;
+  font-weight: var(--weight-regular);
   line-height: var(--leading-body);
   letter-spacing: var(--tracking-strong);
 }
