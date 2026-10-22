@@ -34,7 +34,7 @@
   font-size: var(--step-0);
   line-height: var(--leading-body);
   outline: none;
-  /* Borders & Lines, straight from Figma: #ECECEC on white, #2B2B2B on black. */
+  /* Borders & Lines, straight from Figma: #ECECEC in light, #2E2E2E in dark. */
   transition: border-color var(--dur-color) var(--ease-out-cubic);
 }
 

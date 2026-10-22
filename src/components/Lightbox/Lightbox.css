@@ -9,7 +9,7 @@
   --color-text-soft: rgba(0, 0, 0, 0.6);
   --color-text-muted: rgba(0, 0, 0, 0.6);
   --color-text-dim: rgba(0, 0, 0, 0.4);
-  --color-rule: rgba(0, 0, 0, 0.12);
+  --color-rule: #ECECEC;
   --color-rule-strong: #000000;
   --color-rule-soft: #ECECEC;
 }

@@ -15,9 +15,10 @@
   /* Hairlines are their own tokens so they can be tuned apart from
      --color-border (which is also a surface fill). In dark mode Figma's
      Borders & Lines is #2E2E2E on a #1C1C1C container, so the rules take
-     that value directly; light mode keeps its soft black tint. Rules come to
-     full strength (--color-rule-strong) on hover and press. */
-  --color-rule: rgba(0, 0, 0, 0.12);
+     that value directly. Light mode does the same (Paul, 2026-10-22 colour
+     audit: the old 12% black tint drew about #DBDBDB, darker than Figma's
+     #ECECEC). Rules come to full strength (--color-rule-strong) on hover. */
+  --color-rule: var(--color-border);
   --color-rule-strong: var(--color-text);
   /* Logo-grid rules: Borders & Lines (#ECECEC) on the #F2F2F2 container, as
      Figma draws them. Dark mode uses the same token (#2E2E2E on #1C1C1C). */
@@ -35,7 +36,7 @@
   /* Work page cards (Figma "Testimonial Card" / "Testimonial Text"). The home
      testimonial carousel no longer uses these: its cards carry fixed colours. */
   --color-testimonial-card: #F9F9F9;
-  --color-testimonial-text: #000000;
+  --color-testimonial-text: #0F0F0F;
 
 
 
@@ -55,6 +56,8 @@
   --color-error: #F94C3C;          /* Figma Error (Paul, 2026-10-22; was #E84536) */
   --color-pink: #EC3AA8;
   --color-success: #81C941;
+  --color-teal: #01ECF0;    /* Figma Teal — one testimonial card */
+  --color-purple: #9747FF;  /* Figma Purple — one testimonial card */
   /* Type that sits ON a photo or video: white in both themes (it does not flip with the page). */
   --color-on-media: #FFFFFF;
   --color-info: #0152F0;   /* the former Brand Blue — lives on as Info */
