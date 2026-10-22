@@ -23,9 +23,13 @@
      Figma draws them. Dark mode uses the same token (#2E2E2E on #1C1C1C). */
   --color-rule-soft: var(--color-border);
   --color-text: #0F0F0F;
-  /* Body copy is 80% (Paul, 2026-10-22 — was 60%), set globally. */
-  --color-text-soft: rgba(0, 0, 0, 0.8);
-  --color-text-muted: rgba(0, 0, 0, 0.8);      /* Figma "Muted Text" */
+  /* Body copy is 60% (Paul, 2026-10-22: tried 80%, back to 60%), set globally. */
+  --color-text-soft: rgba(0, 0, 0, 0.6);
+  --color-text-muted: rgba(0, 0, 0, 0.6);      /* Figma "Muted Text" */
+  /* Sibling dimming (the menu overlay's other links while one is hovered).
+     Its own token so the fade never moves when body copy does — at 80% body
+     copy the menu barely dimmed at all. */
+  --color-text-dim: rgba(0, 0, 0, 0.35);
   --color-muted-toggle: #DADADA;
 
   /* Work page cards (Figma "Testimonial Card" / "Testimonial Text"). The home
@@ -141,7 +145,7 @@
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
-  --space-4: 16px;
+  --space-4: 18px;          /* Paul, 2026-10-22: 16 → 18 */
   --space-5: 20px;
   --space-6: 24px;
   --space-8: 32px;
@@ -312,8 +316,9 @@
   --color-rule: var(--color-border);
   --color-rule-strong: var(--color-text);
   --color-rule-soft: var(--color-border);
-  --color-text-soft: rgba(255, 255, 255, 0.8);
-  --color-text-muted: rgba(255, 255, 255, 0.8);
+  --color-text-soft: rgba(255, 255, 255, 0.6);
+  --color-text-muted: rgba(255, 255, 255, 0.6);
+  --color-text-dim: rgba(255, 255, 255, 0.35);
   --color-testimonial-card: #1C1C1C;
   --color-testimonial-text: #FFFFFF;
   --color-muted-toggle: #3F3F3F;

@@ -60,7 +60,7 @@ the container (`#1C1C1C`), so it reads as a line on either. The contact form is 
 deliberate `--color-border` hairline.
 
 **Colour.** Figma variables as of 2026-10-22: page `#F9F9F9` / `#0F0F0F`, container
-`#FFFFFF` / `#1C1C1C`, body copy at 80%. Filled buttons read `--btn-bg` / `--btn-text`: the inverted
+`#FFFFFF` / `#1C1C1C`, body copy at 60%. Filled buttons read `--btn-bg` / `--btn-text`: the inverted
 pill in light mode, charcoal `#292929` with `#FAFAFA` type in dark. Pill buttons
 hover with the scale + drop shadow; only the Contact form Submit (radius 12) adds
 the moving gradient ring (`.btn-ring` in `controls.css`). Table:

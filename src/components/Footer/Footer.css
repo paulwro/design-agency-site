@@ -141,7 +141,7 @@
   font-size: var(--step-0);
 }
 
-/* Same treatment as the menu overlay: underline at half strength, full on
+/* Same treatment as the menu overlay: underline at 60%, full on
    hover — not an opacity fade. See .text-link in styles/controls.css. */
 .footer-social a {
   position: relative;
@@ -158,7 +158,7 @@
   bottom: 0;
   height: 1.5px;
   background: currentColor;
-  opacity: 0.5;
+  opacity: 0.6;                       /* link underlines rest at 60%, like .text-link */
   transition: opacity var(--dur-base) var(--ease-in-out-sine);
 }
 

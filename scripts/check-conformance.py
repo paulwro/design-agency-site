@@ -308,10 +308,13 @@ check('section headlines run step 3 (phone) → step 4 (desktop)',
       and 'var(--step-section)' in read('components/Footer/Footer.css'))
 check('display steps carry −0.5% tracking, reading steps none',
       '--tracking-display: -0.005em' in tokens and '--tracking-strong: 0' in tokens)
-check('2026-10-22 colours: page #F9F9F9 / #0F0F0F, container #FFFFFF / #1C1C1C, body copy 80%',
+check('2026-10-22 colours: page #F9F9F9 / #0F0F0F, container #FFFFFF / #1C1C1C, body copy 60%',
       '--color-background: #F9F9F9' in tokens and '--color-background: #0F0F0F' in tokens
       and '--color-container: #FFFFFF' in tokens and '--color-container: #1C1C1C' in tokens
-      and '--color-text-muted: rgba(0, 0, 0, 0.8)' in tokens and '--color-text-muted: rgba(255, 255, 255, 0.8)' in tokens
+      and '--color-text-muted: rgba(0, 0, 0, 0.6)' in tokens and '--color-text-muted: rgba(255, 255, 255, 0.6)' in tokens)
+check('menu overlay dims its other links with its own token, not body-copy grey',
+      'var(--color-text-dim)' in read('components/MenuOverlay/MenuOverlay.css')
+      and '--color-text-dim: rgba(0, 0, 0, 0.35)' in tokens
       and '--color-border: #2E2E2E' in tokens and '--color-pill: #292929' in tokens)
 check('dark buttons are charcoal (--btn-bg), not a white pill',
       '--btn-bg: var(--color-pill)' in tokens and 'background: var(--btn-bg)' in read('styles/controls.css')

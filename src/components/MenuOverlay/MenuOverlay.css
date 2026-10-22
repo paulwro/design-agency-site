@@ -98,7 +98,7 @@
 
 /* Hovering a link recedes the others. The one under the cursor holds full
    strength — the :hover rule below outranks the parent rule by specificity. */
-.menu-overlay__nav:has(.menu-overlay__link:hover) .menu-overlay__link:not(:hover) { color: var(--color-text-muted); }
+.menu-overlay__nav:has(.menu-overlay__link:hover) .menu-overlay__link:not(:hover) { color: var(--color-text-dim); }
 .menu-overlay__nav .menu-overlay__link:hover { color: var(--color-text); }
 
 .menu-overlay__footer {
