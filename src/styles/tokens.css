@@ -290,7 +290,6 @@
   --dur-fast: 0.2s;
   --dur-toggle: 0.9s;       /* the theme toggle's do-si-do */
   --dur-swap: 0.3s;         /* testimonial card colour swap (Bold's timing) */
-  --dur-ring: 4s;           /* one full turn of the button's gradient ring — slow and even */
 
   /* ---- Reveal --------------------------------------------------------------
      One rise distance and one cadence for the whole site, so sections entering

@@ -9,8 +9,7 @@
    scale() grows the rendered box without touching layout or text metrics.
 
    2026-10-20: dark mode is charcoal with light type (--btn-bg / --btn-text),
-   not a white pill. Hover stays the scale + drop shadow; the gradient ring
-   (.btn-ring below) is the Contact form Submit's alone (Paul, 2026-10-21). */
+   not a white pill. Hover stays the scale + drop shadow. */
 .btn-primary {
   position: relative;
   display: inline-flex;
@@ -64,52 +63,8 @@
     drop-shadow(0 14px 28px rgba(255, 255, 255, 0.07));
 }
 
-/* ---- Gradient ring · Paul, 2026-10-20 -------------------------------------
-   "Some kind of cool moving gradient stroke border on button hover in both
-   light and dark modes" — then, 2026-10-21: only the Submit button (the
-   radius-12 block) gets it; pill buttons keep the scale + drop shadow.
-   A 1.5px ring drawn on the button's own edge (inside it, so nothing
-   shifts), in the semantic palette the Submit glow already uses. It fades in
-   on the quick tier and the gradient turns slowly and evenly while the
-   pointer stays. Opt in with .btn-ring. */
-@property --btn-ring-angle {
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false;
-}
-
-.btn-ring::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  padding: 1.5px;
-  border-radius: inherit;
-  background: conic-gradient(from var(--btn-ring-angle),
-    var(--glow-1), var(--glow-2), var(--glow-3), var(--glow-4), var(--glow-5), var(--glow-1));
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
-  opacity: 0;
-  pointer-events: none;
-  animation: btn-ring-turn var(--dur-ring) linear infinite paused;
-  transition: opacity var(--dur-quick) var(--ease-in-out-sine);
-}
-
-.btn-ring { position: relative; }
-
-.btn-ring:hover::before,
-.btn-ring:focus-visible::before {
-  opacity: 1;
-  animation-play-state: running;
-}
-
-/* A disabled button does not promise anything, so it does not light up. */
-.btn-ring:disabled::before { opacity: 0; }
-
-@keyframes btn-ring-turn {
-  to { --btn-ring-angle: 360deg; }
-}
+/* The moving gradient ring (2026-10-20, then Submit only from 2026-10-21) was
+   removed on 2026-10-22: Paul kept Submit's colour glow and dropped the stroke. */
 
 .btn-primary:active {
   transform: scale(0.98);
@@ -223,8 +178,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  /* The ring still appears; it just does not turn. */
-  .btn-ring::before { animation: none; }
   .btn-primary,
   .pill-link,
   .arrow-btn { transition: none; }

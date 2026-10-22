@@ -8,7 +8,9 @@
    ========================================================================== */
 
 :root {
-  --field-float-y: -24px;   /* distance the label travels on focus/fill */
+  /* Distance the label travels on focus/fill. 29, not 24, since the text moved
+     down 5 (below): the floated label lands exactly where it always did. */
+  --field-float-y: -29px;
 }
 
 /* No reserved air above the field: the label floats up into the 32px gap
@@ -24,7 +26,10 @@
    focus = full-strength Text. */
 .form-input {
   width: 100%;
-  padding: var(--space-2) 0 var(--space-4);
+  /* 13 / 13 (Paul, 2026-10-22): at 8 / 18 the text rode high in the field —
+     plain when Chrome's autofill paints the field blue — and crowded the
+     floated label. Same total height, so the row stays at Figma's 53. */
+  padding: 13px 0;
   border: 0;
   border-bottom: 1px solid var(--color-border);
   border-radius: 0;
@@ -68,7 +73,7 @@
   position: absolute;
   left: 0;
   top: 0;
-  padding-top: var(--space-2);
+  padding-top: 13px;                      /* sits on the input's text line (above) */
   color: var(--color-text);
   opacity: 0.9;
   font-family: var(--font-body);
@@ -109,7 +114,7 @@
 .form-field__chevron {
   position: absolute;
   right: 0;
-  top: 14px;                              /* where bottom: 16px put it on a 54px field */
+  top: 19px;                              /* follows the text down 5 (13 / 13 padding) */
   width: 24px;
   height: 24px;
   background-color: var(--color-text);

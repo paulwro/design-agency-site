@@ -47,11 +47,18 @@
   animation: glow-drift 7s linear infinite;
 }
 
-/* Dark mode has no white page to dilute the colour, so the same opacity reads
-   louder. Pulled back, and blurred further. */
+/* Dark mode (Paul, 2026-10-22: "nice and vibrant… I don't want it to look
+   muddy"). Plain alpha over near-black darkens every colour — yellow into
+   green went olive. Here the glow adds light instead (plus-lighter), and is
+   pushed brighter and more saturated, so it reads as lit colour on black. */
+.dark-mode .contact-form__submit::before {
+  filter: blur(20px) saturate(1.8) brightness(1.4);
+  mix-blend-mode: plus-lighter;
+}
+
 .dark-mode .contact-form__submit:has(.contact-form__btn:hover:not(:disabled))::before,
 .dark-mode .contact-form__submit:has(.contact-form__btn:focus-visible:not(:disabled))::before {
-  opacity: 0.6;
+  opacity: 0.85;
 }
 
 @keyframes glow-drift {
@@ -68,9 +75,14 @@
 }
 
 /* Figma 1074:1090 — full width, radius 12, 58 tall. Shares .btn-primary's
-   fill (charcoal in dark mode), its gradient ring (.btn-ring, on top of the
-   blurred glow) and its hover character, but not its pill shape. */
+   fill (charcoal in dark mode) and hover character, but not its pill shape.
+   The gradient ring is gone (Paul, 2026-10-22): the blurred colour glow behind
+   the button carries the hover on its own. */
 .contact-form__btn {
+  /* Positioned so it paints above the wrapper's glow (::before). The ring
+     used to supply this; without it the dark button, which has no filter to
+     lift it, sat under the wash. */
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -95,8 +107,8 @@
     drop-shadow(0 12px 22px rgba(8, 16, 32, 0.22));
 }
 
-/* The charcoal Submit does not glow white; its ring and the blurred wash
-   behind it carry the hover in dark mode. */
+/* The charcoal Submit does not glow white; the blurred wash behind it carries
+   the hover in dark mode. */
 .dark-mode .contact-form__btn:hover:not(:disabled),
 .dark-mode .contact-form__btn:focus-visible:not(:disabled) { filter: none; }
 

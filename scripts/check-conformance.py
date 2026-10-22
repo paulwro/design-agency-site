@@ -324,9 +324,8 @@ check('menu overlay dims its other links with its own token, not body-copy grey'
 check('dark buttons are charcoal (--btn-bg), not a white pill',
       '--btn-bg: var(--color-pill)' in tokens and 'background: var(--btn-bg)' in read('styles/controls.css')
       and 'background: var(--btn-bg)' in read('components/ContactForm/ContactForm.css'))
-check('only Submit carries the moving gradient ring; pill buttons keep scale + shadow',
-      '@property --btn-ring-angle' in read('styles/controls.css')
-      and 'btn-ring' in read('components/ContactForm/ContactForm.jsx')
+check('no button carries the gradient ring (Submit lost it 2026-10-22); pill buttons keep scale + shadow',
+      'btn-ring' not in read('components/ContactForm/ContactForm.jsx')
       and '.btn-primary::before' not in read('styles/controls.css')
       and '.footer-pill::before' not in read('components/Footer/Footer.css')
       and 'transform: scale(1.04)' in read('styles/controls.css'))
