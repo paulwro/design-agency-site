@@ -35,7 +35,7 @@
 
   /* Work page cards (Figma "Testimonial Card" / "Testimonial Text"). The home
      testimonial carousel no longer uses these: its cards carry fixed colours. */
-  --color-testimonial-card: #F9F9F9;
+  --color-testimonial-card: #FFFFFF;   /* Paul, 2026-10-22 (was #F9F9F9, the same as the page) */
   --color-testimonial-text: #0F0F0F;
 
 
