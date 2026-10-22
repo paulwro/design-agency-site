@@ -76,7 +76,7 @@
   justify-content: center;
   width: 100%;
   min-height: 58px;
-  padding: var(--space-4) var(--space-8);
+  padding: 17px var(--space-8) 19px;      /* optical centring for Unica, as .btn-primary */
   border: none;
   border-radius: 12px;
   background: var(--btn-bg);

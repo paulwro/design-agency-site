@@ -29,7 +29,7 @@
   /* Sibling dimming (the menu overlay's other links while one is hovered).
      Its own token so the fade never moves when body copy does — at 80% body
      copy the menu barely dimmed at all. */
-  --color-text-dim: rgba(0, 0, 0, 0.35);
+  --color-text-dim: rgba(0, 0, 0, 0.4);
   --color-muted-toggle: #DADADA;
 
   /* Work page cards (Figma "Testimonial Card" / "Testimonial Text"). The home
@@ -122,6 +122,14 @@
      runs from step 3's phone size to step 4's desktop size. */
   --step-section: clamp(1.8371rem, 1.3667rem + 1.9300vw, 3.1037rem);  /* 29.4 → 49.7 */
 
+  /* Small cards pinned to their Figma sizes (Paul, 2026-10-22: "break these
+     cards out on their own"). The Studio carousel card and the headshot card
+     are fixed-width objects, so they keep Figma's 16 / 20.4 rather than riding
+     the page scale up to 18 / 23.2 and overflowing their own proportions. */
+  --step-card: 1rem;                 /* 16 / 27.2 */
+  --step-card-title: 1.275rem;       /* 20.4 / 29.7 */
+  --radius-card-media: 4px;          /* image inside a small card */
+
   /* Testimonial quotes: step 0 on a phone, where the card is narrow, up to
      step 2 at 1440 (~30px, near Bold's 32). */
   --step-quote: clamp(1rem, 0.6773rem + 1.3238vw, 1.8686rem);  /* 16 → 29.9 */
@@ -159,7 +167,9 @@
      rhythm is fluid and tops out higher — one number to dial for the whole site. */
   /* Figma: every section is py-128, both sides. Two stacked sections
      therefore put 256 between their content — that is the rhythm. */
-  --section-inset: clamp(56px, 1.09rem + 9.905vw, 160px);      /* 56 on a phone, 160 at 1440 */
+  /* 2026-10-22: 160 → 128 at 1440 (Paul: "you're in no man's land for a
+     little too long" between sections). 128 is Figma's own section padding. */
+  --section-inset: clamp(56px, 1.8286rem + 6.857vw, 128px);     /* 56 on a phone, 128 at 1440 */
   --section-gap: clamp(40px, 0.456rem + 8.381vw, 128px);    /* heading -> its content: 40 on a phone, 128 at 1440 */
 
   /* Rhythm. Figma's 64 and 96 are DESKTOP numbers, and held flat they are what
@@ -318,7 +328,7 @@
   --color-rule-soft: var(--color-border);
   --color-text-soft: rgba(255, 255, 255, 0.6);
   --color-text-muted: rgba(255, 255, 255, 0.6);
-  --color-text-dim: rgba(255, 255, 255, 0.35);
+  --color-text-dim: rgba(255, 255, 255, 0.4);
   --color-testimonial-card: #1C1C1C;
   --color-testimonial-text: #FFFFFF;
   --color-muted-toggle: #3F3F3F;

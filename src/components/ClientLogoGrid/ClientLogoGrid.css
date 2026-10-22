@@ -13,8 +13,8 @@
 }
 
 .logo-section__inner {
-  /* Hugs at the panel's width and sits centred on the page; the label stays
-     on the panel's left edge. */
+  /* Hugs at the panel's width and sits centred on the page; the label is
+     centred over the panel. */
   max-width: 1056px;
   margin-inline: auto;
   display: flex;
@@ -24,6 +24,7 @@
 
 .logo-section__label {
   margin: 0;
+  text-align: center;                /* Paul, 2026-10-22: centred over the panel */
   font-family: var(--font-body);
   font-size: var(--step-0);
   line-height: var(--leading-body);

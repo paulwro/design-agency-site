@@ -287,7 +287,7 @@
 .carousel-card__media {
   aspect-ratio: 322 / 220;
   overflow: hidden;
-  border-radius: var(--radius-media);
+  border-radius: var(--radius-card-media);       /* Figma 4, not the page's 12 */
   background: var(--color-border);
 }
 
@@ -300,10 +300,9 @@
   padding: var(--space-2);
 }
 
-/* Figma I1127:1010;604:865 is a 20px disc filled --background with an 8px
-   diagonal arrow drawn in --text on top of it. An earlier version knocked the
-   arrow out of a --text disc, which inverted the badge: subtracting the arrow
-   shows the CARD behind it, not the text colour. Two layers, not a mask. */
+/* Figma I1127:1010;604:865: a 20px disc in --text with an 8px diagonal arrow
+   in --background on top (it was a --background disc until the light page and
+   white cards made that disc invisible). Two layers, not a knockout. */
 .carousel-card__badge {
   position: relative;
   flex-shrink: 0;
@@ -311,7 +310,7 @@
   height: 20px;
   margin-top: var(--space-1);
   border-radius: 50%;
-  background: var(--color-background);
+  background: var(--color-text);              /* Figma: dark disc, light arrow */
 }
 
 .carousel-card__badge::after {
@@ -321,15 +320,15 @@
   margin: auto;
   width: 8px;
   height: 8px;
-  background-color: var(--color-text);
+  background-color: var(--color-background);
   -webkit-mask: var(--arrow-src) no-repeat center / contain;
   mask: var(--arrow-src) no-repeat center / contain;
 }
 
 .carousel-card__note-text {
   font-family: var(--font-body);
-  font-size: var(--step-0);
-  line-height: var(--leading-body);
+  font-size: var(--step-card);
+  line-height: 1.7;
   color: var(--color-text);
 }
 

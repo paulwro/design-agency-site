@@ -45,8 +45,10 @@ check('Studio: full-panel image is py-64 at ratio 1184/779',
       'ratio="1184 / 779"' in studio_jsx and 'inset="tight"' in studio_jsx)
 check('Studio: bio heading is the section step (step 4 on desktop, step 3 on a phone)',
       re.search(r'\.studio-bio__heading\s*\{[^}]*--step-section', studio_css, re.S))
-check('Studio: bio role is step 0, not step -1',
-      re.search(r'\.studio-bio__role\s*\{[^}]*--step-0', studio_css, re.S))
+check('Studio: headshot card pinned to Figma (name 20.4, role 16, "Design Principal")',
+      re.search(r'\.studio-bio__role\s*\{[^}]*--step-card\)', studio_css, re.S)
+      and re.search(r'\.studio-bio__name\s*\{[^}]*--step-card-title', studio_css, re.S)
+      and "role: 'Design Principal'" in read('pages/studio-data.js'))
 check('Studio: problem-statement lede is step 1 and 60% (soft)',
       re.search(r'\.studio-lede\s*\{[^}]*--step-1[^}]*--color-text-soft', studio_css, re.S))
 check('Studio: client roster uses ClientLineList, not ClientLogoGrid',
@@ -187,10 +189,12 @@ for f in sorted(SRC.rglob('*.css')):
 check('only the form field uses Borders & Lines directly; container rules use --color-rule',
       not container_rules, ', '.join(sorted(set(container_rules))))
 faq_css = read('components/FaqSection/FaqSection.css')
-check('FAQ rules do not light up; hover slides the copy in with no background fill',
+check('FAQ hover: one gliding panel, the two rules around it fade, the rest dims (2026-10-22)',
       '--color-rule-strong' not in faq_css
-      and re.search(r'\.faq-question:hover[^{]*\{[^}]*padding-inline:\s*28px', faq_css, re.S)
-      and not re.search(r'\.faq-question:hover[^{]*\{[^}]*background', faq_css, re.S))
+      and '.faq-item.is-after-active::before { opacity: 0; }' in faq_css
+      and 'var(--color-text-dim)' in faq_css
+      and 'faq-panel' in read('components/FaqSection/FaqSection.jsx')
+      and 'layoutId' not in read('components/FaqSection/FaqSection.jsx'))
 check('Client logo grid: 200x87 cells, 240 artboards at 120%, rules drawn per cell so none cross',
       'aspect-ratio: 200 / 87' in read('components/ClientLogoGrid/ClientLogoGrid.css')
       and '.logo-cell::before' in read('components/ClientLogoGrid/ClientLogoGrid.css')
@@ -202,9 +206,9 @@ check('contact submit is disabled until the form is complete',
       'disabled={!complete' in read('components/ContactForm/ContactForm.jsx'))
 check('the submit button carries the gradient glow',
       '@keyframes glow-drift' in cf_css and '--glow-1' in tokens)
-check('InfoCard email and phone use the shared .text-link underline (60%)',
+check('InfoCard email and phone use the shared .text-link underline (40% at rest)',
       'text-link' in read('components/InfoCard/InfoCard.jsx')
-      and 'opacity: 0.6' in read('styles/controls.css'))
+      and re.search(r'\.text-link::after \{[^}]*opacity: 0\.4', read('styles/controls.css'), re.S))
 check('InfoCard keeps its container — only the form lost one',
       re.search(r'\.info-card\s*\{[^}]*--color-container', read('components/InfoCard/InfoCard.css'), re.S))
 check('client tiles use a monogram, not a crushed wordmark',
@@ -228,8 +232,9 @@ check('the Icon_Arrow stand-in is gone — the real export is wired',
 for asset in ['assets/arrow-right.svg', 'assets/chevron-right.svg',
               'assets/social/linkedin.svg', 'assets/slack-mark.svg']:
     check(f'asset present: {asset}', (SRC / asset).exists())
-check('CarouselCard badge is a light disc with a dark arrow, per Figma',
-      re.search(r'\.carousel-card__badge \{[^}]*background: var\(--color-background\)', blocks_css, re.S)
+check('CarouselCard badge is a dark disc with a light arrow, image radius 4, text 16 (Figma)',
+      re.search(r'\.carousel-card__badge \{[^}]*background: var\(--color-text\)', blocks_css, re.S)
+      and 'border-radius: var(--radius-card-media)' in blocks_css and 'font-size: var(--step-card);' in blocks_css
       and '.carousel-card__badge::after' in blocks_css)
 check('InfoCard: email, phone, then location; no icon tile (gone from Figma 1074:1211)',
       'info-card__icon' not in read('components/InfoCard/InfoCard.jsx')
@@ -314,7 +319,7 @@ check('2026-10-22 colours: page #F9F9F9 / #0F0F0F, container #FFFFFF / #1C1C1C, 
       and '--color-text-muted: rgba(0, 0, 0, 0.6)' in tokens and '--color-text-muted: rgba(255, 255, 255, 0.6)' in tokens)
 check('menu overlay dims its other links with its own token, not body-copy grey',
       'var(--color-text-dim)' in read('components/MenuOverlay/MenuOverlay.css')
-      and '--color-text-dim: rgba(0, 0, 0, 0.35)' in tokens
+      and '--color-text-dim: rgba(0, 0, 0, 0.4)' in tokens
       and '--color-border: #2E2E2E' in tokens and '--color-pill: #292929' in tokens)
 check('dark buttons are charcoal (--btn-bg), not a white pill',
       '--btn-bg: var(--color-pill)' in tokens and 'background: var(--btn-bg)' in read('styles/controls.css')

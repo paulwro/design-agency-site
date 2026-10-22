@@ -107,7 +107,7 @@ export const bio = {
       'for them rather than building unnecessary layers around the engagement.',
   ],
   name: 'Paul Wronski',
-  role: 'Creative Director & Principal',
+  role: 'Design Principal',   // FIGMA 1354:1330 (Paul, 2026-10-22)
   linkedin: 'https://www.linkedin.com/in/pwronski',
 };
 

@@ -128,26 +128,34 @@ export default function TestimonialSlider() {
   const trackRef = useRef(null);
   const x = useMotionValue(0);
   const [index, setIndex] = useState(0);
-  const [bounds, setBounds] = useState({ min: 0, stops: [0] });
+  const [bounds, setBounds] = useState({ min: 0, max: 0, stops: [0] });
   const [dragging, setDragging] = useState(false);
   const wheelTimer = useRef(0);
   const reduce = useReducedMotion();
 
-  /* Where each card sits when it is "in place": its left edge on the track's
-     start. The last stops are clamped so the track never pulls past its end
-     and leaves an empty band on the right. */
+  /* Where each card sits when it is "in place".
+     Desktop: its left edge on the content edge, with the last stops clamped so
+     the track never pulls past its end and leaves an empty band on the right.
+     Phones (Paul, 2026-10-22): the card centred on the screen, every one of
+     them, first and last included, so a swipe always lands a whole card. */
   const measure = useCallback(() => {
     const viewport = viewportRef.current;
     const track = trackRef.current;
     if (!viewport || !track) return;
     const cards = [...track.children];
+    const vw = viewport.clientWidth;
+    if (window.matchMedia('(max-width: 760px)').matches) {
+      const stops = cards.map((c) => Math.round((vw - c.offsetWidth) / 2 - c.offsetLeft));
+      setBounds({ min: Math.min(...stops), max: Math.max(...stops), stops });
+      return;
+    }
     const styles = getComputedStyle(track);
     const padStart = parseFloat(styles.paddingLeft) || 0;
-    const visible = viewport.clientWidth - padStart - (parseFloat(styles.paddingRight) || 0);
+    const visible = vw - padStart - (parseFloat(styles.paddingRight) || 0);
     const span = track.scrollWidth - padStart - (parseFloat(styles.paddingRight) || 0);
     const min = Math.min(0, visible - span);
     const stops = cards.map((c) => Math.max(min, -(c.offsetLeft - padStart)));
-    setBounds({ min, stops: stops.filter((s, i) => i === 0 || s !== stops[i - 1]) });
+    setBounds({ min, max: 0, stops: stops.filter((s, i) => i === 0 || s !== stops[i - 1]) });
   }, []);
 
   useEffect(() => {
@@ -199,7 +207,7 @@ export default function TestimonialSlider() {
       if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
       e.preventDefault();
       const { bounds: b, settle: go, nearest: near } = wheelState.current;
-      x.set(Math.max(b.min, Math.min(0, x.get() - e.deltaX)));
+      x.set(Math.max(b.min, Math.min(b.max, x.get() - e.deltaX)));
       clearTimeout(wheelTimer.current);
       wheelTimer.current = setTimeout(() => go(near(x.get())), 140);
     };
@@ -226,7 +234,8 @@ export default function TestimonialSlider() {
             className={`tsl__track${dragging ? ' is-dragging' : ''}`}
             style={{ x }}
             drag="x"
-            dragConstraints={{ left: bounds.min, right: 0 }}
+            dragDirectionLock
+            dragConstraints={{ left: bounds.min, right: bounds.max }}
             dragElastic={0.08}
             dragMomentum={false}
             onDragStart={() => setDragging(true)}

@@ -129,6 +129,10 @@
 }
 
 .tsl-cursor {
+  /* Tilted (Paul, 2026-10-22) so it reads as a gesture laid over the card,
+     not another line of the quote. `rotate` is its own property, so it never
+     fights the translate the script sets on `transform`. */
+  rotate: -12deg;
   position: fixed;
   top: 0;
   left: 0;

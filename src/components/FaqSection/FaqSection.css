@@ -20,6 +20,7 @@
 }
 
 .faq-list {
+  position: relative;                            /* the hover panel is placed inside it */
   display: flex;
   flex: 1 0 0;
   flex-direction: column;
@@ -29,35 +30,52 @@
   list-style: none;
 }
 
-.faq-item {
-  position: relative;
-  padding-top: var(--space-6);                   /* Figma: py-24 */
+/* ---- Hover panel (Paul, 2026-10-22) ---------------------------------------
+   One container-coloured panel behind the active question, moved by the
+   script (y + height). Corners match the cards. */
+.faq-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 0;
+  border-radius: var(--space-5);
+  background: var(--color-container);
+  pointer-events: none;
 }
 
-/* Figma 1037:857 — the rule is inset 16 from each side and sits 24 down. It
-   stays a rule: it does not brighten on hover, focus or open. On hover the
-   copy slides 8 further in; the background fill that used to come with it is
-   gone for now (Paul, Oct 2026), so the rule stays put. */
+.faq-item {
+  position: relative;
+  z-index: 1;                                    /* copy above the panel */
+}
+
+/* The rule sits on each question's top edge, full width, so the panel's edges
+   land exactly where the rules were. The two rules touching the active
+   question — its own and the next one's — fade out with the panel's fade-in,
+   so the panel reads as a lifted object rather than a fill between lines. */
 .faq-item::before {
   content: '';
   position: absolute;
-  top: var(--space-6);
-  left: var(--space-4);
-  right: var(--space-4);
+  top: 0;
+  left: 0;
+  right: 0;
   height: 1px;
   background: var(--color-rule);
   transition: opacity var(--dur-quick) var(--ease-in-out-sine);
 }
 
+.faq-item.is-active::before,
+.faq-item.is-after-active::before { opacity: 0; }
+
+/* Equal space all round once the copy has slid in: 32 above and below, 32 in
+   from the panel's edge on hover (24 at rest, so it still slides 8 in). */
 .faq-question {
   display: flex;
   align-items: flex-start;
   gap: var(--space-4);
   width: 100%;
-  /* Figma: 16 below the rule, 24 under the text; px 16 (the rule's inset) + 4. */
-  padding: var(--space-4) calc(var(--space-4) + var(--space-1)) var(--space-6);
+  padding: var(--space-8) var(--space-6);
   border: none;
-  border-radius: var(--space-4);                 /* Figma: hover radius 16 */
   background: transparent;
   cursor: pointer;
   text-align: left;
@@ -65,11 +83,7 @@
   transition: padding-inline var(--dur-quick) var(--ease-out-expo);
 }
 
-/* Figma Hover Collapsed: the copy sits 8 further in. */
-.faq-question:hover,
-.faq-question:focus-visible {
-  padding-inline: 28px;                          /* Figma: 28, from 20 */
-}
+.faq-item.is-hover .faq-question { padding-inline: var(--space-8); }
 
 .faq-question__text {
   flex: 1 0 0;
@@ -79,7 +93,14 @@
   line-height: var(--leading-body);
   letter-spacing: var(--tracking-strong);
   color: var(--color-text);
+  transition: color var(--dur-color) var(--ease-out-cubic);
 }
+
+/* Everything but the active question steps back while one is hovered — the
+   menu overlay's treatment, with the same token. */
+.faq-list.is-hot .faq-item:not(.is-active) .faq-question__text,
+.faq-list.is-hot .faq-item:not(.is-active) .faq-answer { color: var(--color-text-dim); }
+.faq-list.is-hot .faq-item:not(.is-active) .faq-question__icon { opacity: 0.4; }
 
 .faq-question__icon {
   flex-shrink: 0;
@@ -95,7 +116,8 @@
   mask-size: contain;
   /* Matches the panel's own height duration, so the chevron and the answer
      finish together rather than the arrow arriving first. */
-  transition: transform var(--dur-quick) var(--ease-out-expo);
+  transition: transform var(--dur-quick) var(--ease-out-expo),
+    opacity var(--dur-color) var(--ease-out-cubic);
 }
 
 .faq-question__icon.is-open {
@@ -104,17 +126,22 @@
 
 .faq-answer-wrap {
   overflow: hidden;
+  margin-top: calc(var(--space-4) * -1);         /* answer sits 16 under the question, not 32 */
 }
 
 .faq-answer {
   margin: 0;
-  /* Left inset matches .faq-question's, so answer and question share an edge. */
-  padding: 0 calc(var(--space-4) + var(--space-1)) var(--space-6);
+  /* Inline inset follows the question's, so answer and question share an edge. */
+  padding: 0 var(--space-6) var(--space-8);
   font-family: var(--font-body);
   font-size: var(--step-0);
   line-height: var(--leading-body);
   color: var(--color-text-muted);
+  transition: padding-inline var(--dur-quick) var(--ease-out-expo),
+    color var(--dur-color) var(--ease-out-cubic);
 }
+
+.faq-item.is-hover .faq-answer { padding-inline: var(--space-8); }
 
 /* The headline column is a fixed 392 (Figma's number at 1440) and the answers
    take what is left. Two columns therefore stop working well before the layout
@@ -139,14 +166,11 @@
 
   .faq-list { max-width: none; }
 
-  /* On a phone the question runs the full width of the column: the rule, the
-     text and the answer all share the container's edges, with none of the
-     16 + 4 desktop inset, and no slide-in on hover (there is no hover). */
-  .faq-item { padding-top: 0; }
-  .faq-item::before { top: 0; left: 0; right: 0; }
-  .faq-question { padding-block: var(--space-5); }
-  .faq-question,
-  .faq-question:hover,
-  .faq-question:focus-visible { padding-inline: 0; }
-  .faq-answer { padding-inline: 0; }
+  /* On a phone the copy keeps the column's edges; the panel (which only marks
+     the open question here — there is no hover) reaches 16 past them on both
+     sides, inside the 24 gutter, so nothing shifts when it appears. */
+  .faq-panel { left: calc(var(--space-4) * -1); right: calc(var(--space-4) * -1); }
+  .faq-question { padding: var(--space-5) 0; }
+  .faq-answer { padding: 0 0 var(--space-5); }
+  .faq-answer-wrap { margin-top: calc(var(--space-2) * -1); }
 }

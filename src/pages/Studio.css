@@ -166,7 +166,7 @@
 
 .studio-bio__portrait {
   aspect-ratio: 1;
-  border-radius: var(--radius-media);
+  border-radius: var(--radius-card-media);       /* Figma 4 */
   background: var(--color-border);
   /* Figma anchors the crop to the bottom of the frame. */
   object-position: bottom;
@@ -188,15 +188,15 @@
 }
 
 .studio-bio__name {
-  font-size: var(--step-1);
-  line-height: var(--leading-display);
+  font-size: var(--step-card-title);             /* pinned to Figma's 20.4 — a 300px card */
+  line-height: 1.456;
   color: var(--color-text);
 }
 
 /* Figma: step 0 at 50% — not step −1. */
 .studio-bio__role {
-  font-size: var(--step-0);
-  line-height: var(--leading-body);
+  font-size: var(--step-card);                   /* pinned to Figma's 16 */
+  line-height: 1.7;
   color: var(--color-text-muted);
 }
 
