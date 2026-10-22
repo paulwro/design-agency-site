@@ -52,7 +52,7 @@
   /* Semantic — identical in both modes. */
   --color-warning: #EBCA07;
   --color-orange: #EC7936;
-  --color-error: #E84536;
+  --color-error: #F94C3C;          /* Figma Error (Paul, 2026-10-22; was #E84536) */
   --color-pink: #EC3AA8;
   --color-success: #81C941;
   /* Type that sits ON a photo or video: white in both themes (it does not flip with the page). */
