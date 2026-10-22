@@ -1,0 +1,167 @@
+/* TestimonialSlider — after Bold Scandinavia's homepage testimonials. */
+
+.tsl {
+  padding-block: var(--section-inset);
+  overflow: clip;
+}
+
+/* The track starts on the content edge (same formula as the Work teaser) and
+   runs off the right of the screen. */
+.tsl__viewport {
+  --tsl-start: max(var(--container-gutter), calc((100vw - var(--container-max)) / 2 + var(--container-gutter)));
+  --tsl-content: calc(min(100vw, var(--container-max)) - 2 * var(--container-gutter));
+  outline: none;
+}
+
+.tsl__viewport:focus-visible .tsl-card.is-current {
+  outline: 2px solid var(--color-text);
+  outline-offset: 4px;
+}
+
+.tsl__track {
+  display: flex;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0 var(--container-gutter) 0 var(--tsl-start);
+  list-style: none;
+  touch-action: pan-y;               /* vertical page scroll still works on phones */
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* ---- Card ------------------------------------------------------------------
+   Five-sixths of the content width, so the next card always peeks in. Rests on
+   the container colour; the brand colour sits on its own layer above it and
+   fades in, the way Bold does it. */
+.tsl-card {
+  position: relative;
+  isolation: isolate;
+  flex: 0 0 auto;
+  display: flex;
+  width: calc(var(--tsl-content) * 5 / 6);
+  min-height: 30rem;
+  overflow: hidden;
+  border-radius: var(--space-5);
+  background: var(--color-container);
+  color: var(--color-text);
+  transition: color var(--dur-swap) var(--ease-in-out-expo);
+}
+
+.tsl-card__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--tsl-bg);
+  opacity: 0;
+  transition: opacity var(--dur-swap) var(--ease-in-out-expo);
+}
+
+/* Left column: the client mark. */
+.tsl-card__client {
+  flex: 0 0 22%;
+  padding: var(--space-10);
+}
+
+.tsl-card__logo-mark {
+  display: block;
+  max-width: 100%;
+  background-color: currentColor;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: left top;
+  mask-position: left top;
+}
+
+.tsl-card__logo-img { display: block; max-width: 100%; height: auto; }
+
+/* Main column: the quote, and the author held to the bottom. */
+.tsl-card__main {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  margin: 0;
+  padding: var(--space-10) var(--space-10) var(--space-10) var(--space-6);
+}
+
+.tsl-card__quote {
+  margin: 0;
+  font-size: var(--step-quote);
+  line-height: var(--leading-display);
+  letter-spacing: 0;
+  text-wrap: pretty;
+}
+
+.tsl-card__quote p { margin: 0; }
+
+.tsl-card__author {
+  display: flex;
+  flex-direction: column;
+  margin-top: auto;
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+}
+
+.tsl-card__role {
+  opacity: 0.8;                      /* body-copy grey, relative to whatever colour the card is */
+}
+
+/* Brand colour: on hover where there is a real pointer; on touch screens, the
+   card that is in place. */
+@media (hover: hover) and (pointer: fine) {
+  .tsl-card:hover { color: var(--tsl-fg); }
+  .tsl-card:hover .tsl-card__bg { opacity: 1; }
+}
+
+@media (hover: none) {
+  .tsl-card.is-current { color: var(--tsl-fg); }
+  .tsl-card.is-current .tsl-card__bg { opacity: 1; }
+}
+
+/* ---- Cursor ----------------------------------------------------------------
+   A large "Drag" that stands in for the pointer over the track: no ring, no
+   disc, just the word — set in the H1 size and in the hovered card's own type
+   colour, so it reads as part of the card rather than a widget on top. */
+@media (hover: hover) and (pointer: fine) {
+  .tsl__track { cursor: none; }
+}
+
+.tsl-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  pointer-events: none;
+  font-size: var(--step-5);
+  line-height: 1;
+  letter-spacing: var(--tracking-display);
+  color: var(--color-text);
+  white-space: nowrap;
+  opacity: 0;
+  scale: 0.85;
+  transition: opacity var(--dur-quick) var(--ease-in-out-sine),
+    scale var(--dur-slow) var(--ease-out-expo),
+    color var(--dur-swap) var(--ease-in-out-expo);
+}
+
+.tsl-cursor.is-visible { opacity: 1; scale: 1; }
+.tsl-cursor.is-visible.is-dragging { scale: 0.9; }
+
+@media (hover: none), (pointer: coarse) {
+  .tsl-cursor { display: none; }
+}
+
+/* ---- Phones ------------------------------------------------------------------
+   Bold stacks the card on small screens: mark, quote, author. A little wider
+   than five-sixths here so a long quote does not run to twenty lines. */
+@media (max-width: 760px) {
+  .tsl-card {
+    flex-direction: column;
+    width: calc(var(--tsl-content) * 0.9);
+    min-height: 0;
+  }
+  .tsl-card__client { flex: none; padding: var(--space-5) var(--space-5) 0; }
+  .tsl-card__main { padding: var(--space-5); gap: var(--space-5); }
+}

@@ -5,8 +5,9 @@ import sema4Logo from '../../assets/testimonials/sema4-logo.svg';
 import noteworthyLogo from '../../assets/testimonials/noteworthy-logo.svg';
 import wexLogo from '../../assets/testimonials/wex-logo.svg';
 
-// Card colors are fixed (the same in light and dark mode), set per card in Figma:
-// `bg` is the card fill, `fg` the quote, attribution and logo colour. A logo that
+// Each card rests on --color-container and takes its brand colour on hover
+// (TestimonialSlider): `bg` is that hover fill, `fg` the quote, attribution
+// and logo colour on top of it. Both are fixed — the same in light and dark. A logo that
 // carries its own colours (SolarGator) sets `logoFullColor` and is drawn as an
 // image instead of a single-colour mask.
 // To add a card, five inputs are needed: the company logo (svg, saved into
@@ -14,9 +15,10 @@ import wexLogo from '../../assets/testimonials/wex-logo.svg';
 // and their company name (title + company become `role`, company alone is
 // `logoAlt`). logoWidth/logoHeight are the mark's rendered pixel size —
 // derive them from the logo file's own aspect ratio at a height that reads
-// as visually balanced against the other cards (swept is 40px tall,
+// as visually balanced against the other cards (swept is 34px tall,
 // ever-wonder is 88px tall — narrow/tall marks need more height than
-// wide/short ones to carry similar visual weight).
+// wide/short ones to carry similar visual weight). Logos go in level: never
+// export one from a rotated frame (swept and WEX once carried a 6° tilt).
 const SHARED_QUOTE =
   'We recently worked with Paul to update our website and branding. Paul was thoughtful, grounded and listened carefully to what we needed. He delivered a clear proposal that accurately reflected what we asked for and delivered on time, in scope. Both his work and his approach were professional and on point.\u201d';
 
@@ -30,8 +32,8 @@ export const testimonials = [
     logoAlt: 'Swept',
     bg: 'var(--color-pink)',
     fg: '#FFFFFF',
-    logoWidth: 109,
-    logoHeight: 40,
+    logoWidth: 102,     // level since 2026-10-22: the file had the old arc card's tilt baked in
+    logoHeight: 34,
   },
   {
     id: 'ever-wonder-sena',
@@ -56,8 +58,8 @@ export const testimonials = [
     logoAlt: 'global commerce platform',
     bg: 'var(--color-error)',
     fg: '#FFFFFF',
-    logoWidth: 83,
-    logoHeight: 33,
+    logoWidth: 85,      // level since 2026-10-22 (was exported at a 6° tilt)
+    logoHeight: 26,
   },
   {
     id: 'sema4-deluca',

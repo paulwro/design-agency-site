@@ -433,6 +433,13 @@
   text-align: right;
 }
 
+/* With body copy at up to 18px, a long client name no longer fits on one line
+   beside its description at tablet widths, so it wraps from 1200 down. */
+@media (max-width: 1200px) {
+  .client-line-list__symbol-name { flex-shrink: 1; min-width: 0; max-width: 50%; }
+  .client-line-list__name { white-space: normal; }
+}
+
 @media (max-width: 760px) {
   .client-line-list { padding: var(--space-4); }
   .client-line-list__row { flex-direction: column; align-items: flex-start; gap: var(--space-2); }

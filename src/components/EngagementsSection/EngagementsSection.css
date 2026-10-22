@@ -37,14 +37,13 @@
   gap: var(--space-4);
 }
 
-/* Step 0 at 60%, per Figma. */
+/* Step 0 in body-copy grey (80% since 2026-10-22). */
 .engagements-body {
   margin: 0;
   font-family: var(--font-body);
   font-size: var(--step-0);
   line-height: var(--leading-body);
-  color: var(--color-text);
-  opacity: 0.6;
+  color: var(--color-text-muted);
 }
 
 .engagements-kicker {

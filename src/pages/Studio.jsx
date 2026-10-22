@@ -6,7 +6,7 @@ import MediaPanel from '../components/blocks/MediaPanel';
 import CarouselCard from '../components/blocks/CarouselCard';
 import ClientLineList from '../components/blocks/ClientLineList';
 import Reveal, { RevealGroup, RevealItem } from '../components/blocks/Reveal';
-import TestimonialArcCarousel from '../components/TestimonialArcCarousel/TestimonialArcCarousel';
+import TestimonialSlider from '../components/TestimonialSlider/TestimonialSlider';
 import FaqSection from '../components/FaqSection/FaqSection';
 import FloatingCollage from '../components/blocks/FloatingCollage';
 import { studioFaqs } from '../components/FaqSection/studio-faq-data';
@@ -168,7 +168,7 @@ export default function Studio() {
       </section>
 
       <FaqSection items={studioFaqs} />
-      <TestimonialArcCarousel />
+      <TestimonialSlider />
     </>
   );
 }

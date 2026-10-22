@@ -1,16 +1,16 @@
 /* ==========================================================================
    paulwro.com design tokens
    Source of truth: Figma U1PDzTkFFiLR3CC4RhLo43
-   Type: Neue Haas Unica Pro Regular, one weight · base 16 · ratio √1.5 at 390 → √φ at 1440
+   Type: Neue Haas Unica Pro Regular, one weight · body 16 → 18 · ratio √1.5 at 390 → 1.289 at 1440
    See 01_branding/{typography,color palette,spacing}
    ========================================================================== */
 
 :root {
   /* ---- Color · light ---------------------------------------------------- */
-  /* Figma variables, audited 2026-10-20. Neither mode uses pure black or
-     white for page or type: Text and Background mirror each other. */
-  --color-background: #FAFAFA;
-  --color-container: #F2F2F2;
+  /* Figma variables, audited 2026-10-22. Light mode: an off-white page with
+     pure white containers on it. Neither mode uses pure black for type. */
+  --color-background: #F9F9F9;
+  --color-container: #FFFFFF;
   --color-border: #ECECEC;
   /* Hairlines are their own tokens so they can be tuned apart from
      --color-border (which is also a surface fill). In dark mode Figma's
@@ -23,8 +23,9 @@
      Figma draws them. Dark mode uses the same token (#2E2E2E on #1C1C1C). */
   --color-rule-soft: var(--color-border);
   --color-text: #0F0F0F;
-  --color-text-soft: rgba(0, 0, 0, 0.6);       /* Figma "Text at 60%" — ledes and lead copy */
-  --color-text-muted: rgba(0, 0, 0, 0.6);      /* "Muted Text" — now the same 60% as soft */
+  /* Body copy is 80% (Paul, 2026-10-22 — was 60%), set globally. */
+  --color-text-soft: rgba(0, 0, 0, 0.8);
+  --color-text-muted: rgba(0, 0, 0, 0.8);      /* Figma "Muted Text" */
   --color-muted-toggle: #DADADA;
 
   /* Work page cards (Figma "Testimonial Card" / "Testimonial Text"). The home
@@ -93,37 +94,42 @@
   --font-mark: var(--font-unica);
   --weight-regular: 400;
 
-  /* Fluid 390 → 1440, base 16 at both ends, and the RATIO interpolates:
-     √1.5 (1.22474) on a phone, √φ (1.27202) on desktop. So every second step is
-     a perfect fifth (×1.5) at 390 and the golden ratio at 1440. The phone end
-     came from Paul's 390 "Mobile pilot" frame (1863:1542): 16 / 20 / 24 / 30 /
-     36 there are this chain rounded. Step 5 runs the ratio (44.1), not the
-     pilot's 48 — Paul, 2026-10-20: "let's use 44 and see". Desktop is
-     unchanged. Spec: 01_branding/typography/typography.md */
-  --step--2: clamp(0.7500rem, 0.7198rem + 0.1238vw, 0.8313rem);  /* 12.0 → 13.3 */
-  --step--1: clamp(0.8750rem, 0.8518rem + 0.0952vw, 0.9375rem);  /* 14.0 → 15.0 */
-  --step-0:  1rem;                                                 /* 16    */
+  /* Fluid 390 → 1440, and the RATIO interpolates with it.
+     Phone (390): body 16, ratio √1.5 (1.22474) — a perfect fifth every second
+     step. From Paul's 390 "Mobile pilot" frame (1863:1542); unchanged.
+     Desktop (1440): body 18, H1 (step 5) 64 — Bold Scandinavia's sizes, same
+     typeface (Paul, 2026-10-22: desktop read "just a tiny bit" small). One
+     ratio joins them: (64 / 18)^(1/5) = 1.2888.
+     Spec: 01_branding/typography/typography.md */
+  --step--2: clamp(0.7500rem, 0.7036rem + 0.1905vw, 0.8750rem);  /* 12.0 → 14.0 */
+  --step--1: clamp(0.8750rem, 0.8286rem + 0.1905vw, 1.0000rem);  /* 14.0 → 16.0 */
+  --step-0:  clamp(1.0000rem, 0.9536rem + 0.1905vw, 1.1250rem);  /* 16.0 → 18.0 */
   /* With one weight there is no strong style left: it is step 0. Kept as an
      alias so the FAQ question and similar call sites still say what they are. */
   --step-0-strong: var(--step-0);
-  --step-1:  clamp(1.2247rem, 1.2072rem + 0.0720vw, 1.2720rem);  /* 19.6 → 20.4 */
-  --step-2:  clamp(1.5000rem, 1.4562rem + 0.1799vw, 1.6180rem);  /* 24.0 → 25.9 */
-  --step-3:  clamp(1.8371rem, 1.7550rem + 0.3368vw, 2.0582rem);  /* 29.4 → 32.9 */
-  --step-4:  clamp(2.2500rem, 2.1133rem + 0.5608vw, 2.6180rem);  /* 36.0 → 41.9 */
-  --step-5:  clamp(2.7557rem, 2.5423rem + 0.8755vw, 3.3302rem);  /* 44.1 → 53.3 */
+  --step-1:  clamp(1.2247rem, 1.1411rem + 0.3431vw, 1.4499rem);  /* 19.6 → 23.2 */
+  --step-2:  clamp(1.5000rem, 1.3631rem + 0.5617vw, 1.8686rem);  /* 24.0 → 29.9 */
+  --step-3:  clamp(1.8371rem, 1.6250rem + 0.8703vw, 2.4082rem);  /* 29.4 → 38.5 */
+  --step-4:  clamp(2.2500rem, 1.9329rem + 1.3009vw, 3.1037rem);  /* 36.0 → 49.7 */
+  --step-5:  clamp(2.7557rem, 2.2935rem + 1.8961vw, 4.0000rem);  /* 44.1 → 64.0 */
 
   /* Section headlines. Desktop sets them in step 4; the phone frame sets every
      one of them in step 3. Rather than a jump at a breakpoint, this one token
      runs from step 3's phone size to step 4's desktop size. */
-  --step-section: clamp(1.8371rem, 1.5471rem + 1.1900vw, 2.6180rem);  /* 29.4 → 41.9 */
+  --step-section: clamp(1.8371rem, 1.3667rem + 1.9300vw, 3.1037rem);  /* 29.4 → 49.7 */
+
+  /* Testimonial quotes: step 0 on a phone, where the card is narrow, up to
+     step 2 at 1440 (~30px, near Bold's 32). */
+  --step-quote: clamp(1rem, 0.6773rem + 1.3238vw, 1.8686rem);  /* 16 → 29.9 */
 
   /* Leading. Steps 1–5: 0.75 × size + a constant that is itself fluid,
-     12.5px on a phone to 14.4px at 1440 — exact against both the pilot and
-     every desktop Figma style. Step 0: 24 → 27.2 (1.5 → 1.7). Steps −1/−2:
-     1.6 on desktop, tighter on phones (see the media query at the end). */
-  --leading-gap: clamp(0.7813rem, 0.7371rem + 0.1810vw, 0.9000rem);   /* 12.5 → 14.4 */
+     12.5px on a phone (exact against the pilot) to 15.3px at 1440 — the
+     original 0.956rem hyperbola, which puts the 64px H1 at ~1.0, as Bold sets
+     theirs. Step 0: 24 → 28.8 (1.5 → 1.6). Steps −1/−2: 1.6 on desktop,
+     tighter on phones (see the media query at the end). */
+  --leading-gap: clamp(0.7813rem, 0.7162rem + 0.2667vw, 0.9563rem);   /* 12.5 → 15.3 */
   --leading-display: calc(0.75em + var(--leading-gap));
-  --leading-body: clamp(1.5rem, 1.4257rem + 0.3048vw, 1.7rem);         /* 24 → 27.2 at 16px */
+  --leading-body: clamp(1.5rem, 1.3886rem + 0.4571vw, 1.8rem);         /* 24 → 28.8 */
   --leading-reading: 1.6;
 
   /* Tracking (Paul, 2026-10-20): 0 on reading steps (−2 to 2), −0.5% on
@@ -242,6 +248,10 @@
   --ease-overshoot: cubic-bezier(0.34, 1.32, 0.64, 1);
   --ease-bounce: cubic-bezier(0.3, 2.4, 0.5, 1);     /* springy: the PW mark's release */
   --ease-menu: var(--ease-out-expo);               /* overlay take-over */
+  /* A hard in-out — slow off the mark, a rush through the middle, a soft
+     landing. Bold Scandinavia's testimonial colour swap uses exactly this at
+     0.3s; it reads as a cut rather than a fade, which is the point. */
+  --ease-in-out-expo: cubic-bezier(0.87, 0, 0.13, 1);
 
   /* Durations are chosen by HOW FAR a thing travels, not by how important it
      is. A full-bleed overlay crossing the screen and a 10px dot settling
@@ -262,6 +272,7 @@
   --dur-base: 0.5s;         /* fades that accompany --dur-slow movement */
   --dur-fast: 0.2s;
   --dur-toggle: 0.9s;       /* the theme toggle's do-si-do */
+  --dur-swap: 0.3s;         /* testimonial card colour swap (Bold's timing) */
   --dur-ring: 4s;           /* one full turn of the button's gradient ring — slow and even */
 
   /* ---- Reveal --------------------------------------------------------------
@@ -301,8 +312,8 @@
   --color-rule: var(--color-border);
   --color-rule-strong: var(--color-text);
   --color-rule-soft: var(--color-border);
-  --color-text-soft: rgba(255, 255, 255, 0.6);
-  --color-text-muted: rgba(255, 255, 255, 0.6);
+  --color-text-soft: rgba(255, 255, 255, 0.8);
+  --color-text-muted: rgba(255, 255, 255, 0.8);
   --color-testimonial-card: #1C1C1C;
   --color-testimonial-text: #FFFFFF;
   --color-muted-toggle: #3F3F3F;
@@ -340,6 +351,7 @@
     --dur-base: 0.01ms;
     --dur-fast: 0.01ms;
     --dur-toggle: 0.01ms;
+    --dur-swap: 0.01ms;
     --dur-reveal: 0.01ms;
     --dur-reveal-sm: 0.01ms;
     --reveal-rise: 0px;

@@ -37,7 +37,7 @@ tokens, controls       = read('styles/tokens.css'), read('styles/controls.css')
 
 # ---- Studio · figma-spec-studio.md -----------------------------------------
 check('Studio: FAQs render before the arced carousel',
-      studio_jsx.index('<FaqSection') < studio_jsx.index('<TestimonialArcCarousel'))
+      studio_jsx.index('<FaqSection') < studio_jsx.index('<TestimonialSlider'))
 check('Studio: step 4 on problem + capabilities, step 3 on who + how',
       studio_jsx.count('<SectionHeader') == 4 and studio_jsx.count('level={3}') == 2,
       f"{studio_jsx.count('<SectionHeader')} headers, {studio_jsx.count('level={3}')} at level 3 (who + how; problem and capabilities are step 4)")
@@ -246,8 +246,9 @@ check('News is gone: no route, no nav link, no menu promo',
 check('Footer is rendered once, by App, and by no page',
       read('App.jsx').count('<Footer />') == 1
       and not any('Footer' in read(f'pages/{n}.jsx') for n in ('Home','Studio','Engagements','Contact','Upcoming')))
-check('Step 0 is a flat 16, and with one weight step 0 (strong) is just step 0',
-      re.search(r'--step-0:\s*1rem;', tokens) and re.search(r'--step-0-strong:\s*var\(--step-0\);', tokens))
+check('Step 0 runs 16 (phone) → 18 (desktop), and with one weight step 0 (strong) is just step 0',
+      '--step-0:  clamp(1.0000rem' in tokens and '1.1250rem);' in tokens
+      and re.search(r'--step-0-strong:\s*var\(--step-0\);', tokens))
 
 # ---- type scale -------------------------------------------------------------
 # Every font-size comes from the fluid scale. A literal px size is a size that
@@ -270,7 +271,15 @@ check('the engagement row label keeps its ratio, not its pixel width',
       'width: clamp(200px, 29%, 360px)' in read('components/EngagementsSection/EngagementsSection.css'))
 
 check('testimonial cards carry no drop shadow',
-      'box-shadow' not in read('components/TestimonialArcCarousel/TestimonialArcCarousel.css'))
+      'box-shadow' not in read('components/TestimonialSlider/TestimonialSlider.css'))
+check('testimonials: Bold-style drag track, brand colour on hover, Drag cursor; arc archived',
+      'drag="x"' in read('components/TestimonialSlider/TestimonialSlider.jsx')
+      and '.tsl-card:hover .tsl-card__bg { opacity: 1; }' in read('components/TestimonialSlider/TestimonialSlider.css')
+      and '.tsl-cursor' in read('components/TestimonialSlider/TestimonialSlider.css')
+      and not (SRC / 'components/TestimonialArcCarousel').exists()
+      and all('<TestimonialSlider />' in read(f'pages/{n}.jsx') for n in ('Home', 'Studio')))
+check('Home drops the video-and-text section (Figma 1015:966 annotation, 2026-10-22)',
+      'ProblemDefinition' not in read('pages/Home.jsx'))
 
 check('section-scale rhythm is fluid, not pinned at Figma desktop values',
       '--rhythm-64: clamp(' in tokens and '--rhythm-96: clamp(' in tokens
@@ -291,17 +300,18 @@ check('the self-hosted Regular is declared and preloaded',
 check('one weight: no 500/600/700/bold anywhere, and no faux bold',
       not re.search(r'font-weight:\s*(500|600|700|bold)', all_css)
       and 'font-synthesis: none' in read('styles/global.css'))
-check('ratio √1.5 at 390 → √φ at 1440 (step 5: 44.1 → 53.3)',
-      '--step-5:  clamp(2.7557rem' in tokens and '3.3302rem)' in tokens
+check('ratio √1.5 at 390 → 1.289 at 1440: H1 44.1 → 64, body 16 → 18 (Bold Scandinavia desktop)',
+      '--step-5:  clamp(2.7557rem, 2.2935rem + 1.8961vw, 4.0000rem)' in tokens
       and '--step-3:  clamp(1.8371rem' in tokens)
 check('section headlines run step 3 (phone) → step 4 (desktop)',
       '--step-section: clamp(1.8371rem' in tokens and 'var(--step-4)' not in read('components/FaqSection/FaqSection.css')
       and 'var(--step-section)' in read('components/Footer/Footer.css'))
 check('display steps carry −0.5% tracking, reading steps none',
       '--tracking-display: -0.005em' in tokens and '--tracking-strong: 0' in tokens)
-check('2026-10-20 colours: page #FAFAFA / #0F0F0F, light container #F2F2F2, dark container #1C1C1C',
-      '--color-background: #FAFAFA' in tokens and '--color-background: #0F0F0F' in tokens
-      and '--color-container: #F2F2F2' in tokens and '--color-container: #1C1C1C' in tokens
+check('2026-10-22 colours: page #F9F9F9 / #0F0F0F, container #FFFFFF / #1C1C1C, body copy 80%',
+      '--color-background: #F9F9F9' in tokens and '--color-background: #0F0F0F' in tokens
+      and '--color-container: #FFFFFF' in tokens and '--color-container: #1C1C1C' in tokens
+      and '--color-text-muted: rgba(0, 0, 0, 0.8)' in tokens and '--color-text-muted: rgba(255, 255, 255, 0.8)' in tokens
       and '--color-border: #2E2E2E' in tokens and '--color-pill: #292929' in tokens)
 check('dark buttons are charcoal (--btn-bg), not a white pill',
       '--btn-bg: var(--color-pill)' in tokens and 'background: var(--btn-bg)' in read('styles/controls.css')

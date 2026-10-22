@@ -33,12 +33,13 @@ changing anything — it carries the reasoning, not just the values.
 
 **Type.** One family, one weight: Neue Haas Unica Pro Regular, self-hosted from
 `public/fonts/` and preloaded in `index.html` (no Typekit). A fluid scale, steps
-−2 to 5, base 16, interpolating 390 → 1440, where the *ratio* interpolates too:
-√1.5 on a phone (a perfect fifth every two steps) opening to √φ at desktop (the
-golden ratio every two steps). Section headlines use `--step-section`, which runs
-from step 3 on a phone to step 4 at 1440. Leading for steps 1–5 is
-`0.75em + 12.5px → 14.4px`; step 0 is 24 → 27.2. Tracking is −0.5% on display
-steps only. Spec: `../01_branding/typography/typography.md`.
+−2 to 5, interpolating 390 → 1440, where the *ratio* interpolates too: body 16 and
+√1.5 on a phone (a perfect fifth every two steps), body 18 and 1.289 at desktop so
+the H1 lands on 64 — Bold Scandinavia's desktop sizes in the same typeface
+(2026-10-22). Section headlines use `--step-section`, which runs from step 3 on a
+phone to step 4 at 1440. Leading for steps 1–5 is `0.75em + 12.5px → 15.3px`;
+step 0 is 24 → 28.8. Tracking is −0.5% on display steps only. Spec:
+`../01_branding/typography/typography.md`.
 
 **Motion.** Measured off wearecollins.com and together.agency, not guessed:
 movement `0.8s cubic-bezier(.19, 1, .22, 1)`, colour `0.7s ease-out-cubic`,
@@ -58,12 +59,17 @@ mode Borders & Lines (`#2E2E2E` since 2026-10-20) sits above both the page (`#0F
 the container (`#1C1C1C`), so it reads as a line on either. The contact form is the only
 deliberate `--color-border` hairline.
 
-**Colour.** Figma variables as of 2026-10-20: page `#FAFAFA` / `#0F0F0F`, container
-`#F2F2F2` / `#1C1C1C`. Filled buttons read `--btn-bg` / `--btn-text`: the inverted
+**Colour.** Figma variables as of 2026-10-22: page `#F9F9F9` / `#0F0F0F`, container
+`#FFFFFF` / `#1C1C1C`, body copy at 80%. Filled buttons read `--btn-bg` / `--btn-text`: the inverted
 pill in light mode, charcoal `#292929` with `#FAFAFA` type in dark. Pill buttons
 hover with the scale + drop shadow; only the Contact form Submit (radius 12) adds
 the moving gradient ring (`.btn-ring` in `controls.css`). Table:
 `../01_branding/color palette/color palette.md`.
+
+**Testimonials.** `TestimonialSlider` (Home, Studio), after Bold Scandinavia: a drag
+track that runs off the right of the screen, cards five-sixths of the content width,
+brand colour on hover (the in-place card on touch screens), and a large "Drag" in
+place of the cursor. The arced carousel it replaced is in `_archive/`.
 
 ## Figma
 

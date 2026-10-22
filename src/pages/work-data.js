@@ -43,7 +43,7 @@ const swept = {
   quote: QUOTE,
   name: 'Michelle Audas',
   role: 'CEO, Swept',
-  logo: { src: sweptLogo, alt: 'Swept', width: 111, height: 36 },
+  logo: { src: sweptLogo, alt: 'Swept', width: 102, height: 34 },
 };
 const everWonder = {
   quote: QUOTE,
