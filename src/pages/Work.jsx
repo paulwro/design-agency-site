@@ -50,7 +50,7 @@ export default function Work() {
         </Reveal>
       )}
 
-      <FaqSection items={workFaqs} />
+      <FaqSection items={workFaqs} title="Questions about the work" />
     </>
   );
 }

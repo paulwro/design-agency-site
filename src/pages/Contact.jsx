@@ -25,7 +25,7 @@ export default function Contact() {
       </section>
 
       <ClientLogoGrid />
-      <FaqSection items={contactFaqs} />
+      <FaqSection items={contactFaqs} title="Before you hit send" />
     </>
   );
 }

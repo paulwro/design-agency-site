@@ -37,7 +37,10 @@ const FADE = { duration: 0.35, ease: EASE_IN_OUT_SINE };
  * layoutId (see Footer.jsx for why: a layoutId re-projects when the page
  * shifts under it).
  */
-export default function FaqSection({ items = faqs }) {
+/* Home keeps the plain "Frequently asked questions" (it helps search and answer
+   engines); the other pages name what their questions are about (Paul,
+   2026-10-22). */
+export default function FaqSection({ items = faqs, title = 'Frequently asked questions' }) {
   const [openId, setOpenId] = useState(null);
   const [hotId, setHotId] = useState(null); // hovered (mouse) or keyboard-focused
   const activeId = hotId ?? openId;
@@ -49,6 +52,9 @@ export default function FaqSection({ items = faqs }) {
   const h = useMotionValue(0);
   const opacity = useMotionValue(0);
   const shownFor = useRef(null); // the id the panel currently sits on
+  const glides = useRef([]); // running glide animations, so a layout change can cut them short
+  const activeRef = useRef(activeId);
+  activeRef.current = activeId;
   const reduce = useReducedMotion();
 
   // Glide to the active question when it changes; fade out when there is none.
@@ -66,31 +72,44 @@ export default function FaqSection({ items = faqs }) {
       y.set(top);
       h.set(height);
     } else {
-      animate(y, top, GLIDE);
-      animate(h, height, GLIDE);
+      glides.current = [animate(y, top, GLIDE), animate(h, height, GLIDE)];
     }
     animate(opacity, 1, reduce ? { duration: 0 } : FADE);
     shownFor.current = activeId;
   }, [activeId, reduce, y, h, opacity]);
 
-  // Follow the active question while its answer opens or closes, frame by frame.
+  /* Follow the active question, frame by frame, while any answer in the list
+     opens or closes. Every item is watched, not just the active one: opening a
+     question below an open one collapses the one above, which moves the active
+     question up after its own height has settled — watching only the active
+     item left the panel 18px high (Paul, 2026-10-22: "bottom padding looks
+     really small" on some questions). A layout change also cuts a glide short,
+     so a half-finished glide cannot land on a stale position. */
   useEffect(() => {
-    const el = activeId ? itemRefs.current[activeId] : null;
-    if (!el) return undefined;
-    const ro = new ResizeObserver(() => {
-      h.set(el.offsetHeight);
+    const seen = new Map();
+    const ro = new ResizeObserver((entries) => {
+      let changed = false;
+      entries.forEach(({ target, contentRect }) => {
+        if (seen.has(target) && seen.get(target) !== contentRect.height) changed = true;
+        seen.set(target, contentRect.height);
+      });
+      const el = activeRef.current ? itemRefs.current[activeRef.current] : null;
+      if (!changed || !el) return;
+      glides.current.forEach((g) => g.stop());
+      glides.current = [];
       y.set(el.offsetTop);
+      h.set(el.offsetHeight);
     });
-    ro.observe(el);
+    Object.values(itemRefs.current).forEach((el) => el && ro.observe(el));
     return () => ro.disconnect();
-  }, [activeId, h, y]);
+  }, [items, h, y]);
 
   const fromMouse = (e) => e.pointerType === 'mouse' || e.pointerType === 'pen';
 
   return (
     <section className="faq container">
       <Reveal as="h2" className="faq-headline">
-        Frequently asked questions
+        {title}
       </Reveal>
 
       <RevealGroup

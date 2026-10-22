@@ -60,7 +60,7 @@ export default function Engagements() {
 
       <MediaPanel items={[{}, {}]} ratio="600 / 544" />
 
-      <FaqSection items={engagementFaqs} />
+      <FaqSection items={engagementFaqs} title="The practical questions" />
     </>
   );
 }

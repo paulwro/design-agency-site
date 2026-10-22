@@ -74,7 +74,10 @@
   align-items: flex-start;
   gap: var(--space-4);
   width: 100%;
-  padding: var(--space-8) var(--space-6);
+  /* 31 / 33, not 32 / 32 (Paul, 2026-10-22): Unica sits low in its line box
+     (see .btn-primary), so a mathematically centred question read low between
+     the rules. One px moved from top to bottom; the row height is unchanged. */
+  padding: calc(var(--space-8) - 1px) var(--space-6) calc(var(--space-8) + 1px);
   border: none;
   background: transparent;
   cursor: pointer;
@@ -170,7 +173,7 @@
      the open question here — there is no hover) reaches 16 past them on both
      sides, inside the 24 gutter, so nothing shifts when it appears. */
   .faq-panel { left: calc(var(--space-4) * -1); right: calc(var(--space-4) * -1); }
-  .faq-question { padding: var(--space-5) 0; }
+  .faq-question { padding: calc(var(--space-5) - 1px) 0 calc(var(--space-5) + 1px); }
   .faq-answer { padding: 0 0 var(--space-5); }
   .faq-answer-wrap { margin-top: calc(var(--space-2) * -1); }
 }

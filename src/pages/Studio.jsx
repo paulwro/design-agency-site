@@ -167,7 +167,7 @@ export default function Studio() {
         </Reveal>
       </section>
 
-      <FaqSection items={studioFaqs} />
+      <FaqSection items={studioFaqs} title="What people ask about us" />
       <TestimonialSlider />
     </>
   );
